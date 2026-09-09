@@ -50,6 +50,7 @@ jobs:
       - run: npm ci
       - run: npm run format:check
       - run: npm run typecheck
+      - run: npm run benchmark:verify
       - run: npm run browsers -- --with-deps
       - run: npm run test:pack
       - run: npm run build

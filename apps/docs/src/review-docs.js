@@ -90,6 +90,10 @@ export function aiWorkflowDocs() {
       ) +
       h('comparison', 'Evaluate the benefit on your own project', '在自己的项目上验证收益') +
       p(
+        'Our <a href="#/docs/benchmark">published workflow benchmark</a> compares a reusable Playwright script with ShipLens on three synthetic fixtures. It includes timings, raw data and evidence-integrity failures. Both use deterministic text checks; no model accuracy or cost claim is established.',
+        '查看已公开的<a href="#/docs/benchmark">工作流对照实测</a>：用三个合成场景比较可复用 Playwright 脚本与 ShipLens，包含耗时、原始数据及证据完整性探测。两组都使用确定性文本断言，没有建立模型准确率或成本优势结论。',
+      ) +
+      p(
         'Use the same model, website version, requirements, browser permissions and time budget in two runs: generic browser tools alone, then those tools plus ShipLens. Plant known defects and retain the expected answers. Compare missed defects, unsupported conclusions, time to repeat after a fix, total tool/model cost and usable regression cases. We have tested the engineering workflow, but have not measured an accuracy, speed or token advantage over direct model testing.',
         '使用相同模型、网站版本、验收项、浏览器权限和时间预算做两组检查：只用通用浏览器工具，以及增加 ShipLens。预置已知缺陷并保留标准答案，比较漏检、无证据结论、修复后复查耗时、工具与模型总成本和可用回归案例。我们验证了工程流程，但尚未测出相对直接使用模型的准确率、速度或 Token 优势。',
       ),

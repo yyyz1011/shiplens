@@ -183,3 +183,7 @@ The documentation includes English/Chinese and light/dark controls, defaults to 
 Changes merged into `master` pass checks before automatic npm publication and GitHub Pages deployment. Each new source commit gets the next patch version, unless the source package declares a higher version. Retries of an already published commit reuse its version. Releases record the source commit; registry versions are authoritative.
 
 MIT licensed.
+
+## Measured workflow comparison
+
+Read the [reproducible workflow benchmark](https://shiplens.nimokit.com/#/docs/benchmark) for Playwright versus ShipLens on three synthetic fixtures, including raw data, all evidence, timings and limitations. Both use deterministic text checks; these results do not establish an AI accuracy or cost advantage. Reproduce with `npm run benchmark:workflow` from this repository.

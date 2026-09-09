@@ -25,7 +25,9 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "demo:interactions": "node scripts/demo-interactions.mjs",
-    "demo:review": "node scripts/demo-review.mjs"
+    "demo:review": "node scripts/demo-review.mjs",
+    "benchmark:workflow": "node benchmarks/workflow/run.mjs",
+    "benchmark:verify": "node benchmarks/workflow/verify.mjs"
   },
   "devDependencies": {
     "@modelcontextprotocol/client": "2.0.0",

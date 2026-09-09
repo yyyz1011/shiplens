@@ -1,0 +1,703 @@
+{
+  "metadata": {
+    "schemaVersion": 1,
+    "benchmark": "synthetic-workflow-v1",
+    "timestamp": "2026-09-09T15:39:42.492Z",
+    "sourceCommit": "2739076282579628745edccda75186f830b4e294",
+    "runnerSha256": "96f4904ef1c696a95c4fee7fabda0946d95adcd67748ebbc9fb9c6d7caffedf0",
+    "shiplens": "0.4.0",
+    "node": "v25.9.0",
+    "playwright": "1.63.0",
+    "chromium": "153.0.8010.12",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M4",
+    "repetitions": 1,
+    "devices": {
+      "desktop": {
+        "width": 1440,
+        "height": 900
+      },
+      "mobile": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    "model": null,
+    "tokens": null,
+    "dollars": null,
+    "warmup": "none; installed browser reused; new browser per phase; arm order alternates",
+    "fixtureCount": 3,
+    "disclosure": "Package-author-run deterministic synthetic fixtures, shared exact-text oracle, no independent AI reviewer or customer projects. Timing compares different output scopes; baseline has screenshots, visible text, errors and reusable code; ShipLens also collects machine reports, manifests, assessments and a case. No accuracy, token, dollar or human-time advantage established."
+  },
+  "summary": {
+    "playwright": {
+      "observations": 12,
+      "defectObservations": 5,
+      "detected": 5,
+      "missed": 0,
+      "cleanObservations": 7,
+      "falseAlarms": 0,
+      "failedTrials": 0,
+      "medianCycleMs": 3236.915000000001,
+      "minCycleMs": 3204.352249999998,
+      "maxCycleMs": 4333.365833,
+      "medianAfterMs": 1610.1516250000004
+    },
+    "shiplens": {
+      "observations": 12,
+      "defectObservations": 5,
+      "detected": 5,
+      "missed": 0,
+      "cleanObservations": 7,
+      "falseAlarms": 0,
+      "failedTrials": 0,
+      "medianCycleMs": 2599.836125,
+      "minCycleMs": 1119.2346249999973,
+      "maxCycleMs": 2643.993125,
+      "medianAfterMs": 750.0183749999997
+    }
+  },
+  "trials": [
+    {
+      "repeat": 1,
+      "fixture": "catalog",
+      "arm": "playwright",
+      "order": [
+        "playwright",
+        "shiplens"
+      ],
+      "phases": [
+        {
+          "phase": "before",
+          "durationMs": 2554.65325
+        },
+        {
+          "phase": "after",
+          "durationMs": 1778.6557080000002
+        }
+      ],
+      "error": null,
+      "cycleMs": 4333.365833,
+      "artifactBytes": 9569
+    },
+    {
+      "repeat": 1,
+      "fixture": "catalog",
+      "arm": "shiplens",
+      "order": [
+        "playwright",
+        "shiplens"
+      ],
+      "phases": [
+        {
+          "phase": "before",
+          "durationMs": 1892.9910419999997
+        },
+        {
+          "phase": "after",
+          "durationMs": 750.0183749999997
+        }
+      ],
+      "error": null,
+      "cycleMs": 2643.993125,
+      "reportMs": 22.87725000000046,
+      "transition": "resolved",
+      "report": "1-catalog-shiplens/runs/9f130cf1-d10d-40ea-8f66-c71d482764c1/7b9e0397-89e0-4145-ad06-7657a7437d82.html",
+      "artifactBytes": 129015
+    },
+    {
+      "repeat": 1,
+      "fixture": "signup",
+      "arm": "shiplens",
+      "order": [
+        "shiplens",
+        "playwright"
+      ],
+      "phases": [
+        {
+          "phase": "before",
+          "durationMs": 1470.5562090000003
+        },
+        {
+          "phase": "after",
+          "durationMs": 1129.1479170000002
+        }
+      ],
+      "error": null,
+      "cycleMs": 2599.836125,
+      "reportMs": 19.56275000000096,
+      "transition": "resolved",
+      "report": "1-signup-shiplens/runs/ae73e48a-ad22-49d0-8b31-bb615e1a78c0/da40c6d1-eeff-4620-9295-5aaee8282a7c.html",
+      "artifactBytes": 313630
+    },
+    {
+      "repeat": 1,
+      "fixture": "signup",
+      "arm": "playwright",
+      "order": [
+        "shiplens",
+        "playwright"
+      ],
+      "phases": [
+        {
+          "phase": "before",
+          "durationMs": 1626.7107500000002
+        },
+        {
+          "phase": "after",
+          "durationMs": 1610.1516250000004
+        }
+      ],
+      "error": null,
+      "cycleMs": 3236.915000000001,
+      "artifactBytes": 13003
+    },
+    {
+      "repeat": 1,
+      "fixture": "dashboard",
+      "arm": "playwright",
+      "order": [
+        "playwright",
+        "shiplens"
+      ],
+      "phases": [
+        {
+          "phase": "before",
+          "durationMs": 1712.112624999998
+        },
+        {
+          "phase": "after",
+          "durationMs": 1492.1862499999988
+        }
+      ],
+      "error": null,
+      "cycleMs": 3204.352249999998,
+      "artifactBytes": 12052
+    },
+    {
+      "repeat": 1,
+      "fixture": "dashboard",
+      "arm": "shiplens",
+      "order": [
+        "playwright",
+        "shiplens"
+      ],
+      "phases": [
+        {
+          "phase": "before",
+          "durationMs": 550.3900829999984
+        },
+        {
+          "phase": "after",
+          "durationMs": 567.8926249999968
+        }
+      ],
+      "error": null,
+      "cycleMs": 1119.2346249999973,
+      "reportMs": 38.65491699999984,
+      "transition": "resolved",
+      "report": "1-dashboard-shiplens/runs/ed56945c-ba16-4fc1-86c4-ddac566ca660/f23c06e5-e1bc-4cf8-b983-2e8fcca3c5b9.html",
+      "artifactBytes": 147376
+    }
+  ],
+  "observations": [
+    {
+      "repeat": 1,
+      "fixture": "catalog",
+      "arm": "playwright",
+      "phase": "before",
+      "expectedStatus": "fail",
+      "viewport": "desktop",
+      "text": "Price: $29",
+      "status": "fail",
+      "errors": [],
+      "imageSha256": "0005775705ac936878519bcc1a11c29f3ba1669edb08d8f06be3241b971c7e09"
+    },
+    {
+      "repeat": 1,
+      "fixture": "catalog",
+      "arm": "playwright",
+      "phase": "before",
+      "expectedStatus": "fail",
+      "viewport": "mobile",
+      "text": "Price: $29",
+      "status": "fail",
+      "errors": [],
+      "imageSha256": "dace35feacc28c05d61098a97b2652399a7be128f36ca4f058186cc07a68b9ca"
+    },
+    {
+      "repeat": 1,
+      "fixture": "catalog",
+      "arm": "playwright",
+      "phase": "after",
+      "expectedStatus": "pass",
+      "viewport": "desktop",
+      "text": "Price: $19",
+      "status": "pass",
+      "errors": [],
+      "imageSha256": "49115a55dc0426aa6309761a150c3292d79c03a4d84d036306b6f8719109f626"
+    },
+    {
+      "repeat": 1,
+      "fixture": "catalog",
+      "arm": "playwright",
+      "phase": "after",
+      "expectedStatus": "pass",
+      "viewport": "mobile",
+      "text": "Price: $19",
+      "status": "pass",
+      "errors": [],
+      "imageSha256": "cced634e8fa9c5d08f1f2c100cfec0a6251a8edb0300e79067c448c7b92bb44a"
+    },
+    {
+      "repeat": 1,
+      "fixture": "catalog",
+      "arm": "shiplens",
+      "phase": "before",
+      "expectedStatus": "fail",
+      "viewport": "desktop",
+      "text": "Price: $29",
+      "status": "fail",
+      "complete": true,
+      "imageSha256": "0005775705ac936878519bcc1a11c29f3ba1669edb08d8f06be3241b971c7e09"
+    },
+    {
+      "repeat": 1,
+      "fixture": "catalog",
+      "arm": "shiplens",
+      "phase": "before",
+      "expectedStatus": "fail",
+      "viewport": "mobile",
+      "text": "Price: $29",
+      "status": "fail",
+      "complete": true,
+      "imageSha256": "dace35feacc28c05d61098a97b2652399a7be128f36ca4f058186cc07a68b9ca"
+    },
+    {
+      "repeat": 1,
+      "fixture": "catalog",
+      "arm": "shiplens",
+      "phase": "after",
+      "expectedStatus": "pass",
+      "viewport": "desktop",
+      "text": "Price: $19",
+      "status": "pass",
+      "complete": true,
+      "imageSha256": "49115a55dc0426aa6309761a150c3292d79c03a4d84d036306b6f8719109f626"
+    },
+    {
+      "repeat": 1,
+      "fixture": "catalog",
+      "arm": "shiplens",
+      "phase": "after",
+      "expectedStatus": "pass",
+      "viewport": "mobile",
+      "text": "Price: $19",
+      "status": "pass",
+      "complete": true,
+      "imageSha256": "cced634e8fa9c5d08f1f2c100cfec0a6251a8edb0300e79067c448c7b92bb44a"
+    },
+    {
+      "repeat": 1,
+      "fixture": "signup",
+      "arm": "shiplens",
+      "phase": "before",
+      "expectedStatus": "fail",
+      "viewport": "desktop",
+      "text": "Please try again",
+      "status": "fail",
+      "complete": true,
+      "imageSha256": "2afa36df73af944b53133d4f967dd8ce8dee6264bb20fa535ee790c7fd12415c"
+    },
+    {
+      "repeat": 1,
+      "fixture": "signup",
+      "arm": "shiplens",
+      "phase": "before",
+      "expectedStatus": "fail",
+      "viewport": "mobile",
+      "text": "Please try again",
+      "status": "fail",
+      "complete": true,
+      "imageSha256": "772b94d7d51e0bea7583f18bf80c30d49a3e599a874a81ad80c75130db126c6c"
+    },
+    {
+      "repeat": 1,
+      "fixture": "signup",
+      "arm": "shiplens",
+      "phase": "after",
+      "expectedStatus": "pass",
+      "viewport": "desktop",
+      "text": "Registration complete",
+      "status": "pass",
+      "complete": true,
+      "imageSha256": "73ce51112cafdc088fbabfa0423ca11601f721accf11897fe4ccea05623ee871"
+    },
+    {
+      "repeat": 1,
+      "fixture": "signup",
+      "arm": "shiplens",
+      "phase": "after",
+      "expectedStatus": "pass",
+      "viewport": "mobile",
+      "text": "Registration complete",
+      "status": "pass",
+      "complete": true,
+      "imageSha256": "3cac7f338389cfe4220509e3c74f475db555ca43cf99d13ca3e9fad2b403f086"
+    },
+    {
+      "repeat": 1,
+      "fixture": "signup",
+      "arm": "playwright",
+      "phase": "before",
+      "expectedStatus": "fail",
+      "viewport": "desktop",
+      "text": "Please try again",
+      "status": "fail",
+      "errors": [],
+      "imageSha256": "2afa36df73af944b53133d4f967dd8ce8dee6264bb20fa535ee790c7fd12415c"
+    },
+    {
+      "repeat": 1,
+      "fixture": "signup",
+      "arm": "playwright",
+      "phase": "before",
+      "expectedStatus": "fail",
+      "viewport": "mobile",
+      "text": "Please try again",
+      "status": "fail",
+      "errors": [],
+      "imageSha256": "772b94d7d51e0bea7583f18bf80c30d49a3e599a874a81ad80c75130db126c6c"
+    },
+    {
+      "repeat": 1,
+      "fixture": "signup",
+      "arm": "playwright",
+      "phase": "after",
+      "expectedStatus": "pass",
+      "viewport": "desktop",
+      "text": "Registration complete",
+      "status": "pass",
+      "errors": [],
+      "imageSha256": "73ce51112cafdc088fbabfa0423ca11601f721accf11897fe4ccea05623ee871"
+    },
+    {
+      "repeat": 1,
+      "fixture": "signup",
+      "arm": "playwright",
+      "phase": "after",
+      "expectedStatus": "pass",
+      "viewport": "mobile",
+      "text": "Registration complete",
+      "status": "pass",
+      "errors": [],
+      "imageSha256": "3cac7f338389cfe4220509e3c74f475db555ca43cf99d13ca3e9fad2b403f086"
+    },
+    {
+      "repeat": 1,
+      "fixture": "dashboard",
+      "arm": "playwright",
+      "phase": "before",
+      "expectedStatus": "pass",
+      "viewport": "desktop",
+      "text": "Sync complete",
+      "status": "pass",
+      "errors": [],
+      "imageSha256": "75649b74fcb0d62929d3f0d61d150da043ea579f758467a740ee736613b43130"
+    },
+    {
+      "repeat": 1,
+      "fixture": "dashboard",
+      "arm": "playwright",
+      "phase": "before",
+      "expectedStatus": "fail",
+      "viewport": "mobile",
+      "text": "Sync pending",
+      "status": "fail",
+      "errors": [],
+      "imageSha256": "068d8fe2143125970ce7e78062c5c5101a272e63e9bb80ec92dff44420d326a8"
+    },
+    {
+      "repeat": 1,
+      "fixture": "dashboard",
+      "arm": "playwright",
+      "phase": "after",
+      "expectedStatus": "pass",
+      "viewport": "desktop",
+      "text": "Sync complete",
+      "status": "pass",
+      "errors": [],
+      "imageSha256": "75649b74fcb0d62929d3f0d61d150da043ea579f758467a740ee736613b43130"
+    },
+    {
+      "repeat": 1,
+      "fixture": "dashboard",
+      "arm": "playwright",
+      "phase": "after",
+      "expectedStatus": "pass",
+      "viewport": "mobile",
+      "text": "Sync complete",
+      "status": "pass",
+      "errors": [],
+      "imageSha256": "a03987e270920e801ed2c40b06fbf5deda2d0b6d3f0f3d98d19ed5e65bb66e4d"
+    },
+    {
+      "repeat": 1,
+      "fixture": "dashboard",
+      "arm": "shiplens",
+      "phase": "before",
+      "expectedStatus": "pass",
+      "viewport": "desktop",
+      "text": "Sync complete",
+      "status": "pass",
+      "complete": true,
+      "imageSha256": "75649b74fcb0d62929d3f0d61d150da043ea579f758467a740ee736613b43130"
+    },
+    {
+      "repeat": 1,
+      "fixture": "dashboard",
+      "arm": "shiplens",
+      "phase": "before",
+      "expectedStatus": "fail",
+      "viewport": "mobile",
+      "text": "Sync pending",
+      "status": "fail",
+      "complete": true,
+      "imageSha256": "068d8fe2143125970ce7e78062c5c5101a272e63e9bb80ec92dff44420d326a8"
+    },
+    {
+      "repeat": 1,
+      "fixture": "dashboard",
+      "arm": "shiplens",
+      "phase": "after",
+      "expectedStatus": "pass",
+      "viewport": "desktop",
+      "text": "Sync complete",
+      "status": "pass",
+      "complete": true,
+      "imageSha256": "75649b74fcb0d62929d3f0d61d150da043ea579f758467a740ee736613b43130"
+    },
+    {
+      "repeat": 1,
+      "fixture": "dashboard",
+      "arm": "shiplens",
+      "phase": "after",
+      "expectedStatus": "pass",
+      "viewport": "mobile",
+      "text": "Sync complete",
+      "status": "pass",
+      "complete": true,
+      "imageSha256": "a03987e270920e801ed2c40b06fbf5deda2d0b6d3f0f3d98d19ed5e65bb66e4d"
+    }
+  ],
+  "safety": [
+    {
+      "repeat": 1,
+      "fixture": "catalog",
+      "oldRunEvidence": {
+        "rejected": true,
+        "message": "Evidence must belong to this run and the requirement scope."
+      },
+      "missingMobile": {
+        "rejected": true,
+        "message": "Pass requires evidence for every requested viewport."
+      },
+      "completeGate": {
+        "runId": "9f130cf1-d10d-40ea-8f66-c71d482764c1",
+        "passed": true,
+        "counts": {
+          "pass": 1,
+          "fail": 0,
+          "pending": 0,
+          "needs-evidence": 0
+        },
+        "failOn": "error",
+        "reasons": [],
+        "note": "Gate applies to recorded caller assessments and observed scope; it does not verify model reasoning."
+      },
+      "deletedArtifactGate": {
+        "runId": "9f130cf1-d10d-40ea-8f66-c71d482764c1",
+        "passed": false,
+        "counts": {
+          "pass": 1,
+          "fail": 0,
+          "pending": 0,
+          "needs-evidence": 0
+        },
+        "failOn": "error",
+        "reasons": [
+          "unavailable-evidence"
+        ],
+        "note": "Gate applies to recorded caller assessments and observed scope; it does not verify model reasoning."
+      },
+      "falseSemanticPassGate": {
+        "runId": "7ce03ead-a7df-453d-bbc0-48f72f429781",
+        "passed": true,
+        "counts": {
+          "pass": 1,
+          "fail": 0,
+          "pending": 0,
+          "needs-evidence": 0
+        },
+        "failOn": "error",
+        "reasons": [],
+        "note": "Gate applies to recorded caller assessments and observed scope; it does not verify model reasoning."
+      },
+      "freshRunStatus": "pending",
+      "freshRunGate": {
+        "runId": "b69ccc49-8dc6-4a7f-a4f7-31f764522d02",
+        "passed": false,
+        "counts": {
+          "pass": 0,
+          "fail": 0,
+          "pending": 1,
+          "needs-evidence": 0
+        },
+        "failOn": "error",
+        "reasons": [
+          "unreviewed-requirements"
+        ],
+        "note": "Gate applies to recorded caller assessments and observed scope; it does not verify model reasoning."
+      }
+    },
+    {
+      "repeat": 1,
+      "fixture": "signup",
+      "oldRunEvidence": {
+        "rejected": true,
+        "message": "Evidence must belong to this run and the requirement scope."
+      },
+      "missingMobile": {
+        "rejected": true,
+        "message": "Pass requires evidence for every requested viewport."
+      },
+      "completeGate": {
+        "runId": "ae73e48a-ad22-49d0-8b31-bb615e1a78c0",
+        "passed": true,
+        "counts": {
+          "pass": 1,
+          "fail": 0,
+          "pending": 0,
+          "needs-evidence": 0
+        },
+        "failOn": "error",
+        "reasons": [],
+        "note": "Gate applies to recorded caller assessments and observed scope; it does not verify model reasoning."
+      },
+      "deletedArtifactGate": {
+        "runId": "ae73e48a-ad22-49d0-8b31-bb615e1a78c0",
+        "passed": false,
+        "counts": {
+          "pass": 1,
+          "fail": 0,
+          "pending": 0,
+          "needs-evidence": 0
+        },
+        "failOn": "error",
+        "reasons": [
+          "unavailable-evidence"
+        ],
+        "note": "Gate applies to recorded caller assessments and observed scope; it does not verify model reasoning."
+      },
+      "falseSemanticPassGate": {
+        "runId": "24936247-67a5-4783-b642-c4916277eda9",
+        "passed": true,
+        "counts": {
+          "pass": 1,
+          "fail": 0,
+          "pending": 0,
+          "needs-evidence": 0
+        },
+        "failOn": "error",
+        "reasons": [],
+        "note": "Gate applies to recorded caller assessments and observed scope; it does not verify model reasoning."
+      },
+      "freshRunStatus": "pending",
+      "freshRunGate": {
+        "runId": "f0c1239f-e624-45d7-9669-bdb147abdb9d",
+        "passed": false,
+        "counts": {
+          "pass": 0,
+          "fail": 0,
+          "pending": 1,
+          "needs-evidence": 0
+        },
+        "failOn": "error",
+        "reasons": [
+          "unreviewed-requirements"
+        ],
+        "note": "Gate applies to recorded caller assessments and observed scope; it does not verify model reasoning."
+      }
+    },
+    {
+      "repeat": 1,
+      "fixture": "dashboard",
+      "oldRunEvidence": {
+        "rejected": true,
+        "message": "Evidence must belong to this run and the requirement scope."
+      },
+      "missingMobile": {
+        "rejected": true,
+        "message": "Pass requires evidence for every requested viewport."
+      },
+      "completeGate": {
+        "runId": "ed56945c-ba16-4fc1-86c4-ddac566ca660",
+        "passed": true,
+        "counts": {
+          "pass": 1,
+          "fail": 0,
+          "pending": 0,
+          "needs-evidence": 0
+        },
+        "failOn": "error",
+        "reasons": [],
+        "note": "Gate applies to recorded caller assessments and observed scope; it does not verify model reasoning."
+      },
+      "deletedArtifactGate": {
+        "runId": "ed56945c-ba16-4fc1-86c4-ddac566ca660",
+        "passed": false,
+        "counts": {
+          "pass": 1,
+          "fail": 0,
+          "pending": 0,
+          "needs-evidence": 0
+        },
+        "failOn": "error",
+        "reasons": [
+          "unavailable-evidence"
+        ],
+        "note": "Gate applies to recorded caller assessments and observed scope; it does not verify model reasoning."
+      },
+      "falseSemanticPassGate": {
+        "runId": "78f1bba9-b736-4f21-9326-539fdbcadbea",
+        "passed": true,
+        "counts": {
+          "pass": 1,
+          "fail": 0,
+          "pending": 0,
+          "needs-evidence": 0
+        },
+        "failOn": "error",
+        "reasons": [],
+        "note": "Gate applies to recorded caller assessments and observed scope; it does not verify model reasoning."
+      },
+      "freshRunStatus": "pending",
+      "freshRunGate": {
+        "runId": "dc4fbfdc-3c5e-483c-b910-c0d1f7ec64a2",
+        "passed": false,
+        "counts": {
+          "pass": 0,
+          "fail": 0,
+          "pending": 1,
+          "needs-evidence": 0
+        },
+        "failOn": "error",
+        "reasons": [
+          "unreviewed-requirements"
+        ],
+        "note": "Gate applies to recorded caller assessments and observed scope; it does not verify model reasoning."
+      }
+    }
+  ]
+}
