@@ -2,7 +2,7 @@
 
 **Evidence before you ship.** A local website delivery checker using a real Chromium browser.
 
-[Documentation](https://yyyz1011.github.io/shiplens/) · [中文](https://github.com/yyyz1011/shiplens/blob/master/README.zh-CN.md) · [npm](https://www.npmjs.com/package/shiplens) · [Issues](https://github.com/yyyz1011/shiplens/issues)
+[Documentation](https://shiplens.nimokit.com/) · [中文](https://github.com/yyyz1011/shiplens/blob/master/README.zh-CN.md) · [npm](https://www.npmjs.com/package/shiplens) · [Issues](https://github.com/yyyz1011/shiplens/issues)
 
 ShipLens checks runtime errors, failed resources, visible broken images, suspicious blank pages and horizontal overflow. It saves HTML, JSON and Markdown reports with page and element screenshots. No model account, API key, telemetry or report upload.
 
@@ -18,7 +18,7 @@ Six tools collect requirement-scoped evidence, read PNG images and bounded DOM, 
 
 For your own agent, import `ReviewWorkspace` from `shiplens/review`. All six methods are demonstrated in `node node_modules/shiplens/examples/review.mjs` after starting the bundled demo server. Saved cases parameterize fill inputs; use test data and masks for any values echoed into page content or logs. Your AI client receives requested evidence; ShipLens makes no model calls or report uploads.
 
-[AI workflow](https://yyyz1011.github.io/shiplens/#/docs/ai-workflow) · [MCP setup and tools](https://yyyz1011.github.io/shiplens/#/docs/mcp) · [Complete review API and runnable example](https://yyyz1011.github.io/shiplens/#/docs/review-api)
+[AI workflow](https://shiplens.nimokit.com/#/docs/ai-workflow) · [MCP setup and tools](https://shiplens.nimokit.com/#/docs/mcp) · [Complete review API and runnable example](https://shiplens.nimokit.com/#/docs/review-api)
 
 This is workflow infrastructure, not an automatic visual judge or browser-session recorder. We have not measured an accuracy, latency or token advantage over using a model with generic browser tools directly.
 
@@ -103,7 +103,7 @@ Supported actions: `click`, `fill`, `press`, `select`, `waitFor`, `expectText`. 
 
 Precise ignores match all supplied fields and retain evidence in `suppressed` with a reason and optional UTC expiry. They do not count toward active severity thresholds. Expired entries return to active reporting. Operational failures cannot be ignored. Changes to flows or ignores invalidate resolution comparisons against the previous configuration.
 
-[Step reference](https://yyyz1011.github.io/shiplens/#/docs/flows) · [Ignore fields](https://yyyz1011.github.io/shiplens/#/docs/ignores)
+[Step reference](https://shiplens.nimokit.com/#/docs/flows) · [Ignore fields](https://shiplens.nimokit.com/#/docs/ignores)
 
 ## Run the included examples
 
@@ -122,7 +122,7 @@ node node_modules/shiplens/examples/api.mjs
 
 The first example exercises all six actions. The second calls all three public API exports: `scan`, `validateOptions`, and `compareBaseline`. The latter compares fingerprints only; use `scan({ baseline: 'previous/report.json', ...options })` and `report.comparison` for coverage-aware resolution.
 
-[Complete API options and return fields](https://yyyz1011.github.io/shiplens/#/docs/api) · [Working, failing and ignored-issue cases](https://yyyz1011.github.io/shiplens/#/docs/examples)
+[Complete API options and return fields](https://shiplens.nimokit.com/#/docs/api) · [Working, failing and ignored-issue cases](https://shiplens.nimokit.com/#/docs/examples)
 
 ## JavaScript and TypeScript
 

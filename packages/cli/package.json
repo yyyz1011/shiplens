@@ -46,7 +46,7 @@
     "url": "git+https://github.com/yyyz1011/shiplens.git",
     "directory": "packages/cli"
   },
-  "homepage": "https://yyyz1011.github.io/shiplens/",
+  "homepage": "https://shiplens.nimokit.com/",
   "bugs": {
     "url": "https://github.com/yyyz1011/shiplens/issues"
   },

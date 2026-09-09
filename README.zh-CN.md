@@ -2,7 +2,7 @@
 
 在交付前，用真实浏览器检查网站，并留下证据。
 
-[English](README.md) · [双语文档](https://yyyz1011.github.io/shiplens/) · [npm](https://www.npmjs.com/package/shiplens)
+[English](README.md) · [双语文档](https://shiplens.nimokit.com/) · [npm](https://www.npmjs.com/package/shiplens)
 
 检查运行异常、失效资源、可见坏图、疑似白屏和横向溢出，生成带页面及元素截图的 HTML、JSON 和 Markdown 报告。无需配置 AI 模型或 API Key，不上传报告。
 
@@ -14,7 +14,7 @@
 
 无需额外模型 API Key；AI 客户端会收到它请求的证据，ShipLens 不调用模型或上传报告。本版不自动录制浏览器会话、不自动修复选择器，也尚未测出相对直接使用模型的准确率、耗时或 Token 优势。
 
-[AI 验收流程](https://yyyz1011.github.io/shiplens/#/docs/ai-workflow) · [MCP 配置](https://yyyz1011.github.io/shiplens/#/docs/mcp) · [完整 API 与可运行案例](https://yyyz1011.github.io/shiplens/#/docs/review-api)
+[AI 验收流程](https://shiplens.nimokit.com/#/docs/ai-workflow) · [MCP 配置](https://shiplens.nimokit.com/#/docs/mcp) · [完整 API 与可运行案例](https://shiplens.nimokit.com/#/docs/review-api)
 
 ## 使用
 
@@ -63,7 +63,7 @@ node node_modules/shiplens/examples/api.mjs
 
 包提供三个公开 API：`scan()` 执行检查，`validateOptions()` 校验并规范参数，`compareBaseline()` 比较问题指纹。后者不判断覆盖与修复状态，需要通过 `scan()` 的 `baseline` 选项获得完整对比。
 
-[完整 API 参考](https://yyyz1011.github.io/shiplens/#/docs/api) · [交互步骤](https://yyyz1011.github.io/shiplens/#/docs/flows) · [精确忽略](https://yyyz1011.github.io/shiplens/#/docs/ignores) · [可运行案例](https://yyyz1011.github.io/shiplens/#/docs/examples)
+[完整 API 参考](https://shiplens.nimokit.com/#/docs/api) · [交互步骤](https://shiplens.nimokit.com/#/docs/flows) · [精确忽略](https://shiplens.nimokit.com/#/docs/ignores) · [可运行案例](https://shiplens.nimokit.com/#/docs/examples)
 
 ## 能力边界
 
