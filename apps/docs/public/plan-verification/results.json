@@ -1,0 +1,200 @@
+{
+  "at": "2026-09-09T17:17:40.708Z",
+  "version": "0.6.0",
+  "node": "v25.9.0",
+  "platform": "darwin",
+  "plan": {
+    "schemaVersion": 1,
+    "kind": "shiplens-case",
+    "name": "Documentation release routes",
+    "tags": ["integration"],
+    "flows": [],
+    "requirements": [
+      {
+        "id": "quickstart",
+        "description": "Page heading: Quick start",
+        "page": "/#/docs/quickstart",
+        "selector": "h1",
+        "checks": [
+          {
+            "operator": "equals",
+            "value": "Quick start"
+          }
+        ],
+        "evaluation": "checks"
+      },
+      {
+        "id": "mcp",
+        "description": "Page heading: MCP setup & tools",
+        "page": "/#/docs/mcp",
+        "selector": "h1",
+        "checks": [
+          {
+            "operator": "equals",
+            "value": "MCP setup & tools"
+          }
+        ],
+        "evaluation": "checks"
+      },
+      {
+        "id": "plans",
+        "description": "Page heading: One-command verification",
+        "page": "/#/docs/portable-plans",
+        "selector": "h1",
+        "checks": [
+          {
+            "operator": "equals",
+            "value": "One-command verification"
+          }
+        ],
+        "evaluation": "checks"
+      }
+    ]
+  },
+  "modules": {
+    "assets/index-B6We_tHB.js": "58ff5088d3ba8a0b193fd131a25bcc6e0f6a4ca75d3670247235ea1e8a2bedfb"
+  },
+  "alteredResponses": 8,
+  "trials": [
+    {
+      "variant": "clean",
+      "exitCode": 0,
+      "result": {
+        "runId": "c4ba8cbc-2f75-43bd-88e9-3f240bba9b4a",
+        "plan": {
+          "name": "Documentation release routes",
+          "sha256": "fd6bfc23a09784f8f456660ee697fd9891410a3d3cb6a11296a9cd598897dd8f",
+          "requirementCount": 3,
+          "flowCount": 0,
+          "requiredInputs": [],
+          "automaticRequirements": ["quickstart", "mcp", "plans"],
+          "manualRequirements": [],
+          "note": "Validates the plan against host policy only. No browser, login, selector or business correctness check."
+        },
+        "gate": {
+          "runId": "c4ba8cbc-2f75-43bd-88e9-3f240bba9b4a",
+          "passed": true,
+          "counts": {
+            "pass": 3,
+            "fail": 0,
+            "pending": 0,
+            "needs-evidence": 0
+          },
+          "failOn": "error",
+          "reasons": [],
+          "note": "Gate applies to configured text checks, recorded caller assessments and observed scope; it does not verify unconfigured business meaning or model reasoning."
+        },
+        "report": {
+          "runId": "c4ba8cbc-2f75-43bd-88e9-3f240bba9b4a",
+          "format": "json",
+          "file": "runs/c4ba8cbc-2f75-43bd-88e9-3f240bba9b4a/e68ffaee-df61-4019-9c54-b548e7fd8b3a.json",
+          "bytes": 7692,
+          "gate": {
+            "runId": "c4ba8cbc-2f75-43bd-88e9-3f240bba9b4a",
+            "passed": true,
+            "counts": {
+              "pass": 3,
+              "fail": 0,
+              "pending": 0,
+              "needs-evidence": 0
+            },
+            "failOn": "error",
+            "reasons": [],
+            "note": "Gate applies to configured text checks, recorded caller assessments and observed scope; it does not verify unconfigured business meaning or model reasoning."
+          },
+          "warnings": []
+        },
+        "unresolved": [],
+        "next": null
+      },
+      "evidenceCount": 6,
+      "callerAssessments": 0
+    },
+    {
+      "variant": "altered-title",
+      "exitCode": 1,
+      "result": {
+        "runId": "ce083cdd-ff7f-4907-bd19-ed4bb1c943f3",
+        "plan": {
+          "name": "Documentation release routes",
+          "sha256": "fd6bfc23a09784f8f456660ee697fd9891410a3d3cb6a11296a9cd598897dd8f",
+          "requirementCount": 3,
+          "flowCount": 0,
+          "requiredInputs": [],
+          "automaticRequirements": ["quickstart", "mcp", "plans"],
+          "manualRequirements": [],
+          "note": "Validates the plan against host policy only. No browser, login, selector or business correctness check."
+        },
+        "gate": {
+          "runId": "ce083cdd-ff7f-4907-bd19-ed4bb1c943f3",
+          "passed": false,
+          "counts": {
+            "pass": 2,
+            "fail": 1,
+            "pending": 0,
+            "needs-evidence": 0
+          },
+          "failOn": "error",
+          "reasons": ["failed-requirements"],
+          "note": "Gate applies to configured text checks, recorded caller assessments and observed scope; it does not verify unconfigured business meaning or model reasoning."
+        },
+        "report": {
+          "runId": "ce083cdd-ff7f-4907-bd19-ed4bb1c943f3",
+          "format": "json",
+          "file": "runs/ce083cdd-ff7f-4907-bd19-ed4bb1c943f3/d041925c-a047-4b2d-8011-555baa97d9e9.json",
+          "bytes": 7738,
+          "gate": {
+            "runId": "ce083cdd-ff7f-4907-bd19-ed4bb1c943f3",
+            "passed": false,
+            "counts": {
+              "pass": 2,
+              "fail": 1,
+              "pending": 0,
+              "needs-evidence": 0
+            },
+            "failOn": "error",
+            "reasons": ["failed-requirements"],
+            "note": "Gate applies to configured text checks, recorded caller assessments and observed scope; it does not verify unconfigured business meaning or model reasoning."
+          },
+          "warnings": []
+        },
+        "unresolved": [
+          {
+            "criterionId": "quickstart",
+            "status": "fail",
+            "verification": {
+              "source": "deterministic-checks",
+              "status": "fail",
+              "evidenceIds": ["e_a517ddabe23d16e5fe513902", "e_147c23d3d1178012ea64d4b1"],
+              "results": [
+                {
+                  "evidenceId": "e_a517ddabe23d16e5fe513902",
+                  "viewport": "desktop",
+                  "checkIndex": 0,
+                  "status": "fail",
+                  "reason": "text-mismatch"
+                },
+                {
+                  "evidenceId": "e_147c23d3d1178012ea64d4b1",
+                  "viewport": "mobile",
+                  "checkIndex": 0,
+                  "status": "fail",
+                  "reason": "text-mismatch"
+                }
+              ]
+            }
+          }
+        ],
+        "next": {
+          "method": "reviewPacket",
+          "input": {
+            "runId": "ce083cdd-ff7f-4907-bd19-ed4bb1c943f3"
+          }
+        }
+      },
+      "evidenceCount": 6,
+      "callerAssessments": 0
+    }
+  ],
+  "note": "Maintainer-controlled integration test of the built documentation app. One injected title defect, three requirements, two viewports, two runs; no AI calls, timing comparison or independent/customer validation. Run npm run build then npm run test:plan-docs. Full local run evidence is under artifacts/docs-plan-TIMESTAMP."
+}

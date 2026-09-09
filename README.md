@@ -14,7 +14,7 @@ Your existing assistant supplies the reasoning; ShipLens supplies repeatable evi
 shiplens mcp --config /absolute/project/shiplens.config.json
 ```
 
-Eighteen tools support the review lifecycle. The core tools collect requirement-scoped evidence, read PNG images and bounded DOM, record cited pass/fail/needs-evidence assessments, retrieve history, save cases and recheck. A pass requires complete evidence for every requested device. Manual judgments start pending on recheck; configured checks re-evaluate fresh evidence. Prior passes are never silently reused. Machine diagnostics remain separate from AI judgments.
+Twenty tools support the review lifecycle. The core tools collect requirement-scoped evidence, read PNG images and bounded DOM, record cited pass/fail/needs-evidence assessments, retrieve history, save cases and recheck. A pass requires complete evidence for every requested device. Manual judgments start pending on recheck; configured checks re-evaluate fresh evidence. Prior passes are never silently reused. Machine diagnostics remain separate from AI judgments.
 
 For your own agent, import `ReviewWorkspace` from `shiplens/review`. The six core methods are demonstrated in `node node_modules/shiplens/examples/review.mjs` after starting the bundled demo server. Saved cases parameterize fill inputs; use test data and masks for any values echoed into page content or logs. Your AI client receives requested evidence; ShipLens makes no model calls or report uploads.
 
@@ -193,3 +193,18 @@ Read the [reproducible workflow benchmark](https://shiplens.nimokit.com/#/docs/b
 Add `checks: [{ operator: 'equals', value: '$19' }]` to a scoped requirement to reject contradictory caller passes. `evaluation: 'checks'` opts an entirely text-defined requirement into fresh automatic evaluation; manual review remains the default. `reviewPacket({ runId })` batches unresolved evidence with explicit pagination and byte omissions. MCP offers `shiplens_review_packet` with native images; CLI offers `shiplens review packet`.
 
 [API, examples and measured protocol results](https://shiplens.nimokit.com/#/docs/checked-review): one synthetic mixed workflow used 8 review API operations instead of 40, with 2 scripted caller receipts instead of 12. It did not establish a speed, token or model-accuracy advantage. Playwright already provides reusable assertions; ShipLens adds the packaged acceptance/evidence workflow.
+
+## One-command verification (0.6)
+
+Keep a reviewed portable case JSON in source control and run it on a fresh machine without importing a case or passing run IDs between commands. Host URL and request policy remain in the configuration.
+
+```sh
+npx shiplens review plan --config shiplens.config.json --plan acceptance.json
+npx shiplens review verify --config shiplens.config.json --plan acceptance.json
+```
+
+`plan` validates without browser requests or artifact writes. `verify` collects fresh evidence, computes the gate and writes an HTML report. stdout returns `runId`, `plan`, `gate`, `report`, `unresolved` and `next`. Exit 0 means passed, 1 means a completed but blocked gate, and 2 means the command could not complete. `report.file` resolves under `<output>/reviews`. Optional `--input` reads named runtime values from a JSON object; `--format`, `--lang`, `--fail-on` and `--timeout-ms` configure the result.
+
+API: `workspace.validatePlan({data})` and `await workspace.verify({data, inputs, format})`. MCP: `shiplens_validate_plan` and `shiplens_verify`. Manual requirements deliberately remain pending. Empty unresolved evidence does not clear machine findings. Reports include the parsed plan fingerprint and remain immutable snapshots.
+
+Try `node node_modules/shiplens/examples/verify.mjs` with the bundled example server running. The package includes `examples/acceptance.json`. [Full parameters, CLI/API examples, inputs and CI integration](https://shiplens.nimokit.com/#/docs/portable-plans).

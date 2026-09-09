@@ -56,6 +56,7 @@ jobs:
       - run: npm run build
         env:
           DOCS_BASE: ./
+      - run: npm run test:plan-docs
       - name: Check production documentation
         run: |
           node node_modules/vite/bin/vite.js preview apps/docs --host 127.0.0.1 --port 4318 --strictPort &

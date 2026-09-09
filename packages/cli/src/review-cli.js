@@ -85,6 +85,8 @@ export async function doctor(args) {
   process.exitCode = result.passed ? 0 : 1;
 }
 const methods = {
+  plan: 'validatePlan',
+  verify: 'verify',
   collect: 'collect',
   run: 'getRun',
   runs: 'listRuns',
@@ -109,11 +111,13 @@ export async function reviewCli(args) {
     allowPositionals: true,
     options: {
       config: { type: 'string' },
+      plan: { type: 'string' },
       input: { type: 'string' },
       run: { type: 'string' },
       case: { type: 'string' },
       previous: { type: 'string' },
       format: { type: 'string' },
+      lang: { type: 'string' },
       'fail-on': { type: 'string' },
       'timeout-ms': { type: 'string' },
       help: { type: 'boolean' },
@@ -123,7 +127,7 @@ export async function reviewCli(args) {
     console.log(
       'shiplens review <' +
         Object.keys(methods).join('|') +
-        '> --config <file> [--input <JSON file>] [--run <id>] [--case <id>] [--previous <runId>] [--format html|json|markdown] [--fail-on error|warning] [--timeout-ms 120000]\nAll commands write JSON to stdout. Report/export return artifacts/data; gate exits 1 while requirements or machine checks remain unresolved.',
+        '> --config <file> [--plan <portable case JSON>] [--input <JSON file>] [--run <id>] [--case <id>] [--previous <runId>] [--format html|json|markdown] [--lang en|zh] [--fail-on error|warning] [--timeout-ms 120000]\nAll commands write JSON to stdout. plan validates without browser execution; verify reads --plan and optional named values from --input. verify/gate exit 1 while requirements or machine checks remain unresolved; command errors exit 2.',
     );
     return;
   }
@@ -131,9 +135,11 @@ export async function reviewCli(args) {
   if (positionals.length !== 1 || !Object.hasOwn(methods, command))
     throw new Error('Unknown review command. Run shiplens review --help.');
   for (const [flag, commands] of Object.entries({
-    format: ['report'],
-    'fail-on': ['gate', 'report'],
-    'timeout-ms': ['collect', 'recheck'],
+    plan: ['plan', 'verify'],
+    lang: ['report', 'verify'],
+    format: ['report', 'verify'],
+    'fail-on': ['gate', 'report', 'verify'],
+    'timeout-ms': ['collect', 'recheck', 'verify'],
     previous: ['compare', 'recheck', 'report'],
     case: ['case', 'update', 'export', 'recheck'],
     run: ['run', 'evidence', 'packet', 'assess', 'save', 'compare', 'report', 'gate'],
@@ -144,11 +150,20 @@ export async function reviewCli(args) {
   let input = values.input ? await readJson(values.input) : {};
   if (!input || typeof input !== 'object' || Array.isArray(input))
     throw new Error('Input must be a JSON object.');
+  if (['plan', 'verify'].includes(command)) {
+    if (!values.plan) throw new Error('This command requires --plan <portable case JSON>.');
+    if (command === 'plan' && values.input) throw new Error('plan does not accept --input.');
+    input = {
+      data: await readJson(values.plan),
+      ...(command === 'verify' ? { inputs: input } : {}),
+    };
+  }
   if (command === 'import') input = { data: input };
   if (values.run) input.runId = values.run;
   if (values.case) input.caseId = values.case;
   if (values.previous) input.previousRunId = values.previous;
   if (values.format) input.format = values.format;
+  if (values.lang) input.lang = values.lang;
   if (values['fail-on']) input.failOn = values['fail-on'];
   const controller = new AbortController();
   const abort = () => controller.abort(new Error('Review interrupted.'));
@@ -162,6 +177,7 @@ export async function reviewCli(args) {
     });
     console.log(JSON.stringify(result));
     if (command === 'gate') process.exitCode = result.passed ? 0 : 1;
+    if (command === 'verify') process.exitCode = result.gate.passed ? 0 : 1;
   } finally {
     process.removeListener('SIGINT', abort);
     process.removeListener('SIGTERM', abort);

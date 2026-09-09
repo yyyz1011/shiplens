@@ -111,8 +111,8 @@ export function mcpDocs() {
     group: t('AI review', 'AI 验收'),
     title: t('MCP setup & tools', 'MCP 配置与工具'),
     description: t(
-      'Eighteen project-scoped tools for your existing image-capable AI client.',
-      '十八个限定项目范围的工具，供现有支持图片的 AI 客户端调用。',
+      'Twenty project-scoped tools for your existing image-capable AI client.',
+      '二十个限定项目范围的工具，供现有支持图片的 AI 客户端调用。',
     ),
     body:
       h('install', 'Install in the target project', '安装到目标项目') +
@@ -164,10 +164,14 @@ export function mcpDocs() {
         ),
       ) +
       p(
-        'Replace both absolute paths. Use the absolute Node executable if your client does not inherit PATH. Other clients use different configuration formats; the process command and arguments are the same. Restart or reconnect the client, then confirm all 18 tools are listed. The server uses stdout only for MCP protocol messages and supports legacy and modern MCP clients.',
-        '替换两个绝对路径。客户端未继承 PATH 时，使用 Node 可执行文件的绝对路径。其他客户端可能采用不同配置格式，但启动命令与参数相同。重启或重新连接后，确认十八个工具全部出现。服务的 stdout 只用于 MCP 协议消息，支持旧版及新版 MCP 客户端。',
+        'Replace both absolute paths. Use the absolute Node executable if your client does not inherit PATH. Other clients use different configuration formats; the process command and arguments are the same. Restart or reconnect the client, then confirm all 20 tools are listed. The server uses stdout only for MCP protocol messages and supports legacy and modern MCP clients.',
+        '替换两个绝对路径。客户端未继承 PATH 时，使用 Node 可执行文件的绝对路径。其他客户端可能采用不同配置格式，但启动命令与参数相同。重启或重新连接后，确认二十个工具全部出现。服务的 stdout 只用于 MCP 协议消息，支持旧版及新版 MCP 客户端。',
       ) +
       h('tools', 'Seven core review tools', '七个核心验收工具') +
+      p(
+        'For plans kept in source control, <a href="#/docs/portable-plans">shiplens_validate_plan and shiplens_verify</a> provide preflight validation and fresh verification with a gate and report, without importing a case first.',
+        '对于保存在源码中的验收文件，<a href="#/docs/portable-plans">shiplens_validate_plan 与 shiplens_verify</a> 提供运行前校验，以及包含 gate 和报告的新证据复测，无需先导入案例。',
+      ) +
       table([
         [
           'shiplens_collect',
@@ -240,6 +244,10 @@ export function reviewApiDocs() {
         'constructor',
         'new ReviewWorkspace({ directory, options })',
         'new ReviewWorkspace({ directory, options })',
+      ) +
+      p(
+        'To run a portable acceptance file directly, start with <a href="#/docs/portable-plans">validatePlan and verify</a>. The methods below remain available for an interactive review loop.',
+        '要直接执行可迁移的验收文件，可先看 <a href="#/docs/portable-plans">validatePlan 与 verify</a>；下列方法继续用于交互式验收流程。',
       ) +
       code(
         "import { ReviewWorkspace } from 'shiplens/review';\nimport type { Requirement, ReviewRun, EvidenceResult, SavedCase } from 'shiplens/review';\n\nconst workspace = new ReviewWorkspace({\n  directory: '.shiplens/reviews',\n  options: { url: 'http://127.0.0.1:3000', crawl: false, viewport: 'both' },\n});",
