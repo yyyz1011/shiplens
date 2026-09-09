@@ -1,0 +1,135 @@
+name: Verify and release
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  test:
+    name: Test (${{ matrix.os }}, Node ${{ matrix.node }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            node: '22'
+          - os: windows-latest
+            node: '24'
+          - os: macos-latest
+            node: '24'
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npm run browsers -- --with-deps
+      - run: npm test
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm run typecheck
+      - run: npm run browsers -- --with-deps
+      - run: npm run test:pack
+      - run: npm run build
+        env:
+          DOCS_BASE: /shiplens/
+      - name: Check production documentation
+        run: |
+          node node_modules/vite/bin/vite.js preview apps/docs --host 127.0.0.1 --port 4318 --strictPort &
+          for i in {1..30}; do curl --fail --silent http://127.0.0.1:4318/shiplens/ > /dev/null && break; sleep 1; done
+          npm run test:ui
+        env:
+          SHIPLENS_DOCS_URL: http://127.0.0.1:4318/shiplens
+          DOCS_BASE: /shiplens/
+  publish:
+    needs: [test, quality]
+    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request' && vars.NPM_TRUSTED_PUBLISHING == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      id-token: write
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm install -g npm@11.19.1
+      - id: version
+        run: node scripts/prepare-release.mjs --run
+      - name: Pack exact release
+        run: |
+          mkdir -p artifacts/release
+          npm pack --workspace shiplens --pack-destination artifacts/release
+      - name: Publish using GitHub OIDC
+        if: steps.version.outputs.publish == 'true'
+        run: npm publish "artifacts/release/shiplens-${VERSION}.tgz" --access public --provenance
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+      - name: Record release and source commit
+        run: |
+          if ! gh release view "v${VERSION}" >/dev/null 2>&1; then
+            gh release create "v${VERSION}" "artifacts/release/shiplens-${VERSION}.tgz" --target "$GITHUB_SHA" --title "ShipLens ${VERSION}" --generate-notes
+          fi
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  docs:
+    needs: [test, quality, publish]
+    if: always() && github.ref == 'refs/heads/master' && github.event_name != 'pull_request' && needs.test.result == 'success' && needs.quality.result == 'success' && (needs.publish.result == 'success' || needs.publish.result == 'skipped')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+      - run: npm run build
+        env:
+          DOCS_BASE: /shiplens/
+          DOCS_VERSION: ${{ needs.publish.outputs.version }}
+      - uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+        with:
+          path: apps/docs/dist
+      - id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

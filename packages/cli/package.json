@@ -1,0 +1,50 @@
+{
+  "name": "shiplens",
+  "version": "0.1.0",
+  "description": "Local-first website delivery checks with browser evidence and AI-ready reports.",
+  "type": "module",
+  "bin": {
+    "shiplens": "src/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js"
+    }
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "license": "MIT",
+  "keywords": [
+    "website",
+    "audit",
+    "playwright",
+    "cli",
+    "qa",
+    "ai",
+    "smoke-test"
+  ],
+  "dependencies": {
+    "playwright": "1.63.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yyyz1011/shiplens.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://yyyz1011.github.io/shiplens/",
+  "bugs": {
+    "url": "https://github.com/yyyz1011/shiplens/issues"
+  },
+  "author": "yeyezhou",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      try {
+        document.documentElement.dataset.theme =
+          localStorage.getItem('shiplens-theme') === 'dark' ? 'dark' : 'light';
+      } catch {}
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2459db" />
+    <meta
+      name="description"
+      content="Local website delivery checks with real browser evidence. Find runtime errors, broken resources and mobile layout issues."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>ShipLens — Evidence before you ship.</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div id="app"></div>
+    <dialog id="search-dialog" aria-labelledby="search-title"></dialog>
+    <div class="toast" role="status" aria-live="polite" id="toast"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

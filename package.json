@@ -1,0 +1,33 @@
+{
+  "name": "shiplens-workspace",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": [
+    "packages/cli",
+    "apps/docs"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "npm run dev --workspace @shiplens/docs",
+    "build": "npm run build --workspace @shiplens/docs",
+    "scan": "node packages/cli/src/cli.js",
+    "browsers": "node packages/cli/src/cli.js browsers",
+    "test": "node --test packages/cli/test/*.test.js",
+    "test:ui": "node scripts/check-docs.mjs",
+    "test:pack": "node scripts/check-package.mjs",
+    "check": "npm test && npm run build",
+    "pack:check": "npm pack --workspace shiplens --dry-run",
+    "demo": "node scripts/demo.mjs",
+    "typecheck": "tsc -p tsconfig.json",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@types/node": "26.5.0",
+    "prettier": "3.9.6",
+    "typescript": "7.0.2"
+  }
+}

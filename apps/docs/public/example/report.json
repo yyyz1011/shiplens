@@ -1,0 +1,303 @@
+{
+  "schemaVersion": 2,
+  "version": "0.1.0",
+  "target": "http://127.0.0.1:56128/",
+  "startedAt": "2026-09-09T02:03:31.014Z",
+  "options": {
+    "maxPages": 4,
+    "timeout": 15000,
+    "settle": 250,
+    "viewport": "both",
+    "exclude": [
+      "/excluded"
+    ],
+    "pages": [],
+    "crawl": true,
+    "scroll": true,
+    "scrollSteps": 6,
+    "waitFor": "",
+    "allowRequests": [],
+    "ignoreRules": [],
+    "mask": [],
+    "authProfile": "anonymous",
+    "targetProfile": "0585e96c001c31cd"
+  },
+  "pages": [
+    {
+      "url": "http://127.0.0.1:56128/",
+      "discoveredFrom": "explicit",
+      "checks": [
+        {
+          "viewport": "desktop",
+          "status": "complete",
+          "screenshot": "screenshots/1-desktop.png",
+          "blockedRequests": 0,
+          "scrollTruncated": false,
+          "notes": [],
+          "httpStatus": 200,
+          "finalUrl": "http://127.0.0.1:56128/",
+          "screenshotMode": "full-page"
+        },
+        {
+          "viewport": "mobile",
+          "status": "complete",
+          "screenshot": "screenshots/1-mobile.png",
+          "blockedRequests": 0,
+          "scrollTruncated": false,
+          "notes": [],
+          "httpStatus": 200,
+          "finalUrl": "http://127.0.0.1:56128/",
+          "screenshotMode": "full-page"
+        }
+      ],
+      "title": "旅途手记 · 测试网站"
+    },
+    {
+      "url": "http://127.0.0.1:56128/healthy",
+      "discoveredFrom": "same-origin link",
+      "checks": [
+        {
+          "viewport": "desktop",
+          "status": "complete",
+          "screenshot": "screenshots/2-desktop.png",
+          "blockedRequests": 0,
+          "scrollTruncated": false,
+          "notes": [],
+          "httpStatus": 200,
+          "finalUrl": "http://127.0.0.1:56128/healthy",
+          "screenshotMode": "full-page"
+        },
+        {
+          "viewport": "mobile",
+          "status": "complete",
+          "screenshot": "screenshots/2-mobile.png",
+          "blockedRequests": 0,
+          "scrollTruncated": false,
+          "notes": [],
+          "httpStatus": 200,
+          "finalUrl": "http://127.0.0.1:56128/healthy",
+          "screenshotMode": "full-page"
+        }
+      ],
+      "title": "Healthy"
+    },
+    {
+      "url": "http://127.0.0.1:56128/missing",
+      "discoveredFrom": "same-origin link",
+      "checks": [
+        {
+          "viewport": "desktop",
+          "status": "complete",
+          "screenshot": "screenshots/3-desktop.png",
+          "blockedRequests": 0,
+          "scrollTruncated": false,
+          "notes": [],
+          "httpStatus": 404,
+          "finalUrl": "http://127.0.0.1:56128/missing",
+          "screenshotMode": "full-page"
+        },
+        {
+          "viewport": "mobile",
+          "status": "complete",
+          "screenshot": "screenshots/3-mobile.png",
+          "blockedRequests": 0,
+          "scrollTruncated": false,
+          "notes": [],
+          "httpStatus": 404,
+          "finalUrl": "http://127.0.0.1:56128/missing",
+          "screenshotMode": "full-page"
+        }
+      ],
+      "title": ""
+    },
+    {
+      "url": "http://127.0.0.1:56128/empty",
+      "discoveredFrom": "same-origin link",
+      "checks": [
+        {
+          "viewport": "desktop",
+          "status": "complete",
+          "screenshot": "screenshots/4-desktop.png",
+          "blockedRequests": 0,
+          "scrollTruncated": false,
+          "notes": [],
+          "httpStatus": 200,
+          "finalUrl": "http://127.0.0.1:56128/empty",
+          "screenshotMode": "full-page"
+        },
+        {
+          "viewport": "mobile",
+          "status": "complete",
+          "screenshot": "screenshots/4-mobile.png",
+          "blockedRequests": 0,
+          "scrollTruncated": false,
+          "notes": [],
+          "httpStatus": 200,
+          "finalUrl": "http://127.0.0.1:56128/empty",
+          "screenshotMode": "full-page"
+        }
+      ],
+      "title": "Empty fixture"
+    }
+  ],
+  "findings": [
+    {
+      "code": "http-error",
+      "severity": "error",
+      "title": "HTTP request failed",
+      "detail": "500 · fetch · http://127.0.0.1:56128/api/error",
+      "subject": "http://127.0.0.1:56128/api/error",
+      "url": "http://127.0.0.1:56128/",
+      "viewport": "desktop",
+      "screenshot": "screenshots/1-desktop.png",
+      "statusCode": 500,
+      "fingerprint": "d457a4f08f02a432"
+    },
+    {
+      "code": "runtime-error",
+      "severity": "error",
+      "title": "Unhandled page error",
+      "detail": "Fixture: itinerary data is undefined",
+      "subject": "Fixture: itinerary data is undefined",
+      "url": "http://127.0.0.1:56128/",
+      "viewport": "desktop",
+      "screenshot": "screenshots/1-desktop.png",
+      "fingerprint": "819c4e8f249e1cd3"
+    },
+    {
+      "code": "broken-image",
+      "severity": "error",
+      "title": "Image could not be displayed",
+      "detail": "body > main > img · http://127.0.0.1:56128/missing.jpg · HTTP 404",
+      "subject": "http://127.0.0.1:56128/missing.jpg",
+      "url": "http://127.0.0.1:56128/",
+      "viewport": "desktop",
+      "screenshot": "screenshots/1-desktop.png",
+      "selector": "body > main > img",
+      "fingerprint": "7649290c69691cf7",
+      "elementScreenshot": "screenshots/1-desktop-element-1.png"
+    },
+    {
+      "code": "http-error",
+      "severity": "error",
+      "title": "HTTP request failed",
+      "detail": "500 · fetch · http://127.0.0.1:56128/api/error",
+      "subject": "http://127.0.0.1:56128/api/error",
+      "url": "http://127.0.0.1:56128/",
+      "viewport": "mobile",
+      "screenshot": "screenshots/1-mobile.png",
+      "statusCode": 500,
+      "fingerprint": "0c26fead47954c44"
+    },
+    {
+      "code": "runtime-error",
+      "severity": "error",
+      "title": "Unhandled page error",
+      "detail": "Fixture: itinerary data is undefined",
+      "subject": "Fixture: itinerary data is undefined",
+      "url": "http://127.0.0.1:56128/",
+      "viewport": "mobile",
+      "screenshot": "screenshots/1-mobile.png",
+      "fingerprint": "7864b13680ddf260"
+    },
+    {
+      "code": "broken-image",
+      "severity": "error",
+      "title": "Image could not be displayed",
+      "detail": "body > main > img · http://127.0.0.1:56128/missing.jpg · HTTP 404",
+      "subject": "http://127.0.0.1:56128/missing.jpg",
+      "url": "http://127.0.0.1:56128/",
+      "viewport": "mobile",
+      "screenshot": "screenshots/1-mobile.png",
+      "selector": "body > main > img",
+      "fingerprint": "bd1fd0d5e9e5dae0",
+      "elementScreenshot": "screenshots/1-mobile-element-1.png"
+    },
+    {
+      "code": "horizontal-overflow",
+      "severity": "warning",
+      "title": "Suspected horizontal overflow",
+      "detail": "390px viewport. Suspected elements: body > main > div:nth-of-type(2) (right 724px), body > main > div:nth-of-type(2) > p (right 698px). Confirm whether this layout is intentional.",
+      "subject": "document",
+      "url": "http://127.0.0.1:56128/",
+      "viewport": "mobile",
+      "screenshot": "screenshots/1-mobile.png",
+      "elements": [
+        {
+          "selector": "body > main > div:nth-of-type(2)",
+          "right": 724,
+          "width": 700
+        },
+        {
+          "selector": "body > main > div:nth-of-type(2) > p",
+          "right": 698,
+          "width": 648
+        }
+      ],
+      "selector": "body > main > div:nth-of-type(2)",
+      "fingerprint": "bfc5aab4ba4304f7",
+      "elementScreenshot": "screenshots/1-mobile-element-2.png"
+    },
+    {
+      "code": "http-error",
+      "severity": "error",
+      "title": "HTTP request failed",
+      "detail": "404 · document · http://127.0.0.1:56128/missing",
+      "subject": "http://127.0.0.1:56128/missing",
+      "url": "http://127.0.0.1:56128/missing",
+      "viewport": "desktop",
+      "screenshot": "screenshots/3-desktop.png",
+      "statusCode": 404,
+      "fingerprint": "65097bf73db02e10"
+    },
+    {
+      "code": "http-error",
+      "severity": "error",
+      "title": "HTTP request failed",
+      "detail": "404 · document · http://127.0.0.1:56128/missing",
+      "subject": "http://127.0.0.1:56128/missing",
+      "url": "http://127.0.0.1:56128/missing",
+      "viewport": "mobile",
+      "screenshot": "screenshots/3-mobile.png",
+      "statusCode": 404,
+      "fingerprint": "a432ab9f50bae4a9"
+    },
+    {
+      "code": "page-empty",
+      "severity": "warning",
+      "title": "Page appears empty",
+      "detail": "No visible text, media or controls after the configured readiness wait. Confirm manually or set --wait-for.",
+      "subject": "document",
+      "url": "http://127.0.0.1:56128/empty",
+      "viewport": "desktop",
+      "screenshot": "screenshots/4-desktop.png",
+      "fingerprint": "a3a0ab6e99ff54f8"
+    },
+    {
+      "code": "page-empty",
+      "severity": "warning",
+      "title": "Page appears empty",
+      "detail": "No visible text, media or controls after the configured readiness wait. Confirm manually or set --wait-for.",
+      "subject": "document",
+      "url": "http://127.0.0.1:56128/empty",
+      "viewport": "mobile",
+      "screenshot": "screenshots/4-mobile.png",
+      "fingerprint": "eba318fb5fcc5bbf"
+    }
+  ],
+  "skipped": [],
+  "truncated": false,
+  "remainingPages": 0,
+  "durationMs": 5117,
+  "completedAt": "2026-09-09T02:03:36.131Z",
+  "summary": {
+    "pages": 4,
+    "checks": 8,
+    "errors": 8,
+    "warnings": 3,
+    "incomplete": 0,
+    "groups": 6,
+    "scrollLimited": 0
+  },
+  "lang": "en"
+}
