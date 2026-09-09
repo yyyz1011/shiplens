@@ -1,6 +1,6 @@
 {
   "name": "shiplens",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Local-first website delivery checks with browser evidence and AI-ready reports.",
   "type": "module",
   "bin": {
@@ -15,7 +15,8 @@
   "files": [
     "src",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "examples"
   ],
   "engines": {
     "node": ">=22.12.0"

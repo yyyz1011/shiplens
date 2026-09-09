@@ -4,6 +4,8 @@ import { mkdtemp, rm, mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { tmpdir } from 'node:os';
 import assert from 'node:assert/strict';
+import http from 'node:http';
+import { demoHandler } from '../packages/cli/examples/server.mjs';
 import { startFixture } from '../packages/cli/test/fixture.js';
 const exec = promisify(execFile);
 const temp = await mkdtemp(path.join(tmpdir(), 'shiplens-package-'));
@@ -15,7 +17,10 @@ try {
   )[0];
   assert.ok(
     packed.files.every(
-      (f) => f.path.startsWith('src/') || ['README.md', 'LICENSE', 'package.json'].includes(f.path),
+      (f) =>
+        f.path.startsWith('src/') ||
+        f.path.startsWith('examples/') ||
+        ['README.md', 'LICENSE', 'package.json'].includes(f.path),
     ),
   );
   const installed = path.join(temp, 'consumer');
@@ -57,6 +62,34 @@ try {
     ],
     { cwd: installed },
   );
+  const demo = http.createServer(demoHandler);
+  await new Promise((resolve) => demo.listen(0, '127.0.0.1', resolve));
+  try {
+    const exampleResult = await exec(process.execPath, ['node_modules/shiplens/examples/api.mjs'], {
+      cwd: installed,
+      env: {
+        ...process.env,
+        SHIPLENS_EXAMPLE_URL: `http://127.0.0.1:${demo.address().port}`,
+        SHIPLENS_EXAMPLE_OUTPUT: path.join(temp, 'example-reports'),
+      },
+    });
+    assert.match(exampleResult.stdout, /comparable: true/);
+    const config = JSON.parse(
+      await (
+        await import('node:fs/promises')
+      ).readFile(path.join(installed, 'node_modules/shiplens/examples/flows.json'), 'utf8'),
+    );
+    config.url = `http://127.0.0.1:${demo.address().port}`;
+    config.settle = 0;
+    config.output = path.join(temp, 'flow-reports');
+    await writeFile(path.join(installed, 'flows.json'), JSON.stringify(config));
+    const run = await exec(binary, ['--config', 'flows.json', '--json'], { cwd: installed });
+    const flows = JSON.parse(run.stdout);
+    assert.equal(flows.summary.checks, 4);
+    assert.equal(flows.summary.incomplete, 0);
+  } finally {
+    await new Promise((resolve) => demo.close(resolve));
+  }
   await mkdir('artifacts/package', { recursive: true });
   await writeFile(
     'artifacts/package/results.json',
@@ -71,13 +104,15 @@ try {
         independentInstall: true,
         cliScan: true,
         esmImport: true,
+        executableApiExample: true,
+        bundledFlowExample: true,
       },
       null,
       2,
     ),
   );
   console.log(
-    `Packed ${packed.name}@${packed.version}: ${packed.files.length} files. Independent install, CLI scan and ESM import passed.`,
+    `Packed ${packed.name}@${packed.version}: ${packed.files.length} files. Independent install, CLI scan, all API exports and bundled interaction examples passed.`,
   );
 } finally {
   await fixture.close();

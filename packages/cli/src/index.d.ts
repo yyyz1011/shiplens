@@ -1,3 +1,32 @@
+export type InteractionStep = { selector: string; timeout?: number } & (
+  | { action: 'click' }
+  | { action: 'fill' | 'select' | 'expectText'; value: string }
+  | { action: 'press'; key: string }
+  | { action: 'waitFor'; state?: 'visible' | 'hidden' }
+);
+export interface InteractionFlow {
+  name: string;
+  page: string;
+  steps: InteractionStep[];
+}
+export interface IgnoreEntry {
+  rule: string;
+  reason: string;
+  page?: string;
+  viewport?: 'desktop' | 'mobile';
+  selector?: string;
+  messageIncludes?: string;
+  fingerprint?: string;
+  expires?: string;
+}
+export interface StepResult {
+  index: number;
+  action: InteractionStep['action'];
+  selector: string;
+  status: 'passed' | 'failed' | 'skipped';
+  screenshot: string | null;
+  detail?: string;
+}
 export interface ScanOptions {
   url: string;
   pages?: string[];
@@ -13,11 +42,13 @@ export interface ScanOptions {
   allowRequests?: Array<{ method: 'POST' | 'PUT' | 'PATCH' | 'DELETE'; path: string }>;
   mask?: string[];
   ignoreRules?: string[];
+  flows?: InteractionFlow[];
+  ignore?: IgnoreEntry[];
   output?: string;
   exclude?: string[];
   baseline?: string;
   lang?: 'en' | 'zh';
-  onProgress?: (event: { url: string; viewport: string; page: number }) => void;
+  onProgress?: (event: { url: string; viewport: string; page: number; flow?: string }) => void;
 }
 export interface Finding {
   code: string;
@@ -32,8 +63,16 @@ export interface Finding {
   selector?: string;
   statusCode?: number;
   fingerprint: string;
+  flow?: string;
+  step?: number;
+  elements?: Array<{ selector: string; right: number; width: number }>;
+}
+export interface SuppressedFinding extends Finding {
+  suppression: { index: number; reason: string; expires?: string };
 }
 export interface PageCheck {
+  flow?: string;
+  steps?: StepResult[];
   viewport: string;
   status: 'complete' | 'incomplete';
   screenshot: string | null;
@@ -62,9 +101,12 @@ export interface Report {
     incomplete: number;
     groups: number;
     scrollLimited: number;
+    suppressed: number;
   };
   pages: Array<{ url: string; title?: string; discoveredFrom: string; checks: PageCheck[] }>;
   findings: Finding[];
+  suppressed: SuppressedFinding[];
+  ignoreWarnings: string[];
   skipped: Array<{ url: string; viewport: string; reason: string }>;
   truncated: boolean;
   remainingPages: number;

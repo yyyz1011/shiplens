@@ -1,0 +1,23 @@
+{
+  "url": "http://127.0.0.1:3000",
+  "crawl": false,
+  "scroll": false,
+  "viewport": "both",
+  "flows": [
+    {
+      "name": "search-and-details",
+      "page": "/",
+      "steps": [
+        { "action": "fill", "selector": "#query", "value": "Kyoto" },
+        { "action": "select", "selector": "#category", "value": "guides" },
+        { "action": "press", "selector": "#query", "key": "Enter" },
+        { "action": "waitFor", "selector": "#result" },
+        { "action": "expectText", "selector": "#result", "value": "Kyoto / guides" },
+        { "action": "click", "selector": "#details" },
+        { "action": "expectText", "selector": "#details-panel", "value": "itinerary" },
+        { "action": "click", "selector": "#details" },
+        { "action": "waitFor", "selector": "#details-panel", "state": "hidden" }
+      ]
+    }
+  ]
+}

@@ -30,7 +30,7 @@ const help = `
   --ignore-rule <rule>            Suppress a non-operational rule (repeatable)
   --exclude </prefix>             Exclude path/hash-route prefixes (repeatable)
   --output <dir>                  Report parent directory, default .shiplens
-  --config <file>                 Explicit JSON configuration
+  --config <file>                 Explicit JSON configuration (also flows and ignore)
   --baseline <report.json>        Compare against a previous run with coverage checks
   --fail-on <error|warning|none>   Exit threshold, default error
   --lang <en|zh>                  Report language, default en
@@ -38,7 +38,7 @@ const help = `
   --help / --version              Show help/version
 
   Exit: 0 within threshold · 1 findings/incomplete checks · 2 configuration/runtime failure
-  No automatic clicks or form submissions. Configure data endpoints explicitly.
+  Interactions run only through explicit flows in JSON configuration.
 `;
 async function main() {
   const { values: v, positionals } = parseArgs({
@@ -105,6 +105,8 @@ async function main() {
           exclude: ['/logout'],
           allowRequests: [],
           mask: [],
+          flows: [],
+          ignore: [],
           output: '.shiplens',
         },
         null,
@@ -135,6 +137,8 @@ async function main() {
     'allowRequests',
     'mask',
     'ignoreRules',
+    'flows',
+    'ignore',
     'output',
     'exclude',
     'baseline',
@@ -180,8 +184,10 @@ async function main() {
     throw new Error('fail-on must be error, warning or none.');
   if (!v.json) {
     console.error(`\n  ◉ ShipLens ${VERSION}\n`);
-    options.onProgress = ({ url, viewport, page }) =>
-      console.error(`  ${String(page).padStart(2, '0')} ${viewport.padEnd(7)} ${url}`);
+    options.onProgress = ({ url, viewport, page, flow }) =>
+      console.error(
+        `  ${String(page).padStart(2, '0')} ${viewport.padEnd(7)} ${url}${flow ? ` · ${flow}` : ''}`,
+      );
   }
   const r = await scan(options);
   if (v.json) console.log(JSON.stringify(r, null, 2));

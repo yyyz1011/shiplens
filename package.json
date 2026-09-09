@@ -23,7 +23,8 @@
     "demo": "node scripts/demo.mjs",
     "typecheck": "tsc -p tsconfig.json",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "demo:interactions": "node scripts/demo-interactions.mjs"
   },
   "devDependencies": {
     "@types/node": "26.5.0",
