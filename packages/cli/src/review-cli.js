@@ -92,6 +92,7 @@ const methods = {
   runs: 'listRuns',
   evidence: 'readEvidence',
   packet: 'reviewPacket',
+  audit: 'auditChecks',
   assess: 'assess',
   save: 'saveCase',
   recheck: 'recheck',
@@ -127,7 +128,7 @@ export async function reviewCli(args) {
     console.log(
       'shiplens review <' +
         Object.keys(methods).join('|') +
-        '> --config <file> [--plan <portable case JSON>] [--input <JSON file>] [--run <id>] [--case <id>] [--previous <runId>] [--format html|json|markdown] [--lang en|zh] [--fail-on error|warning] [--timeout-ms 120000]\nAll commands write JSON to stdout. plan validates without browser execution; verify reads --plan and optional named values from --input. verify/gate exit 1 while requirements or machine checks remain unresolved; command errors exit 2.',
+        '> --config <file> [--plan <portable case JSON>] [--input <JSON file>] [--run <id>] [--case <id>] [--previous <runId>] [--format html|json|markdown] [--lang en|zh] [--fail-on error|warning] [--timeout-ms 120000]\nAll commands write JSON to stdout. plan validates without browser execution; verify reads --plan and optional named values from --input. verify/gate exit 1 while requirements or machine checks remain unresolved; command errors exit 2. audit is advisory and exits 0 when completed, including survivors; inspect pageSummary and follow nextOffset.',
     );
     return;
   }
@@ -142,7 +143,7 @@ export async function reviewCli(args) {
     'timeout-ms': ['collect', 'recheck', 'verify'],
     previous: ['compare', 'recheck', 'report'],
     case: ['case', 'update', 'export', 'recheck'],
-    run: ['run', 'evidence', 'packet', 'assess', 'save', 'compare', 'report', 'gate'],
+    run: ['run', 'evidence', 'packet', 'audit', 'assess', 'save', 'compare', 'report', 'gate'],
   }))
     if (values[flag] !== undefined && !commands.includes(command))
       throw new Error(`--${flag} is not supported by this review command.`);
