@@ -1,3 +1,11 @@
+import {
+  makePlanLock,
+  validatePlanLock,
+  inspectPlanLock,
+  lockPolicy,
+  planLockBlocked,
+  fingerprint,
+} from './plan-lock.js';
 import { prepareDelivery, executeDelivery } from './delivery.js';
 import { auditInputSchema, auditRun } from './check-audit.js';
 import { mkdir, readFile, writeFile, readdir, realpath, stat, rm, rename } from 'node:fs/promises';
@@ -50,13 +58,15 @@ export class ReviewWorkspace {
   #options;
   #profile;
   #active = null;
-  constructor({ directory, options }) {
+  #acceptanceLock = null;
+  constructor({ directory, options, acceptanceLock }) {
     nonempty(directory, 4096, 'directory');
     this.#directory = path.resolve(directory);
     const { onProgress: ignoredProgress, ...ownedOptions } = validateOptions(options);
     this.#options = structuredClone(ownedOptions);
     const { output, baseline, onProgress, captureDom, ...profile } = this.#options;
     this.#profile = digest(canonical(profile));
+    if (acceptanceLock !== undefined) this.#acceptanceLock = validatePlanLock(acceptanceLock);
   }
   async #init() {
     await mkdir(this.#directory, { recursive: true, mode: 0o700 });
@@ -191,6 +201,7 @@ export class ReviewWorkspace {
     return { flows, requiredInputs };
   }
   async collect({ requirements, flows = [] }, runtime = {}) {
+    this.#requireUnlockedExecution();
     return this.#mutate(() =>
       this.#execute({ requirements, flows: [...this.#options.flows, ...flows] }, runtime),
     );
@@ -241,6 +252,7 @@ export class ReviewWorkspace {
     }
   }
   async verifyDelivery({ contract, inputs = {} }, runtime = {}) {
+    this.#requireUnlockedExecution();
     const prepared = prepareDelivery(contract, inputs, this.#options);
     return this.#mutate(() =>
       this.#withRuntime(
@@ -304,7 +316,7 @@ export class ReviewWorkspace {
     this.#active?.controller.abort(new Error('Review cancelled. No completed run was created.'));
     return { requested: running };
   }
-  async #collect({ requirements, flows, previousRunId, caseId, planSource }, runtime) {
+  async #collect({ requirements, flows, previousRunId, caseId, planSource, planLock }, runtime) {
     const validated = validateOptions({ ...this.#options, flows });
     const criteria = this.#requirements(requirements, validated);
     const options = validateOptions({
@@ -389,6 +401,7 @@ export class ReviewWorkspace {
       ...(previousRunId ? { previousRunId } : {}),
       ...(caseId ? { caseId } : {}),
       ...(planSource ? { planSource } : {}),
+      ...(planLock ? { planLock } : {}),
     };
     runtime.signal.throwIfAborted();
     this.#active.newRunId = runId;
@@ -432,6 +445,7 @@ export class ReviewWorkspace {
       previousRunId: manifest.previousRunId,
       caseId: manifest.caseId,
       ...(manifest.planSource ? { planSource: manifest.planSource } : {}),
+      ...(manifest.planLock ? { planLock: manifest.planLock } : {}),
       requirements,
       evidence: manifest.evidence.filter((entry) => entry.criterionIds.length),
       otherEvidenceCount: manifest.evidence.filter((entry) => !entry.criterionIds.length).length,
@@ -714,6 +728,7 @@ export class ReviewWorkspace {
     }));
   }
   async recheck({ caseId, inputs = {}, previousRunId }, runtime = {}) {
+    this.#requireUnlockedExecution();
     return this.#mutate(async () => {
       const saved = await this.#read(`cases/${id(caseId)}.json`);
       if (saved.profile !== this.#profile)
@@ -892,6 +907,26 @@ export class ReviewWorkspace {
       flows: validated.flows.map((f, i) => ({ ...f, steps: portable.flows[i].steps })),
     };
   }
+  #requireUnlockedExecution() {
+    if (this.#acceptanceLock)
+      throw new Error(
+        'This workspace locks a portable acceptance plan. Use verify; collect, recheck and delivery cannot bypass the lock.',
+      );
+  }
+  createPlanLock({ data, failOn = 'error' }) {
+    if (this.#acceptanceLock)
+      throw new Error(
+        'Create a reviewed replacement lock from a separate unlocked host; agent tools cannot replace this lock.',
+      );
+    const { portable } = this.#bindPlan(data);
+    return makePlanLock(portable, lockPolicy(this.#options, failOn));
+  }
+  checkPlanLock({ data, failOn = this.#acceptanceLock?.policy.failOn ?? 'error' }) {
+    if (!this.#acceptanceLock) throw new Error('No acceptanceLock is configured by this host.');
+    const result = inspectPlanLock(this.#acceptanceLock, data, lockPolicy(this.#options, failOn));
+    if (result.passed) this.#bindPlan(data);
+    return result;
+  }
   validatePlan({ data }) {
     const bound = this.#bindPlan(data);
     return this.#planInfo(bound);
@@ -928,7 +963,13 @@ export class ReviewWorkspace {
     });
   }
   async verify(
-    { data, inputs = {}, failOn = 'error', format = 'html', lang = 'en' },
+    {
+      data,
+      inputs = {},
+      failOn = this.#acceptanceLock?.policy.failOn ?? 'error',
+      format = 'html',
+      lang = 'en',
+    },
     runtime = {},
   ) {
     if (
@@ -937,6 +978,15 @@ export class ReviewWorkspace {
       !['en', 'zh'].includes(lang)
     )
       throw new Error('Use error/warning threshold, html/json/markdown format and en/zh lang.');
+    const inspection = this.#acceptanceLock ? this.checkPlanLock({ data, failOn }) : null;
+    if (inspection && !inspection.passed) throw planLockBlocked(inspection);
+    const planLock = inspection
+      ? {
+          sha256: inspection.lockSha256,
+          definitionSha256: inspection.definitionSha256,
+          policySha256: inspection.policySha256,
+        }
+      : null;
     const bound = this.#bindPlan(data),
       plan = this.#planInfo(bound);
     const flows = this.#resolveInputs(bound, inputs);
@@ -946,6 +996,7 @@ export class ReviewWorkspace {
           requirements: bound.requirements,
           flows,
           planSource: { name: plan.name, sha256: plan.sha256 },
+          ...(planLock ? { planLock } : {}),
         },
         runtime,
       );
@@ -1058,9 +1109,40 @@ export class ReviewWorkspace {
       note: 'Image/text changes are signals, not semantic verdicts. Resolved/regressed reflect fresh caller assessments under matching execution and evidence scope.',
     };
   }
-  async gate({ runId, failOn = 'error' }) {
+  async gate({ runId, failOn = this.#acceptanceLock?.policy.failOn ?? 'error' }) {
     const run = await this.getRun(runId);
     const result = acceptanceGate(run, { failOn });
+    if (this.#acceptanceLock) {
+      const manifest = await this.#manifest(runId);
+      const inspection = this.checkPlanLock({ data: this.#acceptanceLock.plan, failOn });
+      const actual = manifest.planLock;
+      let matchingRequirements = false;
+      try {
+        matchingRequirements =
+          fingerprint(
+            [...manifest.requirements].sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0)),
+          ) ===
+          fingerprint(
+            this.#bindPlan(this.#acceptanceLock.plan).requirements.sort((a, b) =>
+              a.id < b.id ? -1 : a.id > b.id ? 1 : 0,
+            ),
+          );
+      } catch {}
+      if (
+        !inspection.passed ||
+        !actual ||
+        actual.sha256 !== this.#acceptanceLock.sha256 ||
+        actual.definitionSha256 !== inspection.definitionSha256 ||
+        actual.policySha256 !== inspection.policySha256 ||
+        manifest.profile !== this.#profile ||
+        !matchingRequirements
+      )
+        result.reasons.push('acceptance-lock-mismatch');
+      result.planLock = {
+        sha256: this.#acceptanceLock.sha256,
+        matched: !result.reasons.includes('acceptance-lock-mismatch'),
+      };
+    }
     // Revalidate cited artifacts: a past pass cannot hide deleted or damaged evidence.
     for (const requirement of run.requirements.filter((r) => r.status === 'pass')) {
       for (const evidenceId of requirement.assessment?.evidenceIds ||
@@ -1094,7 +1176,7 @@ export class ReviewWorkspace {
     format = 'html',
     includeImages = true,
     lang = 'en',
-    failOn = 'error',
+    failOn = this.#acceptanceLock?.policy.failOn ?? 'error',
   }) {
     if (
       !['html', 'json', 'markdown'].includes(format) ||

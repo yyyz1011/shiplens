@@ -1,0 +1,293 @@
+{
+  "config": {
+    "argv": [
+      "<node>",
+      "<repository>/node_modules/playwright/cli.js",
+      "test",
+      "--config",
+      "<benchmark-workspace>/unfixed/playwright.config.mjs"
+    ],
+    "configFile": "<benchmark-workspace>/unfixed/playwright.config.mjs",
+    "rootDir": "<benchmark-workspace>/unfixed",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "<repository>/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "<benchmark-workspace>/unfixed",
+        "testIgnore": [],
+        "testMatch": [
+          "native.spec.mjs"
+        ],
+        "timeout": 5000
+      },
+      {
+        "outputDir": "<repository>/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile",
+        "name": "mobile",
+        "testDir": "<benchmark-workspace>/unfixed",
+        "testIgnore": [],
+        "testMatch": [
+          "native.spec.mjs"
+        ],
+        "timeout": 5000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "native.spec.mjs",
+      "file": "native.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "title",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 5000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 73,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-09T19:46:29.477Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be0bbe6c09e2880a49e1-075c6ab61fb21273ad83",
+          "file": "native.spec.mjs",
+          "line": 3,
+          "column": 35
+        },
+        {
+          "title": "price",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 5000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1059,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#price')\nExpected: \u001b[32m\"¥\u001b[7m12\u001b[27m9\"\u001b[39m\nReceived: \u001b[31m\"¥\u001b[7m99\u001b[27m9\"\u001b[39m\nTimeout:  1000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('#price') with timeout 1000ms\u001b[22m\n\u001b[2m  - waiting for locator('#price')\u001b[22m\n\u001b[2m    11 × locator resolved to <p id=\"price\">…</p>\u001b[22m\n\u001b[2m       - unexpected value \"¥999\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#price')\nExpected: \u001b[32m\"¥\u001b[7m12\u001b[27m9\"\u001b[39m\nReceived: \u001b[31m\"¥\u001b[7m99\u001b[27m9\"\u001b[39m\nTimeout:  1000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('#price') with timeout 1000ms\u001b[22m\n\u001b[2m  - waiting for locator('#price')\u001b[22m\n\u001b[2m    11 × locator resolved to <p id=\"price\">…</p>\u001b[22m\n\u001b[2m       - unexpected value \"¥999\"\u001b[22m\n\n    at <benchmark-workspace>/unfixed/native.spec.mjs:3:318",
+                    "location": {
+                      "file": "<benchmark-workspace>/unfixed/native.spec.mjs",
+                      "column": 318,
+                      "line": 3
+                    },
+                    "snippet": "  1 | import { test, expect } from 'playwright/test';\n  2 | const data={\"schemaVersion\":1,\"kind\":\"shiplens-case\",\"name\":\"Approved order summary\",\"tags\":[\"checkout\"],\"requirements\":[{\"id\":\"title\",\"description\":\"Order summary is visible\",\"page\":\"/\",\"selector\":\"h1\",\"checks\":[{\"operator\":\"equals\",\"value\":\"Order summary\"}],\"evaluation\":\"checks\"},{\"id\":\"price\",\"description\":\"The total must be ¥129\",\"page\":\"/\",\"selector\":\"#price\",\"checks\":[{\"operator\":\"equals\",\"value\":\"¥129\"}],\"evaluation\":\"checks\"}],\"flows\":[]};\n> 3 | for(const r of data.requirements) test(r.id,async({page},info)=>{test.skip(r.viewports && !r.viewports.includes(info.project.name),'Viewport not in current requirement');await page.goto(\"http://127.0.0.1:57069\"+r.page);for(const check of r.checks){if(check.operator==='equals') await expect(page.locator(r.selector)).toHaveText(check.value,{useInnerText:true,timeout:1000});else await expect(page.locator(r.selector)).toContainText(check.value,{useInnerText:true,timeout:1000});}});\n    |                                                                                                                                                                                                                                                                                                                              ^\n  4 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "<benchmark-workspace>/unfixed/native.spec.mjs",
+                        "column": 318,
+                        "line": 3
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#price')\nExpected: \u001b[32m\"¥\u001b[7m12\u001b[27m9\"\u001b[39m\nReceived: \u001b[31m\"¥\u001b[7m99\u001b[27m9\"\u001b[39m\nTimeout:  1000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('#price') with timeout 1000ms\u001b[22m\n\u001b[2m  - waiting for locator('#price')\u001b[22m\n\u001b[2m    11 × locator resolved to <p id=\"price\">…</p>\u001b[22m\n\u001b[2m       - unexpected value \"¥999\"\u001b[22m\n\n\n  1 | import { test, expect } from 'playwright/test';\n  2 | const data={\"schemaVersion\":1,\"kind\":\"shiplens-case\",\"name\":\"Approved order summary\",\"tags\":[\"checkout\"],\"requirements\":[{\"id\":\"title\",\"description\":\"Order summary is visible\",\"page\":\"/\",\"selector\":\"h1\",\"checks\":[{\"operator\":\"equals\",\"value\":\"Order summary\"}],\"evaluation\":\"checks\"},{\"id\":\"price\",\"description\":\"The total must be ¥129\",\"page\":\"/\",\"selector\":\"#price\",\"checks\":[{\"operator\":\"equals\",\"value\":\"¥129\"}],\"evaluation\":\"checks\"}],\"flows\":[]};\n> 3 | for(const r of data.requirements) test(r.id,async({page},info)=>{test.skip(r.viewports && !r.viewports.includes(info.project.name),'Viewport not in current requirement');await page.goto(\"http://127.0.0.1:57069\"+r.page);for(const check of r.checks){if(check.operator==='equals') await expect(page.locator(r.selector)).toHaveText(check.value,{useInnerText:true,timeout:1000});else await expect(page.locator(r.selector)).toContainText(check.value,{useInnerText:true,timeout:1000});}});\n    |                                                                                                                                                                                                                                                                                                                              ^\n  4 |\n    at <benchmark-workspace>/unfixed/native.spec.mjs:3:318"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-09T19:46:29.663Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "<repository>/test-results/native-price-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "<benchmark-workspace>/unfixed/native.spec.mjs",
+                    "column": 318,
+                    "line": 3
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "be0bbe6c09e2880a49e1-71aaa95d2eab14c64fe9",
+          "file": "native.spec.mjs",
+          "line": 3,
+          "column": 35
+        },
+        {
+          "title": "title",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 5000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 70,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-09T19:46:30.956Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be0bbe6c09e2880a49e1-42e2254e2596cd9b7dce",
+          "file": "native.spec.mjs",
+          "line": 3,
+          "column": 35
+        },
+        {
+          "title": "price",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 5000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1046,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#price')\nExpected: \u001b[32m\"¥\u001b[7m12\u001b[27m9\"\u001b[39m\nReceived: \u001b[31m\"¥\u001b[7m99\u001b[27m9\"\u001b[39m\nTimeout:  1000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('#price') with timeout 1000ms\u001b[22m\n\u001b[2m  - waiting for locator('#price')\u001b[22m\n\u001b[2m    11 × locator resolved to <p id=\"price\">…</p>\u001b[22m\n\u001b[2m       - unexpected value \"¥999\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#price')\nExpected: \u001b[32m\"¥\u001b[7m12\u001b[27m9\"\u001b[39m\nReceived: \u001b[31m\"¥\u001b[7m99\u001b[27m9\"\u001b[39m\nTimeout:  1000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('#price') with timeout 1000ms\u001b[22m\n\u001b[2m  - waiting for locator('#price')\u001b[22m\n\u001b[2m    11 × locator resolved to <p id=\"price\">…</p>\u001b[22m\n\u001b[2m       - unexpected value \"¥999\"\u001b[22m\n\n    at <benchmark-workspace>/unfixed/native.spec.mjs:3:318",
+                    "location": {
+                      "file": "<benchmark-workspace>/unfixed/native.spec.mjs",
+                      "column": 318,
+                      "line": 3
+                    },
+                    "snippet": "  1 | import { test, expect } from 'playwright/test';\n  2 | const data={\"schemaVersion\":1,\"kind\":\"shiplens-case\",\"name\":\"Approved order summary\",\"tags\":[\"checkout\"],\"requirements\":[{\"id\":\"title\",\"description\":\"Order summary is visible\",\"page\":\"/\",\"selector\":\"h1\",\"checks\":[{\"operator\":\"equals\",\"value\":\"Order summary\"}],\"evaluation\":\"checks\"},{\"id\":\"price\",\"description\":\"The total must be ¥129\",\"page\":\"/\",\"selector\":\"#price\",\"checks\":[{\"operator\":\"equals\",\"value\":\"¥129\"}],\"evaluation\":\"checks\"}],\"flows\":[]};\n> 3 | for(const r of data.requirements) test(r.id,async({page},info)=>{test.skip(r.viewports && !r.viewports.includes(info.project.name),'Viewport not in current requirement');await page.goto(\"http://127.0.0.1:57069\"+r.page);for(const check of r.checks){if(check.operator==='equals') await expect(page.locator(r.selector)).toHaveText(check.value,{useInnerText:true,timeout:1000});else await expect(page.locator(r.selector)).toContainText(check.value,{useInnerText:true,timeout:1000});}});\n    |                                                                                                                                                                                                                                                                                                                              ^\n  4 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "<benchmark-workspace>/unfixed/native.spec.mjs",
+                        "column": 318,
+                        "line": 3
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#price')\nExpected: \u001b[32m\"¥\u001b[7m12\u001b[27m9\"\u001b[39m\nReceived: \u001b[31m\"¥\u001b[7m99\u001b[27m9\"\u001b[39m\nTimeout:  1000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('#price') with timeout 1000ms\u001b[22m\n\u001b[2m  - waiting for locator('#price')\u001b[22m\n\u001b[2m    11 × locator resolved to <p id=\"price\">…</p>\u001b[22m\n\u001b[2m       - unexpected value \"¥999\"\u001b[22m\n\n\n  1 | import { test, expect } from 'playwright/test';\n  2 | const data={\"schemaVersion\":1,\"kind\":\"shiplens-case\",\"name\":\"Approved order summary\",\"tags\":[\"checkout\"],\"requirements\":[{\"id\":\"title\",\"description\":\"Order summary is visible\",\"page\":\"/\",\"selector\":\"h1\",\"checks\":[{\"operator\":\"equals\",\"value\":\"Order summary\"}],\"evaluation\":\"checks\"},{\"id\":\"price\",\"description\":\"The total must be ¥129\",\"page\":\"/\",\"selector\":\"#price\",\"checks\":[{\"operator\":\"equals\",\"value\":\"¥129\"}],\"evaluation\":\"checks\"}],\"flows\":[]};\n> 3 | for(const r of data.requirements) test(r.id,async({page},info)=>{test.skip(r.viewports && !r.viewports.includes(info.project.name),'Viewport not in current requirement');await page.goto(\"http://127.0.0.1:57069\"+r.page);for(const check of r.checks){if(check.operator==='equals') await expect(page.locator(r.selector)).toHaveText(check.value,{useInnerText:true,timeout:1000});else await expect(page.locator(r.selector)).toContainText(check.value,{useInnerText:true,timeout:1000});}});\n    |                                                                                                                                                                                                                                                                                                                              ^\n  4 |\n    at <benchmark-workspace>/unfixed/native.spec.mjs:3:318"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-09T19:46:31.132Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "<repository>/test-results/native-price-mobile/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "<benchmark-workspace>/unfixed/native.spec.mjs",
+                    "column": 318,
+                    "line": 3
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "be0bbe6c09e2880a49e1-8f27b0395c19ef37f08f",
+          "file": "native.spec.mjs",
+          "line": 3,
+          "column": 35
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-09T19:46:29.269Z",
+    "duration": 2940.864,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

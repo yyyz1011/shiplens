@@ -27,11 +27,12 @@
     "demo:interactions": "node scripts/demo-interactions.mjs",
     "demo:review": "node scripts/demo-review.mjs",
     "benchmark:workflow": "node benchmarks/workflow/run.mjs",
-    "benchmark:verify": "node benchmarks/workflow/verify.mjs && node benchmarks/checked-review/verify.mjs && node benchmarks/check-audit/verify.mjs && node benchmarks/delivery-proof/verify.mjs",
+    "benchmark:verify": "node benchmarks/workflow/verify.mjs && node benchmarks/checked-review/verify.mjs && node benchmarks/check-audit/verify.mjs && node benchmarks/delivery-proof/verify.mjs && node benchmarks/plan-lock/verify.mjs",
     "benchmark:checked": "node benchmarks/checked-review/run.mjs",
     "test:plan-docs": "node scripts/verify-docs-plan.mjs",
     "benchmark:audit": "node benchmarks/check-audit/run.mjs",
-    "benchmark:delivery": "node benchmarks/delivery-proof/run.mjs"
+    "benchmark:delivery": "node benchmarks/delivery-proof/run.mjs",
+    "benchmark:lock": "node benchmarks/plan-lock/run.mjs"
   },
   "devDependencies": {
     "@modelcontextprotocol/client": "2.0.0",

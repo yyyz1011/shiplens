@@ -45,6 +45,7 @@ try {
           '/#/docs/portable-plans',
           '/#/docs/check-audit',
           '/#/docs/delivery-proof',
+          '/#/docs/acceptance-lock',
           '/#/docs/mcp',
           '/#/docs/review-api',
           '/#/docs/scoped-review',
@@ -60,6 +61,12 @@ try {
           await page.locator('h1').waitFor();
           await page.evaluate(() => document.fonts.ready);
           assert.ok(await page.locator('h1').innerText());
+          if (route === '/#/docs/acceptance-lock') {
+            assert.equal(await page.locator('a[href*="native-result.json"]').count(), 9);
+            assert.ok((await page.locator('.doc-body').innerText()).includes('SHA-256'));
+            assert.ok(!(await page.locator('.doc-body').innerText()).includes('undefined'));
+          }
+
           const bounds = await page.evaluate(() => ({
             content: document.documentElement.scrollWidth,
             width: innerWidth,
@@ -119,6 +126,7 @@ try {
       'portable-plans',
       'check-audit',
       'delivery-proof',
+      'acceptance-lock',
     ]) {
       await page.goto(base + '/#/docs/' + section);
       reviewText += '\n' + (await page.locator('.reading-article').innerText());
@@ -171,7 +179,7 @@ try {
       assert.ok(!(await page.locator('#docs-drawer').isVisible()));
       await page.locator('.docs-menu-trigger').click();
       await page.locator('#docs-drawer a[href="#/"]').click();
-      await page.locator('.reading-home .home-comparison').waitFor();
+      await page.locator('.reading-home .home-evidence').waitFor();
       assert.ok(!(await page.locator('#docs-drawer').isVisible()));
     }
     await page.goto(base + '/#/docs/cli?section=exit-codes');

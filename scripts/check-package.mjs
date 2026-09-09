@@ -6,6 +6,7 @@ import { tmpdir } from 'node:os';
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import { createDeliveryDemo } from '../packages/cli/examples/delivery-server.mjs';
+import { startPlanLockDemo } from '../packages/cli/examples/plan-lock-server.mjs';
 import { demoHandler } from '../packages/cli/examples/server.mjs';
 import { startFixture } from '../packages/cli/test/fixture.js';
 const exec = promisify(execFile);
@@ -63,6 +64,26 @@ try {
     ],
     { cwd: installed },
   );
+  const lockDemo = await startPlanLockDemo();
+  try {
+    const result = JSON.parse(
+      (
+        await exec(process.execPath, ['node_modules/shiplens/examples/plan-lock.mjs'], {
+          cwd: installed,
+          env: {
+            ...process.env,
+            SHIPLENS_EXAMPLE_URL: lockDemo.url,
+            SHIPLENS_EXAMPLE_OUTPUT: path.join(temp, 'lock-example'),
+          },
+        })
+      ).stdout,
+    );
+    assert.equal(result.originalPassed, false);
+    assert.equal(result.changedBlocked, true);
+    assert.equal(result.inspection.changes[0].criterionId, 'price');
+  } finally {
+    await lockDemo.close();
+  }
   const demo = http.createServer(demoHandler);
   await new Promise((resolve) => demo.listen(0, '127.0.0.1', resolve));
   try {
@@ -228,7 +249,7 @@ try {
         }),
       );
       const tools = (await client.listTools()).tools;
-      assert.equal(tools.length, 24);
+      assert.equal(tools.length, 25);
       assert.equal(
         tools.find((t) => t.name === 'shiplens_verify_delivery').annotations.destructiveHint,
         true,

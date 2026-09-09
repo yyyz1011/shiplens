@@ -1,0 +1,24 @@
+{
+  "blockedBeforeBrowser": true,
+  "requests": 0,
+  "inspection": {
+    "kind": "shiplens-plan-lock-check",
+    "passed": false,
+    "status": "changed",
+    "lockSha256": "bcae10201122e679460d31c338b141e7ad6b3bc25210dcd5c7bfdf4b65c43a9a",
+    "definitionSha256": "4f16947b2de6b44e56c4d72152f711c37658d1488f1d815b38ba49ec12bb17b5",
+    "policySha256": "0295744954d85405ad8beb26f5e8b2e8df3cfb7a21d92e705b1a38b75033d230",
+    "changes": [
+      {
+        "kind": "policy-changed",
+        "field": "viewport",
+        "before": "\"both\"",
+        "after": "\"desktop\""
+      }
+    ],
+    "totalChanges": 1,
+    "changesTruncated": false,
+    "note": "Checks contract identity, not whether changes are weaker or legitimate. All definition/policy changes need review. Names, tags, object-key order and requirement order may change. No browser execution or website verdict."
+  },
+  "gate": null
+}
