@@ -87,8 +87,8 @@ const report = await workspace.exportReport({
         ],
       ]) +
       p(
-        'recheck({ caseId, inputs?, previousRunId? }) defaults to the saved source run. Supply a later run from the same case to compare the next repair; mismatched cases, requirements or host profiles reject. Imported cases have no source baseline. All rechecks start pending. MCP equivalents: shiplens_compare_runs and shiplens_recheck.',
-        'recheck({ caseId, inputs?, previousRunId? }) 默认使用保存时的来源轮次。可传入同一案例的后续轮次来验证下一次修复；不同案例、验收定义或宿主配置会拒绝。导入的案例没有来源基线，所有复查仍从 pending 开始。对应 MCP：shiplens_compare_runs、shiplens_recheck。',
+        'recheck({ caseId, inputs?, previousRunId? }) defaults to the saved source run. Supply a later run from the same case to compare the next repair; mismatched cases, requirements or host profiles reject. Imported cases have no source baseline. Manual judgments start pending; configured checks re-evaluate new evidence. MCP equivalents: shiplens_compare_runs and shiplens_recheck.',
+        'recheck({ caseId, inputs?, previousRunId? }) 默认使用保存时的来源轮次。可传入同一案例的后续轮次来验证下一次修复；不同案例、验收定义或宿主配置会拒绝。导入的案例没有来源基线，manual 判断从 pending 开始，配置的断言重新检查新证据。对应 MCP：shiplens_compare_runs、shiplens_recheck。',
       ),
   );
 }

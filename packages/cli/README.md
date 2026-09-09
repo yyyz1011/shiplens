@@ -14,7 +14,7 @@ Your existing assistant supplies the reasoning; ShipLens supplies repeatable evi
 shiplens mcp --config /absolute/project/shiplens.config.json
 ```
 
-Seventeen tools support the review lifecycle. The core tools collect requirement-scoped evidence, read PNG images and bounded DOM, record cited pass/fail/needs-evidence assessments, retrieve history, save cases and recheck. A pass requires complete evidence for every requested device. Rechecks start pending; prior passes are never silently reused. Machine diagnostics remain separate from AI judgments.
+Eighteen tools support the review lifecycle. The core tools collect requirement-scoped evidence, read PNG images and bounded DOM, record cited pass/fail/needs-evidence assessments, retrieve history, save cases and recheck. A pass requires complete evidence for every requested device. Manual judgments start pending on recheck; configured checks re-evaluate fresh evidence. Prior passes are never silently reused. Machine diagnostics remain separate from AI judgments.
 
 For your own agent, import `ReviewWorkspace` from `shiplens/review`. The six core methods are demonstrated in `node node_modules/shiplens/examples/review.mjs` after starting the bundled demo server. Saved cases parameterize fill inputs; use test data and masks for any values echoed into page content or logs. Your AI client receives requested evidence; ShipLens makes no model calls or report uploads.
 

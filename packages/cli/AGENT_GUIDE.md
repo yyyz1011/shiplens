@@ -14,7 +14,7 @@ Install `shiplens` in the project and run `npx shiplens browsers`. Create a JSON
 4. Call `shiplens_assess` with `pass`, `fail` or `needs-evidence`, a reason and evidence IDs from the same run and requirement scope. Pass requires complete, non-truncated evidence for every requested viewport. Semantic correctness remains your responsibility; citations prove provenance, not reasoning. A passed UI requirement does not erase console/network findings.
 5. For missing states, collect a narrower requirement with new explicit steps. This creates a fresh run. Never use absence of machine findings or an old pass as proof of current business correctness.
 6. Save a case with `shiplens_save_case` after all requirements are pass/fail. Confirmed failures can be saved for regression reproduction. Cases store explicit supplied steps; they do not automatically record your separate browser session. Fill values become `input_1`, `input_2`, etc. Supply these via `shiplens_recheck({caseId, inputs})`.
-7. Inspect and assess the new run. All judgments start pending; `previousRunId` points to the source run. Machine baseline comparability includes scope, options and auth state. It is separate from AI acceptance.
+7. Inspect and assess the new run. All manual judgments start pending; `previousRunId` points to the source run. Machine baseline comparability includes scope, options and auth state. It is separate from AI acceptance.
 
 `shiplens_get_run` retrieves current statuses and append-only assessment history. The `review_website` MCP prompt also describes this loop. The six core operations are methods of `ReviewWorkspace` from `shiplens/review`; `getRun` takes a string run ID.
 

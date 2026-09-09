@@ -51,8 +51,8 @@ export function aiWorkflowDocs() {
       table([
         [
           '1 · collect',
-          'Declare exact requirements and optional steps. Every requirement starts pending.',
-          '声明精确验收项及可选步骤，每个验收项从 pending 开始。',
+          'Declare exact requirements and optional steps. Manual judgments start pending; configured checks evaluate fresh evidence.',
+          '声明精确验收项及可选步骤，manual 判断从 pending 开始，配置的断言使用新证据计算。',
         ],
         [
           '2 · readEvidence',
@@ -111,8 +111,8 @@ export function mcpDocs() {
     group: t('AI review', 'AI 验收'),
     title: t('MCP setup & tools', 'MCP 配置与工具'),
     description: t(
-      'Seventeen project-scoped tools for your existing image-capable AI client.',
-      '十七个限定项目范围的工具，供现有支持图片的 AI 客户端调用。',
+      'Eighteen project-scoped tools for your existing image-capable AI client.',
+      '十八个限定项目范围的工具，供现有支持图片的 AI 客户端调用。',
     ),
     body:
       h('install', 'Install in the target project', '安装到目标项目') +
@@ -165,14 +165,14 @@ export function mcpDocs() {
       ) +
       p(
         'Replace both absolute paths. Use the absolute Node executable if your client does not inherit PATH. Other clients use different configuration formats; the process command and arguments are the same. Restart or reconnect the client, then confirm all 18 tools are listed. The server uses stdout only for MCP protocol messages and supports legacy and modern MCP clients.',
-        '替换两个绝对路径。客户端未继承 PATH 时，使用 Node 可执行文件的绝对路径。其他客户端可能采用不同配置格式，但启动命令与参数相同。重启或重新连接后，确认十七个工具全部出现。服务的 stdout 只用于 MCP 协议消息，支持旧版及新版 MCP 客户端。',
+        '替换两个绝对路径。客户端未继承 PATH 时，使用 Node 可执行文件的绝对路径。其他客户端可能采用不同配置格式，但启动命令与参数相同。重启或重新连接后，确认十八个工具全部出现。服务的 stdout 只用于 MCP 协议消息，支持旧版及新版 MCP 客户端。',
       ) +
       h('tools', 'Six core review tools', '六个核心验收工具') +
       table([
         [
           'shiplens_collect',
-          '{ requirements, flows? } → run with pending criteria and an evidence index.',
-          '{ requirements, flows? } → 含待判定验收项与证据索引的新一轮结果。',
+          '{ requirements, flows? } → fresh run with manual review state, optional check results and an evidence index.',
+          '{ requirements, flows? } → 新一轮结果，含人工验收状态、可选的断言结果与证据索引。',
         ],
         [
           'shiplens_get_run',
@@ -196,8 +196,8 @@ export function mcpDocs() {
         ],
         [
           'shiplens_recheck',
-          '{ caseId, inputs? } → fresh pending run with previousRunId and a machine baseline comparison.',
-          '{ caseId, inputs? } → 新的待判定结果，含 previousRunId 与机器基线对比。',
+          '{ caseId, inputs? } → fresh run with previousRunId, reevaluated checks and a machine baseline comparison.',
+          '{ caseId, inputs? } → 新一轮结果，重新计算断言，含 previousRunId 与机器基线对比。',
         ],
       ]) +
       p(
@@ -272,8 +272,8 @@ export function reviewApiDocs() {
         ],
       ]) +
       p(
-        'Returns Promise&lt;ReviewRun&gt;. Every requirement is pending; no AI judgment is performed. Invalid scope, duplicate names, missing flow steps, secret query parameters or an insufficient maxPages budget reject before scanning.',
-        '返回 Promise&lt;ReviewRun&gt;。所有验收项均为 pending，不执行 AI 判断。范围无效、名称重复、缺失流程步骤、带敏感查询参数或 maxPages 不足时，在扫描前拒绝。',
+        'Returns Promise&lt;ReviewRun&gt;. Without checks, requirements start pending. Configured checks can fail immediately or complete explicit check-only criteria; no AI judgment is performed. Invalid scope, duplicate names, missing flow steps, secret query parameters or an insufficient maxPages budget reject before scanning.',
+        '返回 Promise&lt;ReviewRun&gt;。无断言时验收项从 pending 开始。配置的断言可直接发现失败，或完成显式 check-only 验收；不执行 AI 判断。范围无效、名称重复、缺失流程步骤、带敏感查询参数或 maxPages 不足时，在扫描前拒绝。',
       ) +
       h('get-run', 'getRun(runId)', 'getRun(runId)') +
       code(
