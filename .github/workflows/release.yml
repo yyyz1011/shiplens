@@ -54,15 +54,15 @@ jobs:
       - run: npm run test:pack
       - run: npm run build
         env:
-          DOCS_BASE: /shiplens/
+          DOCS_BASE: ./
       - name: Check production documentation
         run: |
           node node_modules/vite/bin/vite.js preview apps/docs --host 127.0.0.1 --port 4318 --strictPort &
-          for i in {1..30}; do curl --fail --silent http://127.0.0.1:4318/shiplens/ > /dev/null && break; sleep 1; done
+          for i in {1..30}; do curl --fail --silent http://127.0.0.1:4318/ > /dev/null && break; sleep 1; done
           npm run test:ui
         env:
-          SHIPLENS_DOCS_URL: http://127.0.0.1:4318/shiplens
-          DOCS_BASE: /shiplens/
+          SHIPLENS_DOCS_URL: http://127.0.0.1:4318
+          DOCS_BASE: ./
   publish:
     needs: [test, quality]
     if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request' && vars.NPM_TRUSTED_PUBLISHING == 'true'
@@ -126,7 +126,7 @@ jobs:
       - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
       - run: npm run build
         env:
-          DOCS_BASE: /shiplens/
+          DOCS_BASE: ./
           DOCS_VERSION: ${{ needs.publish.outputs.version }}
       - uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
         with:
