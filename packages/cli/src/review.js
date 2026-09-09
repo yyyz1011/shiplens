@@ -1,7 +1,9 @@
 import { mkdir, readFile, writeFile, readdir, realpath, stat, rm, rename } from 'node:fs/promises';
 import path from 'node:path';
 import { randomUUID, createHash } from 'node:crypto';
-import { scan } from './scan.js';
+import { scanWithEvidence } from './scan.js';
+import { parseCase, parseTags } from './case-format.js';
+import { acceptanceGate, acceptanceMarkdown, acceptanceHtml } from './review-report.js';
 import { validateOptions, normalizeUrl, redact } from './options.js';
 
 const uuid = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/;
@@ -31,7 +33,8 @@ const matches = (requirement, evidence) =>
   requirement.page === evidence.page &&
   requirement.viewports.includes(evidence.viewport) &&
   requirement.flow === evidence.flow &&
-  requirement.step === evidence.step;
+  requirement.step === evidence.step &&
+  requirement.selector === evidence.selector;
 const json = (value) => JSON.stringify(value, null, 2) + '\n';
 const inside = (root, filename) => {
   const rel = path.relative(root, filename);
@@ -43,6 +46,7 @@ export class ReviewWorkspace {
   #directory;
   #options;
   #profile;
+  #active = null;
   constructor({ directory, options }) {
     nonempty(directory, 4096, 'directory');
     this.#directory = path.resolve(directory);
@@ -116,7 +120,8 @@ export class ReviewWorkspace {
         !r ||
         typeof r !== 'object' ||
         Object.keys(r).some(
-          (key) => !['id', 'description', 'page', 'flow', 'step', 'viewports'].includes(key),
+          (key) =>
+            !['id', 'description', 'page', 'flow', 'step', 'viewports', 'selector'].includes(key),
         )
       )
         throw new Error('Unknown requirement fields.');
@@ -124,6 +129,7 @@ export class ReviewWorkspace {
       nonempty(r.description, 2000, 'Requirement description');
       if (ids.has(r.id)) throw new Error('Requirement IDs must be unique.');
       ids.add(r.id);
+      if (r.selector !== undefined) nonempty(r.selector, 2000, 'Requirement selector');
       const page = normalizeUrl(nonempty(r.page, 4096, 'Requirement page'), options.url);
       if (redact(page) !== page)
         throw new Error('Use storageState instead of secret query parameters in review page URLs.');
@@ -149,6 +155,7 @@ export class ReviewWorkspace {
         page,
         ...(flow ? { flow: flow.name } : {}),
         ...(r.step ? { step: r.step } : {}),
+        ...(r.selector !== undefined ? { selector: r.selector } : {}),
         viewports: [...viewports],
       };
     });
@@ -167,12 +174,64 @@ export class ReviewWorkspace {
     }));
     return { flows, requiredInputs };
   }
-  async collect({ requirements, flows = [] }) {
+  async collect({ requirements, flows = [] }, runtime = {}) {
     return this.#mutate(() =>
-      this.#collect({ requirements, flows: [...this.#options.flows, ...flows] }),
+      this.#execute({ requirements, flows: [...this.#options.flows, ...flows] }, runtime),
     );
   }
-  async #collect({ requirements, flows, previousRunId, caseId }) {
+  async #execute(input, { signal, onProgress, timeoutMs = 120000 } = {}) {
+    if (!Number.isInteger(timeoutMs) || timeoutMs < 1000 || timeoutMs > 1800000)
+      throw new Error('timeoutMs must be 1000–1800000 milliseconds.');
+    if (onProgress !== undefined && typeof onProgress !== 'function')
+      throw new Error('onProgress must be a function.');
+    signal?.throwIfAborted();
+    const controller = new AbortController();
+    const abort = () =>
+      controller.abort(new Error('Review cancelled. No completed run was created.'));
+    signal?.addEventListener('abort', abort, { once: true });
+    const timer = setTimeout(
+      () =>
+        controller.abort(
+          new Error('Review time budget exceeded. Reduce scope or raise timeoutMs.'),
+        ),
+      timeoutMs,
+    );
+    this.#active = { controller, startedAt: new Date().toISOString(), progress: null };
+    try {
+      const run = await this.#collect(input, {
+        signal: controller.signal,
+        onProgress: (event) => {
+          this.#active.progress = event;
+          onProgress?.(event);
+        },
+      });
+      controller.signal.throwIfAborted();
+      return run;
+    } catch (error) {
+      if (controller.signal.aborted && this.#active.newRunId)
+        await rm(path.join(this.#directory, 'runs', this.#active.newRunId), {
+          recursive: true,
+          force: true,
+        });
+      controller.signal.throwIfAborted();
+      throw error;
+    } finally {
+      clearTimeout(timer);
+      signal?.removeEventListener('abort', abort);
+      this.#active = null;
+    }
+  }
+  getStatus() {
+    return this.#active
+      ? { running: true, startedAt: this.#active.startedAt, progress: this.#active.progress }
+      : { running: false, progress: null };
+  }
+  cancel() {
+    const running = !!this.#active;
+    this.#active?.controller.abort(new Error('Review cancelled. No completed run was created.'));
+    return { requested: running };
+  }
+  async #collect({ requirements, flows, previousRunId, caseId }, runtime) {
     const validated = validateOptions({ ...this.#options, flows });
     const criteria = this.#requirements(requirements, validated);
     const options = validateOptions({
@@ -181,13 +240,16 @@ export class ReviewWorkspace {
       captureDom: true,
       output: path.join(this.#directory, 'scans'),
       baseline: undefined,
-      onProgress: undefined,
+      onProgress: runtime.onProgress,
     });
     if (options.flows.some((f) => redact(f.page) !== f.page))
       throw new Error('Review flow URLs must not contain secret query parameters.');
     if (previousRunId)
       options.baseline = await this.#file((await this.#manifest(previousRunId)).report);
-    const report = await scan(options),
+    const report = await scanWithEvidence(options, {
+        signal: runtime.signal,
+        scopes: criteria.filter((r) => r.selector),
+      }),
       runId = randomUUID();
     const scanDirectory = path.relative(this.#directory, report.runDirectory);
     const evidence = [];
@@ -208,6 +270,7 @@ export class ReviewWorkspace {
             complete:
               check.status === 'complete' &&
               !check.scrollTruncated &&
+              (item.index || check.screenshotMode !== 'viewport') &&
               (!item.index || item.status === 'passed') &&
               !!item.screenshot &&
               !!item.observation,
@@ -216,7 +279,28 @@ export class ReviewWorkspace {
             screenshotMode: item.index ? 'viewport' : check.screenshotMode,
             notes: [...check.notes],
             status: item.status,
+            ...(item.failureKind ? { failureKind: item.failureKind } : {}),
           });
+          for (const region of item.regions || []) {
+            const regionScope = { ...scope, selector: region.selector };
+            evidence.push({
+              evidenceId: 'e_' + digest([runId, regionScope, region.criterionId]).slice(0, 24),
+              ...regionScope,
+              criterionIds: criteria
+                .filter((r) => r.id === region.criterionId && matches(r, regionScope))
+                .map((r) => r.id),
+              complete:
+                check.status === 'complete' &&
+                (!item.index || item.status === 'passed') &&
+                region.complete,
+              screenshot: region.screenshot,
+              observation: region.observation,
+              screenshotMode: 'element',
+              status: region.complete ? item.status : 'incomplete',
+              notes: [...check.notes, ...region.notes],
+              ...(item.failureKind ? { failureKind: item.failureKind } : {}),
+            });
+          }
         }
       }
     const manifest = {
@@ -232,6 +316,8 @@ export class ReviewWorkspace {
       ...(previousRunId ? { previousRunId } : {}),
       ...(caseId ? { caseId } : {}),
     };
+    runtime.signal.throwIfAborted();
+    this.#active.newRunId = runId;
     await mkdir(path.join(this.#directory, 'runs', runId), { mode: 0o700 });
     await mkdir(path.join(this.#directory, 'runs', runId, 'assessments'), { mode: 0o700 });
     await this.#write(`runs/${runId}/run.json`, manifest);
@@ -374,9 +460,10 @@ export class ReviewWorkspace {
       return this.getRun(runId);
     });
   }
-  async saveCase({ runId, name }) {
+  async saveCase({ runId, name, tags = [] }) {
     return this.#mutate(async () => {
       nonempty(name, 120, 'Case name');
+      tags = parseTags(tags);
       const run = await this.getRun(runId),
         manifest = await this.#manifest(runId);
       if (run.requirements.some((r) => !['pass', 'fail'].includes(r.status)))
@@ -390,6 +477,8 @@ export class ReviewWorkspace {
         caseId: randomUUID(),
         name,
         sourceRunId: runId,
+        tags,
+        revision: 1,
         profile: manifest.profile,
         createdAt: new Date().toISOString(),
         requirements: manifest.requirements,
@@ -400,11 +489,13 @@ export class ReviewWorkspace {
         caseId: result.caseId,
         name,
         sourceRunId: runId,
+        tags,
+        revision: 1,
         requiredInputs: result.requiredInputs,
       };
     });
   }
-  async recheck({ caseId, inputs = {} }) {
+  async recheck({ caseId, inputs = {}, previousRunId }, runtime = {}) {
     return this.#mutate(async () => {
       const saved = await this.#read(`cases/${id(caseId)}.json`);
       if (saved.profile !== this.#profile)
@@ -424,16 +515,376 @@ export class ReviewWorkspace {
           if (!step.valueFromInput) return step;
           const { valueFromInput, ...rest } = step;
           const value = inputs[valueFromInput];
-          if (typeof value !== 'string') throw new Error(`Missing string input: ${valueFromInput}`);
+          if (typeof value !== 'string' || value.length > 10000)
+            throw new Error('Missing string input or value exceeds 10000 characters.');
           return { ...rest, value };
         }),
       }));
-      return this.#collect({
-        requirements: saved.requirements,
-        flows,
-        previousRunId: saved.sourceRunId,
-        caseId,
+      if (previousRunId) {
+        const previous = await this.#manifest(previousRunId);
+        if (
+          previous.profile !== saved.profile ||
+          digest(previous.requirements) !== digest(saved.requirements) ||
+          (previous.caseId !== caseId && previousRunId !== saved.sourceRunId)
+        )
+          throw new Error(
+            'Previous run must belong to this case and the same requirements and profile.',
+          );
+      }
+      return this.#execute(
+        {
+          requirements: saved.requirements,
+          flows,
+          previousRunId: previousRunId || saved.sourceRunId,
+          caseId,
+        },
+        runtime,
+      );
+    });
+  }
+  async listCases({ query = '', tag, offset = 0, limit = 20 } = {}) {
+    return this.#list('cases', { query, tag, offset, limit });
+  }
+  async listRuns({ query = '', offset = 0, limit = 20 } = {}) {
+    return this.#list('runs', { query, offset, limit });
+  }
+  async #list(kind, { query, tag, offset, limit }) {
+    if (
+      typeof query !== 'string' ||
+      query.length > 120 ||
+      (tag !== undefined && (typeof tag !== 'string' || tag.length > 40)) ||
+      !Number.isInteger(offset) ||
+      offset < 0 ||
+      !Number.isInteger(limit) ||
+      limit < 1 ||
+      limit > 100
+    )
+      throw new Error('Invalid list query. Use a nonnegative offset and limit 1–100.');
+    await this.#init();
+    const files = (await readdir(await this.#file(kind))).filter((name) =>
+      uuid.test(kind === 'cases' ? name.replace(/\.json$/, '') : name),
+    );
+    if (files.length > 5000)
+      throw new Error('Workspace listing exceeds 5000 artifacts. Use a separate workspace.');
+    const entries = [];
+    for (const filename of files) {
+      const item = await this.#read(`${kind}/${filename}${kind === 'runs' ? '/run.json' : ''}`);
+      const entry =
+        kind === 'cases'
+          ? this.#caseInfo(item)
+          : {
+              runId: item.runId,
+              createdAt: item.createdAt,
+              caseId: item.caseId,
+              requirementCount: item.requirements.length,
+              requirementIds: item.requirements.map((r) => r.id),
+            };
+      if (
+        JSON.stringify(entry).toLowerCase().includes(query.toLowerCase()) &&
+        (!tag || entry.tags?.includes(tag))
+      )
+        entries.push(entry);
+    }
+    entries.sort(
+      (a, b) =>
+        b.createdAt.localeCompare(a.createdAt) ||
+        String(a.caseId || a.runId).localeCompare(String(b.caseId || b.runId)),
+    );
+    return {
+      items: entries.slice(offset, offset + limit),
+      total: entries.length,
+      nextOffset: offset + limit < entries.length ? offset + limit : null,
+    };
+  }
+  #caseInfo(saved) {
+    return {
+      caseId: saved.caseId,
+      name: saved.name,
+      createdAt: saved.createdAt,
+      sourceRunId: saved.sourceRunId,
+      tags: saved.tags || [],
+      revision: saved.revision || 1,
+      requirementCount: saved.requirements.length,
+      requiredInputs: saved.requiredInputs,
+    };
+  }
+  async getCase(caseId) {
+    const saved = await this.#read(`cases/${id(caseId)}.json`);
+    return { ...this.#caseInfo(saved), requirements: saved.requirements, flows: saved.flows };
+  }
+  async updateCase({ caseId, name, tags }) {
+    return this.#mutate(async () => {
+      const saved = await this.#read(`cases/${id(caseId)}.json`);
+      if (name !== undefined) saved.name = nonempty(name, 120, 'Case name');
+      if (tags !== undefined) saved.tags = parseTags(tags);
+      if (name === undefined && tags === undefined) throw new Error('Provide name or tags.');
+      saved.revision = (saved.revision || 1) + 1;
+      saved.updatedAt = new Date().toISOString();
+      await this.#write(`cases/${caseId}.json`, saved);
+      return this.#caseInfo(saved);
+    });
+  }
+  async exportCase({ caseId }) {
+    const saved = await this.#read(`cases/${id(caseId)}.json`);
+    // Export portable paths only. Host configuration, credentials, runs and assessments are never exported.
+    const relative = (page) => {
+      const u = new URL(page);
+      return u.pathname + u.search + u.hash;
+    };
+    return parseCase({
+      schemaVersion: 1,
+      kind: 'shiplens-case',
+      name: saved.name,
+      tags: saved.tags || [],
+      requirements: saved.requirements.map((r) => ({ ...r, page: relative(r.page) })),
+      flows: saved.flows.map((f) => ({ ...f, page: relative(f.page) })),
+    });
+  }
+  async importCase({ data }) {
+    return this.#mutate(async () => {
+      const portable = parseCase(data);
+      const requiredInputs = [],
+        seen = new Set();
+      const relative = (page) => {
+        if (
+          !page.startsWith('/') ||
+          page.startsWith('//') ||
+          page.includes('\\') ||
+          redact(page) !== page
+        )
+          throw new Error(
+            'Portable pages must use non-secret relative paths starting with a single /.',
+          );
+        return page;
+      };
+      const flows = portable.flows.map((f) => ({
+        ...f,
+        page: relative(f.page),
+        steps: f.steps.map((s) => {
+          if (s.action === 'fill') {
+            if (s.value !== undefined || !s.valueFromInput || seen.has(s.valueFromInput))
+              throw new Error(
+                'Every imported fill must have a unique valueFromInput and no raw value.',
+              );
+            seen.add(s.valueFromInput);
+            requiredInputs.push({ key: s.valueFromInput, flow: f.name, selector: s.selector });
+            const { valueFromInput, ...rest } = s;
+            return { ...rest, value: '' };
+          }
+          if (s.valueFromInput !== undefined) throw new Error('Only fill can use valueFromInput.');
+          return s;
+        }),
+      }));
+      const validated = validateOptions({ ...this.#options, flows });
+      const requirements = this.#requirements(
+        portable.requirements.map((r) => ({ ...r, page: relative(r.page) })),
+        validated,
+      );
+      // Validate origin, exclusions and the complete page budget now, before any execution.
+      validateOptions({
+        ...validated,
+        pages: [...validated.pages, ...requirements.map((r) => r.page)],
       });
+      const saved = {
+        schemaVersion: 1,
+        caseId: randomUUID(),
+        name: portable.name,
+        tags: portable.tags,
+        revision: 1,
+        createdAt: new Date().toISOString(),
+        profile: this.#profile,
+        requirements,
+        requiredInputs,
+        flows: validated.flows.map((f, i) => ({ ...f, steps: portable.flows[i].steps })),
+      };
+      await this.#write(`cases/${saved.caseId}.json`, saved);
+      return this.#caseInfo(saved);
+    });
+  }
+  async compareRuns({ runId, previousRunId }) {
+    const after = await this.getRun(runId),
+      before = await this.getRun(previousRunId);
+    const currentManifest = await this.#manifest(runId),
+      previousManifest = await this.#manifest(previousRunId);
+    const currentReport = await this.#report(currentManifest),
+      previousReport = await this.#report(previousManifest);
+    // Input/auth/policy changes invalidate claims of a fix even if the criterion text is identical.
+    const executionComparable =
+      currentManifest.profile === previousManifest.profile &&
+      digest(canonical(currentReport.options)) === digest(canonical(previousReport.options));
+    const criteria = [];
+    for (const requirement of after.requirements) {
+      const previous = before.requirements.find((r) => r.id === requirement.id);
+      const scope = (r) => {
+        const { status, assessment, ...definition } = r;
+        return canonical(definition);
+      };
+      const comparable =
+        !!previous && executionComparable && digest(scope(previous)) === digest(scope(requirement));
+      const pairs = [];
+      for (const viewport of requirement.viewports) {
+        const a = after.evidence.find(
+          (e) => e.criterionIds.includes(requirement.id) && e.viewport === viewport,
+        );
+        const b = before.evidence.find(
+          (e) => e.criterionIds.includes(requirement.id) && e.viewport === viewport,
+        );
+        const read = async (run, e) => {
+          if (!e) return null;
+          try {
+            return await this.readEvidence({ runId: run.runId, evidenceId: e.evidenceId });
+          } catch {
+            return null;
+          }
+        };
+        const current = await read(after, a),
+          prior = await read(before, b);
+        const complete = (p) =>
+          !!p?.evidence.complete &&
+          !!p.image &&
+          !!p.observation &&
+          !p.observation.textTruncated &&
+          !p.observation.elementsTruncated;
+        pairs.push({
+          viewport,
+          beforeEvidenceId: b?.evidenceId ?? null,
+          afterEvidenceId: a?.evidenceId ?? null,
+          comparable: comparable && complete(current) && complete(prior),
+          imageChanged:
+            current?.image && prior?.image ? current.image.data !== prior.image.data : null,
+          textChanged:
+            current?.observation && prior?.observation
+              ? current.observation.text !== prior.observation.text
+              : null,
+          beforeText: prior?.observation?.text.slice(0, 1000) ?? null,
+          afterText: current?.observation?.text.slice(0, 1000) ?? null,
+        });
+      }
+      const reviewable = comparable && pairs.every((p) => p.comparable);
+      const transition = !previous
+        ? 'added'
+        : !reviewable
+          ? 'not-comparable'
+          : ['pending', 'needs-evidence'].includes(requirement.status)
+            ? 'awaiting-review'
+            : previous.status === 'fail' && requirement.status === 'pass'
+              ? 'resolved'
+              : previous.status === 'pass' && requirement.status === 'fail'
+                ? 'regressed'
+                : requirement.status === 'fail' && previous.status === 'fail'
+                  ? 'still-failing'
+                  : requirement.status === 'pass' && previous.status === 'pass'
+                    ? 'still-passing'
+                    : 'reviewed';
+      criteria.push({
+        criterionId: requirement.id,
+        beforeStatus: previous?.status ?? null,
+        afterStatus: requirement.status,
+        comparable: reviewable,
+        transition,
+        pairs,
+      });
+    }
+    return {
+      runId,
+      previousRunId,
+      criteria,
+      removed: before.requirements
+        .filter((r) => !after.requirements.some((a) => a.id === r.id))
+        .map((r) => r.id),
+      note: 'Image/text changes are signals, not semantic verdicts. Resolved/regressed reflect fresh caller assessments under matching execution and evidence scope.',
+    };
+  }
+  async gate({ runId, failOn = 'error' }) {
+    const run = await this.getRun(runId);
+    const result = acceptanceGate(run, { failOn });
+    // Revalidate cited artifacts: a past pass cannot hide deleted or damaged evidence.
+    for (const requirement of run.requirements.filter((r) => r.status === 'pass')) {
+      for (const evidenceId of requirement.assessment.evidenceIds) {
+        try {
+          const proof = await this.readEvidence({ runId, evidenceId });
+          if (
+            !proof.image ||
+            !proof.observation ||
+            !proof.evidence.complete ||
+            proof.observation.textTruncated ||
+            proof.observation.elementsTruncated
+          )
+            throw new Error('Invalid evidence');
+        } catch {
+          if (!result.reasons.includes('unavailable-evidence'))
+            result.reasons.push('unavailable-evidence');
+        }
+      }
+    }
+    result.passed = !result.reasons.length;
+    return result;
+  }
+  async exportReport({
+    runId,
+    previousRunId,
+    format = 'html',
+    includeImages = true,
+    lang = 'en',
+    failOn = 'error',
+  }) {
+    if (
+      !['html', 'json', 'markdown'].includes(format) ||
+      typeof includeImages !== 'boolean' ||
+      !['en', 'zh'].includes(lang)
+    )
+      throw new Error('Use html/json/markdown format, boolean includeImages and en/zh lang.');
+    return this.#mutate(async () => {
+      const run = await this.getRun(runId),
+        gate = await this.gate({ runId, failOn });
+      const comparison = previousRunId ? await this.compareRuns({ runId, previousRunId }) : null;
+      const priorRun = previousRunId ? await this.getRun(previousRunId) : null;
+      const captures = [],
+        warnings = [];
+      let bytes = 0;
+      if (format === 'html')
+        for (const [captureRun, evidence] of [
+          ...run.evidence.map((e) => [run, e]),
+          ...(priorRun?.evidence.map((e) => [priorRun, e]) || []),
+        ]) {
+          try {
+            const proof = await this.readEvidence({
+              runId: captureRun.runId,
+              evidenceId: evidence.evidenceId,
+              includeImage: includeImages,
+            });
+            if (proof.image) {
+              bytes += Buffer.byteLength(proof.image.data, 'base64');
+              if (bytes > 12 * 1024 * 1024) {
+                delete proof.image;
+                warnings.push('Image budget exceeded; additional images omitted.');
+              }
+            }
+            captures.push(proof);
+          } catch {
+            captures.push({ evidence, observation: null, findings: [] });
+            warnings.push('An original evidence artifact is unavailable.');
+          }
+        }
+      const contents =
+        format === 'html'
+          ? acceptanceHtml(run, gate, captures, lang, comparison)
+          : format === 'markdown'
+            ? acceptanceMarkdown(run, gate) +
+              (comparison ? '\n## Comparison\n\n```json\n' + json(comparison) + '```\n' : '')
+            : json({ schemaVersion: 1, run, gate, comparison });
+      const extension = { html: 'html', json: 'json', markdown: 'md' }[format];
+      const parent = await this.#file(`runs/${id(runId)}`);
+      const filename = `${randomUUID()}.${extension}`;
+      await writeFile(path.join(parent, filename), contents, { flag: 'wx', mode: 0o600 });
+      return {
+        runId,
+        format,
+        file: `runs/${runId}/${filename}`,
+        bytes: Buffer.byteLength(contents),
+        gate,
+        warnings: [...new Set(warnings)],
+      };
     });
   }
 }

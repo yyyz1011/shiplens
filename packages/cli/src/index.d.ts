@@ -21,6 +21,7 @@ export interface IgnoreEntry {
 }
 export interface StepResult {
   observation?: string;
+  failureKind?: 'timeout' | 'action-or-policy';
   index: number;
   action: InteractionStep['action'];
   selector: string;
@@ -122,7 +123,7 @@ export interface Report {
     note: string;
   };
 }
-export function scan(options: ScanOptions): Promise<Report>;
+export function scan(options: ScanOptions, runtime?: { signal?: AbortSignal }): Promise<Report>;
 export function validateOptions(options: ScanOptions): ScanOptions;
 export function compareBaseline(
   findings: Finding[],

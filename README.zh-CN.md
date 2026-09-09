@@ -8,9 +8,9 @@
 
 ## AI 验收与回归案例
 
-由现有 AI 助手理解需求和判断页面；ShipLens 提供可重复的证据与验收记录。通过 `shiplens mcp --config /项目绝对路径/shiplens.config.json` 启动六个 MCP 工具，支持采集、读取图片与页面结构、引用证据判断、查询历史、保存案例和重放。
+由现有 AI 助手理解需求和判断页面；ShipLens 提供可重复的证据与验收记录。通过 `shiplens mcp --config /项目绝对路径/shiplens.config.json` 启动十七个 MCP 工具，支持采集、读取图片与页面结构、引用证据判断、查询历史、保存案例和重放。
 
-每个指定设备都要有完整证据才能提交通过；复查后的判断重新为 pending，旧结论不会自动沿用。机器诊断独立保留。自己的 Agent 可使用 `shiplens/review` 中的 `ReviewWorkspace`，包内 `examples/review.mjs` 演示全部六个方法。案例中的 fill 值转换为命名输入参数，回显内容与日志仍需测试数据及遮罩。
+每个指定设备都要有完整证据才能提交通过；复查后的判断重新为 pending，旧结论不会自动沿用。机器诊断独立保留。自己的 Agent 可使用 `shiplens/review` 中的 `ReviewWorkspace`，包内 `examples/review.mjs` 演示六个核心方法。案例中的 fill 值转换为命名输入参数，回显内容与日志仍需测试数据及遮罩。
 
 无需额外模型 API Key；AI 客户端会收到它请求的证据，ShipLens 不调用模型或上传报告。本版不自动录制浏览器会话、不自动修复选择器，也尚未测出相对直接使用模型的准确率、耗时或 Token 优势。
 
@@ -78,3 +78,18 @@ node node_modules/shiplens/examples/api.mjs
 文档站右上角可切换中英文及白天/黑夜模式，首次默认英文，后续记住选择。合并 `master` 后运行检查，再自动发布 npm 和更新文档站。详见 [发布流程](docs/RELEASE.md)。
 
 MIT 许可证。
+
+## 0.4 完整验收流程
+
+新增组件级截图与 DOM 取证、同一验收项修复前后对比、案例搜索与标签、参数化计划导入导出、HTML/JSON/Markdown 验收报告、CI 验收检查、进度与取消及总时限。保留原有 API；每次复查必须重新判断。
+
+```sh
+shiplens review --help
+shiplens doctor --config shiplens.config.json
+# 启动包内示例服务器后：
+node node_modules/shiplens/examples/workflow.mjs
+```
+
+[局部证据与对比](https://shiplens.nimokit.com/#/docs/scoped-review) · [用例库与迁移](https://shiplens.nimokit.com/#/docs/case-library) · [报告、CI 与运行控制](https://shiplens.nimokit.com/#/docs/acceptance-ops)
+
+案例可随 Git 迁移，凭据、宿主访问策略和旧判断不会导出。导入后绑定接收方配置。演示的第二轮保留 pending，因此验收 gate 阻塞；实际使用需由现有 AI 助手读取本轮证据后提交判断。
