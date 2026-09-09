@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-09-09T17:45:03.555Z",
+  "url": "http://127.0.0.1:56576/bad",
+  "scope": "selected element; bounded visible DOM; input values and masked subtrees excluded; frames and shadow DOM not traversed",
+  "text": "Stock: 0 units",
+  "textTruncated": false,
+  "elements": [],
+  "elementsTruncated": false
+}

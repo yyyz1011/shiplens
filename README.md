@@ -14,7 +14,7 @@ Your existing assistant supplies the reasoning; ShipLens supplies repeatable evi
 shiplens mcp --config /absolute/project/shiplens.config.json
 ```
 
-Twenty tools support the review lifecycle. The core tools collect requirement-scoped evidence, read PNG images and bounded DOM, record cited pass/fail/needs-evidence assessments, retrieve history, save cases and recheck. A pass requires complete evidence for every requested device. Manual judgments start pending on recheck; configured checks re-evaluate fresh evidence. Prior passes are never silently reused. Machine diagnostics remain separate from AI judgments.
+Twenty-one tools support the review lifecycle. The core tools collect requirement-scoped evidence, read PNG images and bounded DOM, record cited pass/fail/needs-evidence assessments, retrieve history, save cases and recheck. A pass requires complete evidence for every requested device. Manual judgments start pending on recheck; configured checks re-evaluate fresh evidence. Prior passes are never silently reused. Machine diagnostics remain separate from AI judgments.
 
 For your own agent, import `ReviewWorkspace` from `shiplens/review`. The six core methods are demonstrated in `node node_modules/shiplens/examples/review.mjs` after starting the bundled demo server. Saved cases parameterize fill inputs; use test data and masks for any values echoed into page content or logs. Your AI client receives requested evidence; ShipLens makes no model calls or report uploads.
 
@@ -208,3 +208,14 @@ npx shiplens review verify --config shiplens.config.json --plan acceptance.json
 API: `workspace.validatePlan({data})` and `await workspace.verify({data, inputs, format})`. MCP: `shiplens_validate_plan` and `shiplens_verify`. Manual requirements deliberately remain pending. Empty unresolved evidence does not clear machine findings. Reports include the parsed plan fingerprint and remain immutable snapshots.
 
 Try `node node_modules/shiplens/examples/verify.mjs` with the bundled example server running. The package includes `examples/acceptance.json`. [Full parameters, CLI/API examples, inputs and CI integration](https://shiplens.nimokit.com/#/docs/portable-plans).
+
+## Challenge passing checks (0.7+)
+
+An AI-authored check that only expects `¥` accepts both `¥129` and `¥999`. `auditChecks` exposes synthetic counterexamples using saved evidence, without another browser or model call. Survivors are advisory rule blind spots, not confirmed website defects. It never changes acceptance status.
+
+```sh
+npx shiplens review audit --config shiplens.config.json --run <runId> > check-audit.json
+node node_modules/shiplens/examples/audit.mjs
+```
+
+Run the example server first for the packaged example. API: `await workspace.auditChecks({runId})`; MCP: `shiplens_audit_checks`. Follow every `nextOffset` page; confirm relevance against the specification before changing rules. Supports custom labeled counterexamples, explicit byte limits and numeric probe coverage. [Full usage, response contract and reproducible comparison](https://shiplens.nimokit.com/#/docs/check-audit).

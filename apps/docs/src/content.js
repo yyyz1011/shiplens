@@ -6,6 +6,7 @@ import { aiWorkflowDocs, mcpDocs, reviewApiDocs } from './review-docs.js';
 import { scopedReviewDocs, caseLibraryDocs, acceptanceOpsDocs } from './lifecycle-docs.js';
 import { apiDocs } from './api-docs.js';
 import { checkedDocs } from './checked-docs.js';
+import { auditDocs } from './audit-docs.js';
 import { planDocs } from './plan-docs.js';
 import { benchmarkDocs } from './benchmark-docs.js';
 export function getDocs() {
@@ -24,6 +25,10 @@ export function getDocs() {
         p(
           'Use your existing AI assistant through MCP, or run deterministic browser checks from the CLI. ShipLens captures evidence and records assessments; your model supplies the judgment. No additional model API key is required.',
           '通过 MCP 使用现有 AI 助手，或从 CLI 运行确定性浏览器检查。ShipLens 采集证据、记录验收，模型负责判断，无需额外配置模型 API Key。',
+        ) +
+        p(
+          'A passing rule may still accept a wrong price. <a href="#/docs/check-audit">Challenge your acceptance checks with concrete counterexamples</a> from saved evidence before trusting the plan.',
+          '规则通过，也可能放过错误金额。在信任验收文件前，<a href="#/docs/check-audit">用保存证据中的具体反例检查规则盲区</a>。',
         ) +
         h('start', 'Choose your starting point', '选择你的起点') +
         `<div class="reading-paths">${[
@@ -452,6 +457,7 @@ export function getDocs() {
     benchmarkDocs(),
     checkedDocs(),
     planDocs(),
+    auditDocs(),
     mcpDocs(),
     reviewApiDocs(),
     scopedReviewDocs(),

@@ -111,8 +111,8 @@ export function mcpDocs() {
     group: t('AI review', 'AI 验收'),
     title: t('MCP setup & tools', 'MCP 配置与工具'),
     description: t(
-      'Twenty project-scoped tools for your existing image-capable AI client.',
-      '二十个限定项目范围的工具，供现有支持图片的 AI 客户端调用。',
+      'Twenty-one project-scoped tools for your existing image-capable AI client.',
+      '二十一个限定项目范围的工具，供现有支持图片的 AI 客户端调用。',
     ),
     body:
       h('install', 'Install in the target project', '安装到目标项目') +
@@ -164,8 +164,12 @@ export function mcpDocs() {
         ),
       ) +
       p(
-        'Replace both absolute paths. Use the absolute Node executable if your client does not inherit PATH. Other clients use different configuration formats; the process command and arguments are the same. Restart or reconnect the client, then confirm all 20 tools are listed. The server uses stdout only for MCP protocol messages and supports legacy and modern MCP clients.',
-        '替换两个绝对路径。客户端未继承 PATH 时，使用 Node 可执行文件的绝对路径。其他客户端可能采用不同配置格式，但启动命令与参数相同。重启或重新连接后，确认二十个工具全部出现。服务的 stdout 只用于 MCP 协议消息，支持旧版及新版 MCP 客户端。',
+        'Replace both absolute paths. Use the absolute Node executable if your client does not inherit PATH. Other clients use different configuration formats; the process command and arguments are the same. Restart or reconnect the client, then confirm all 21 tools are listed. The server uses stdout only for MCP protocol messages and supports legacy and modern MCP clients.',
+        '替换两个绝对路径。客户端未继承 PATH 时，使用 Node 可执行文件的绝对路径。其他客户端可能采用不同配置格式，但启动命令与参数相同。重启或重新连接后，确认二十一个工具全部出现。服务的 stdout 只用于 MCP 协议消息，支持旧版及新版 MCP 客户端。',
+      ) +
+      p(
+        'Use <a href="#/docs/check-audit">shiplens_audit_checks</a> to challenge passing text rules with offline counterexamples before trusting a plan.',
+        '信任验收文件前，可用 <a href="#/docs/check-audit">shiplens_audit_checks</a> 通过离线反例检查已经通过的文本规则。',
       ) +
       h('tools', 'Seven core review tools', '七个核心验收工具') +
       p(

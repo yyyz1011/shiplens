@@ -119,3 +119,19 @@ review.collect({
   // @ts-expect-error Checks do not accept executable scripts or regular expressions.
   requirements: [{ ...requirement, checks: [{ operator: 'regex', value: '.*' }] }],
 });
+
+review
+  .auditChecks({
+    runId: 'id',
+    criterionIds: ['heading'],
+    limit: 2,
+    counterexamples: [{ criterionId: 'heading', label: 'Wrong state', text: 'Loading…' }],
+  })
+  .then((audit) => {
+    const next: number | null = audit.nextOffset;
+    const scope: 'offline-text-counterexamples' = audit.scope;
+    const result: 'caught' | 'survived' | 'unchanged' = audit.items[0].samples[0].probes[0].result;
+    void [next, scope, result];
+  });
+// @ts-expect-error Custom counterexamples require an explanatory label.
+review.auditChecks({ runId: 'id', counterexamples: [{ criterionId: 'heading', text: 'bad' }] });

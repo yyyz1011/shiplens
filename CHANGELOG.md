@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.7.0
+
+- Challenge passing text checks with offline counterexamples from saved evidence through `auditChecks`, `review audit`, and `shiplens_audit_checks`. Report concrete surviving numeric/text variants, custom unacceptable states, baseline eligibility, per-device proof identifiers, pagination and byte limits. Audits are advisory and never modify acceptance or evidence.
+- Include a runnable packaged example and a reproducible three-fixture comparison corroborated against actual browser states and independent Playwright predicates. No AI accuracy, customer benefit or competitive speed claims.
+- Document all parameters, result semantics, limitations and the measured comparison in English and Chinese.
+
 ## 0.4.0
 
 A complete local acceptance workflow, compatible with the existing CLI, root API and core review methods.

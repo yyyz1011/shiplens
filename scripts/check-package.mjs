@@ -108,6 +108,24 @@ try {
     });
     assert.match(checks.stdout, /callerAssessments: 0/);
     assert.match(checks.stdout, /gate: true/);
+    const auditExample = JSON.parse(
+      (
+        await exec(process.execPath, ['node_modules/shiplens/examples/audit.mjs'], {
+          cwd: installed,
+          env: {
+            ...process.env,
+            SHIPLENS_EXAMPLE_URL: `http://127.0.0.1:${demo.address().port}`,
+            SHIPLENS_EXAMPLE_OUTPUT: path.join(temp, 'audit-example'),
+          },
+        })
+      ).stdout,
+    );
+    assert.equal(auditExample.items[0].status, 'audited');
+    assert.ok(
+      auditExample.items[0].samples.every(
+        (s) => s.probes.find((p) => p.kind === 'custom').result === 'survived',
+      ),
+    );
     const verified = await exec(process.execPath, ['node_modules/shiplens/examples/verify.mjs'], {
       cwd: installed,
       env: {
@@ -189,7 +207,39 @@ try {
           ],
         }),
       );
-      assert.equal((await client.listTools()).tools.length, 20);
+      const tools = (await client.listTools()).tools;
+      assert.equal(tools.length, 21);
+      assert.equal(
+        tools.find((t) => t.name === 'shiplens_audit_checks').annotations.readOnlyHint,
+        true,
+      );
+      const collected = await client.callTool({
+        name: 'shiplens_collect',
+        arguments: {
+          requirements: [
+            {
+              id: 'heading',
+              description: 'Heading includes delivery',
+              page: '/',
+              selector: 'h1',
+              evaluation: 'checks',
+              checks: [{ operator: 'contains', value: 'delivery' }],
+            },
+          ],
+        },
+      });
+      const runId = collected.structuredContent.runId;
+      const audited = await client.callTool({
+        name: 'shiplens_audit_checks',
+        arguments: { runId },
+      });
+      assert.equal(audited.isError, undefined);
+      assert.equal(audited.structuredContent.items[0].status, 'audited');
+      assert.equal(
+        audited.structuredContent.items[0].samples[0].probes.find((p) => p.kind === 'error-suffix')
+          .result,
+        'survived',
+      );
     } finally {
       await client.close();
     }

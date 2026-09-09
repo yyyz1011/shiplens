@@ -6,6 +6,7 @@ import { ReviewWorkspace } from './review.js';
 import { loadReviewConfig } from './review-cli.js';
 import { portableCaseSchema, tagsSchema } from './case-format.js';
 import { VERSION } from './version.js';
+import { auditInputSchema } from './check-audit.js';
 import { checksSchema } from './acceptance-checks.js';
 
 const text = (max) => z.string().min(1).max(max);
@@ -52,6 +53,7 @@ If a reviewed portable plan is already available, call shiplens_validate_plan th
 5. When all requirements are pass/fail, call shiplens_save_case. Cases preserve explicit steps, not an automatic recording of your browser session. Supply returned named inputs to shiplens_recheck. Input values are parameterized in cases, but echoed page/log content still needs masks and test data.
 6. After recheck, inspect new evidence and assess again. Machine baseline comparison does not prove semantic correctness. Use shiplens_compare_runs to pair prior/current evidence. Supply previousRunId to recheck against a later compatible run if desired. No provider account or extra model API key is used by ShipLens.
 For explicit visible-text requirements, add checks [{operator: equals|contains|excludes, value: expected text}]. These guardrails cannot be overridden by a caller pass. Manual review remains the default. Only use evaluation: checks when the user requirement is fully described by those text assertions; such results are freshly evaluated without caller assessments. Never relabel subjective visual acceptance as a text-only check to obtain a pass. Text is case-sensitive and whitespace-normalized, scoped to visible unmasked evidence, not iframe/shadow DOM or hidden content.
+Before trusting a passing text-only plan, use shiplens_audit_checks on its run. Inspect surviving counterexamples and numeric coverage limits, follow every nextOffset page, and ask whether each changed field matters to the user requirement. Add explicit expected checks or a narrower scope only from known requirements, then collect fresh evidence and audit again. Custom labeled counterexamples can encode known unacceptable text. Audit output is synthetic and advisory, never an assessment or live website proof. Do not optimize for zero survivors by blindly copying all observed text.
 The host configuration pins URL, masks, request policy and budgets. Tools cannot override them. Use shiplens_list_cases/list_runs to resume, export/import_case to transfer reviewed plans, export_report for handoff and gate for final status. shiplens_status/cancel control this instance. MCP scans have a 120-second total budget; API/CLI callers may configure a longer budget. Cancellation notifications are honored; abrupt process termination may leave partial scan files and a stale lock.`;
 
 export function createReviewServer(workspace) {
@@ -164,6 +166,13 @@ export function createReviewServer(workspace) {
       });
       return { ...packet, items, images };
     },
+    true,
+  );
+  tool(
+    'shiplens_audit_checks',
+    'Challenge passing text predicates with synthetic counterexamples from saved evidence. Read-only, no browser or model call. Survivors identify possible rule blind spots, not website defects. Follow nextOffset; confirm business relevance before changing checks.',
+    auditInputSchema,
+    (args) => workspace.auditChecks(args),
     true,
   );
   tool(

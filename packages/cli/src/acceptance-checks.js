@@ -29,7 +29,18 @@ export function parseChecks(checks, evaluation) {
   return parsed.data;
 }
 
-const normalize = (s) => s.replace(/\s+/g, ' ').trim();
+export const normalizeText = (s) => s.replace(/\s+/g, ' ').trim();
+export function evaluateText(checks, text) {
+  const observed = normalizeText(text);
+  return checks.map((check) => {
+    const expected = normalizeText(check.value);
+    return check.operator === 'equals'
+      ? observed === expected
+      : check.operator === 'contains'
+        ? observed.includes(expected)
+        : !observed.includes(expected);
+  });
+}
 export async function verifyChecks(requirement, evidence, read) {
   const results = [],
     evidenceIds = [];
@@ -63,15 +74,10 @@ export async function verifyChecks(requirement, evidence, read) {
         });
         continue;
       }
-      const observed = normalize(proof.observation.text);
-      for (const [checkIndex, check] of requirement.checks.entries()) {
-        const expected = normalize(check.value);
-        const passed =
-          check.operator === 'equals'
-            ? observed === expected
-            : check.operator === 'contains'
-              ? observed.includes(expected)
-              : !observed.includes(expected);
+      for (const [checkIndex, passed] of evaluateText(
+        requirement.checks,
+        proof.observation.text,
+      ).entries()) {
         results.push({
           evidenceId: entry.evidenceId,
           viewport,

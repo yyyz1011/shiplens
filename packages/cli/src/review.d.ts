@@ -126,6 +126,7 @@ export class ReviewWorkspace {
     runtime?: ReviewRuntime,
   ): Promise<ReviewRun>;
   getRun(runId: string): Promise<ReviewRun>;
+  auditChecks(input: CheckAuditInput): Promise<CheckAudit>;
   reviewPacket(input: {
     runId: string;
     offset?: number;
@@ -309,4 +310,54 @@ export interface RunComparison {
       afterText: string | null;
     }>;
   }>;
+}
+
+export interface CheckAuditInput {
+  runId: string;
+  criterionIds?: string[];
+  offset?: number;
+  limit?: number;
+  maxBytes?: number;
+  counterexamples?: Array<{ criterionId: string; label: string; text: string }>;
+}
+export interface CheckAudit {
+  schemaVersion: 1;
+  kind: 'shiplens-check-audit';
+  runId: string;
+  planSource?: { name: string; sha256: string };
+  scope: 'offline-text-counterexamples';
+  total: number;
+  offset: number;
+  nextOffset: number | null;
+  items: Array<{
+    criterionId: string;
+    description: string;
+    checks: NonNullable<Requirement['checks']>;
+    status: 'no-checks' | 'baseline-failing' | 'needs-evidence' | 'audited';
+    baselineStatus?: AssessmentStatus;
+    samples: Array<{
+      evidenceId: string;
+      viewport: 'desktop' | 'mobile';
+      sourceSha256: string;
+      observedText: string;
+      numericCandidates: number;
+      numericTested: number;
+      probes: Array<{
+        kind: 'empty' | 'loading' | 'error-suffix' | 'number-change' | 'custom';
+        label?: string;
+        text: string;
+        result: 'caught' | 'survived' | 'unchanged';
+        failedCheckIndexes: number[];
+      }>;
+    }>;
+  }>;
+  pageSummary: {
+    audited: number;
+    skipped: number;
+    caught: number;
+    survived: number;
+    unchanged: number;
+  };
+  bytes: number;
+  note: string;
 }
