@@ -2,7 +2,7 @@ import { writeFile } from 'node:fs/promises';
 import { redact } from './options.js';
 
 // Runs in the page. A bounded observation, not an accessibility audit or a full DOM dump.
-function observe(masked) {
+function observe({ masked, root }) {
   const hidden = (el) => {
     if (!el || masked.some((root) => root === el || root.contains(el))) return true;
     for (let node = el; node; node = node.parentElement) {
@@ -40,7 +40,7 @@ function observe(masked) {
     }
     return 'body' + (parts.length ? ' > ' + parts.join(' > ') : '');
   };
-  const body = document.body;
+  const body = root || document.body;
   if (!body) return { text: '', elements: [], textTruncated: false, elementsTruncated: false };
   const text = textOf(body, 8000),
     elements = [];
@@ -80,15 +80,16 @@ function observe(masked) {
   return { text: text.text, textTruncated: text.truncated, elements, elementsTruncated };
 }
 
-export async function captureObservation(page, masks, filename) {
+export async function captureObservation(page, masks, filename, root = null) {
   const handles = (await Promise.all(masks.map((locator) => locator.elementHandles()))).flat();
   try {
-    const observation = await page.evaluate(observe, handles);
+    const observation = await page.evaluate(observe, { masked: handles, root });
     const result = {
       schemaVersion: 1,
       capturedAt: new Date().toISOString(),
       url: redact(page.url()),
       scope:
+        (root ? 'selected element; ' : '') +
         'bounded visible DOM; input values and masked subtrees excluded; frames and shadow DOM not traversed',
       ...observation,
     };

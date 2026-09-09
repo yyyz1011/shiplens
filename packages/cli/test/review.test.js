@@ -236,7 +236,7 @@ test('saved cases parameterize fill values and restart safely; evidence cannot e
     }
   }));
 
-test('MCP stdio works with official legacy and modern clients, including PNG evidence and all six tools', () =>
+test('MCP stdio works with official legacy and modern clients, including PNG evidence and all 17 tools', () =>
   fixture(async ({ directory, options }) => {
     const config = path.join(directory, 'shiplens.config.json');
     await writeFile(config, JSON.stringify({ ...options, viewport: 'desktop', output: 'output' }));
@@ -253,7 +253,7 @@ test('MCP stdio works with official legacy and modern clients, including PNG evi
       try {
         await client.connect(transport);
         assert.equal(client.getProtocolEra(), mode === 'legacy' ? 'legacy' : 'modern');
-        assert.equal((await client.listTools()).tools.length, 6);
+        assert.equal((await client.listTools()).tools.length, 17);
         assert.ok(
           (await client.getPrompt({ name: 'review_website' })).messages[0].content.text.includes(
             'untrusted',
@@ -282,7 +282,24 @@ test('MCP stdio works with official legacy and modern clients, including PNG evi
         });
         const saved = (await call('save_case', { runId: run.runId, name: 'MCP details' }))
           .structuredContent;
+        assert.ok((await call('list_cases', {})).structuredContent.total >= 1);
+        assert.ok((await call('list_runs', {})).structuredContent.total >= 1);
+        assert.equal(
+          (await call('get_case', { caseId: saved.caseId })).structuredContent.caseId,
+          saved.caseId,
+        );
+        await call('update_case', { caseId: saved.caseId, tags: ['mcp'] });
+        const portable = (await call('export_case', { caseId: saved.caseId })).structuredContent;
+        await call('import_case', { data: portable });
+        assert.equal((await call('status', {})).structuredContent.running, false);
+        assert.equal((await call('cancel', {})).structuredContent.requested, false);
+        await call('gate', { runId: run.runId });
+        await call('export_report', { runId: run.runId, format: 'json' });
         const next = (await call('recheck', { caseId: saved.caseId })).structuredContent;
+        assert.ok(
+          (await call('compare_runs', { runId: next.runId, previousRunId: run.runId }))
+            .structuredContent.criteria.length,
+        );
         assert.equal(
           (await call('get_run', { runId: next.runId })).structuredContent.requirements[0].status,
           'pending',

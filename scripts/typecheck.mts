@@ -71,3 +71,26 @@ review.assess({
 review.getRun('id');
 review.saveCase({ runId: 'id', name: 'Heading' });
 review.recheck({ caseId: 'id', inputs: { input_1: 'test' } });
+
+const cancellation = new AbortController();
+scan(options, { signal: cancellation.signal });
+review.collect(
+  { requirements: [{ ...requirement, selector: 'h1' }] },
+  { signal: cancellation.signal, timeoutMs: 180000, onProgress: console.log },
+);
+review.getStatus();
+review.cancel();
+review.listCases({ tag: 'smoke', limit: 10 });
+review.listRuns();
+review.getCase('id');
+review.updateCase({ caseId: 'id', tags: ['critical'] });
+review.exportCase({ caseId: 'id' }).then((data) => review.importCase({ data }));
+review.compareRuns({ runId: 'id', previousRunId: 'id' });
+review.exportReport({ runId: 'id', previousRunId: 'id', format: 'html', lang: 'zh' });
+review.gate({ runId: 'id', failOn: 'warning' });
+// @ts-expect-error Unsupported gate thresholds must fail in consumers.
+review.gate({ runId: 'id', failOn: 'none' });
+
+review
+  .saveCase({ runId: 'id', name: 'Legacy signature' })
+  .then((saved) => review.getRun(saved.sourceRunId));

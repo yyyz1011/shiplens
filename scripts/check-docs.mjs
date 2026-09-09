@@ -42,6 +42,9 @@ try {
           '/#/docs/ai-workflow',
           '/#/docs/mcp',
           '/#/docs/review-api',
+          '/#/docs/scoped-review',
+          '/#/docs/case-library',
+          '/#/docs/acceptance-ops',
           '/#/docs/flows',
           '/#/docs/ignores',
           '/#/docs/examples',
@@ -80,7 +83,8 @@ try {
             route === '/#/docs/api' ||
             route === '/#/docs/flows' ||
             route === '/#/docs/mcp' ||
-            route === '/#/docs/review-api'
+            route === '/#/docs/review-api' ||
+            route === '/#/docs/acceptance-ops'
           )
             await page.screenshot({
               path: `${output}/${device}-${locale}-${theme}-${route === '/' ? 'home' : route.includes('quickstart') ? 'docs' : route.includes('/docs/') ? route.split('/').at(-1) : 'report'}.png`,
@@ -96,7 +100,11 @@ try {
     for (const method of Object.keys(await import('../packages/cli/src/index.js')))
       assert.ok(apiText.includes(method + '('), `Public API is undocumented: ${method}`);
     await page.goto(base + '/#/docs/review-api');
-    const reviewText = await page.locator('.reading-article').innerText();
+    let reviewText = await page.locator('.reading-article').innerText();
+    for (const section of ['scoped-review', 'case-library', 'acceptance-ops']) {
+      await page.goto(base + '/#/docs/' + section);
+      reviewText += '\n' + (await page.locator('.reading-article').innerText());
+    }
     const { ReviewWorkspace } = await import('../packages/cli/src/review.js');
     for (const method of Object.getOwnPropertyNames(ReviewWorkspace.prototype).filter(
       (name) => name !== 'constructor',
@@ -191,6 +199,24 @@ try {
       fullPage: false,
       animations: 'disabled',
     });
+    await page.goto(base + '/review-example/index.html');
+    await page.getByRole('heading', { name: 'Before and after', exact: true }).waitFor();
+    assert.ok((await page.locator('main').innerText()).includes('resolved'));
+    for (const image of await page.locator('img').all()) {
+      await image.scrollIntoViewIfNeeded();
+      await image.evaluate((img) => img.decode());
+      assert.ok(await image.evaluate((img) => img.naturalWidth > 0));
+    }
+    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
+    for (const colorScheme of ['light', 'dark']) {
+      await page.emulateMedia({ colorScheme });
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await page.screenshot({
+        path: `${output}/${device}-acceptance-${colorScheme}.png`,
+        fullPage: true,
+        animations: 'disabled',
+      });
+    }
     await context.close();
   }
   assert.deepEqual(errors, []);

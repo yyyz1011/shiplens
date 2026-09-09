@@ -14,3 +14,13 @@ Each scan creates a restricted run directory and separate contexts; authenticati
 Coverage state is part of the report, not inferred from the absence of findings. Options, target identity, authentication fingerprint, actual page/viewport coverage, final URLs and completion must match before absent findings can be called resolved. Limited scrolling or truncated crawling disables this interpretation.
 
 Flow checks use separate contexts and step-specific screenshots. Flow configuration is fingerprinted without persisting input values. Precise ignore entries filter findings only after evidence capture, preserve matched findings in `suppressed`, and include active/expired state in coverage comparability.
+
+Review lifecycle modules:
+
+- `observations.js` captures bounded DOM from a document or selected element, respecting masked ancestors and input-value exclusions.
+- `review.js` owns immutable run manifests, append-only assessments, parameterized case plans, metadata, discovery, comparisons, acceptance gates and exports. A writer lock guards mutations; runtime cancellation closes the browser and releases the lock.
+- `case-format.js` defines strict portable schemas. Only root-relative routes and named fill inputs cross workspaces. Imports receive new IDs and bind to the receiving host policy; judgments never transfer.
+- `review-report.js` renders escaped self-contained acceptance snapshots with a script-free CSP and bounded images. Comparison labels require matching execution signatures, criterion definitions, complete device evidence and caller assessments.
+- `mcp.js` exposes 17 tools; `review-cli.js` shares validated configuration and provides JSON commands, gate exit codes and setup diagnostics. The original root API remains independent.
+
+Original 0.3 runs and cases remain readable. Absent tags/revision use defaults, and absent selector retains page scope. A case plan change requires a new case; metadata edits increment a revision without changing the plan. Reports are snapshots of recorded judgments, not independent model evaluations.

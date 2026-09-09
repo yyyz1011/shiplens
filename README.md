@@ -14,13 +14,30 @@ Your existing assistant supplies the reasoning; ShipLens supplies repeatable evi
 shiplens mcp --config /absolute/project/shiplens.config.json
 ```
 
-Six tools collect requirement-scoped evidence, read PNG images and bounded DOM, record cited pass/fail/needs-evidence assessments, retrieve history, save cases and recheck. A pass requires complete evidence for every requested device. Rechecks start pending; prior passes are never silently reused. Machine diagnostics remain separate from AI judgments.
+Seventeen tools support the review lifecycle. The core tools collect requirement-scoped evidence, read PNG images and bounded DOM, record cited pass/fail/needs-evidence assessments, retrieve history, save cases and recheck. A pass requires complete evidence for every requested device. Rechecks start pending; prior passes are never silently reused. Machine diagnostics remain separate from AI judgments.
 
-For your own agent, import `ReviewWorkspace` from `shiplens/review`. All six methods are demonstrated in `node node_modules/shiplens/examples/review.mjs` after starting the bundled demo server. Saved cases parameterize fill inputs; use test data and masks for any values echoed into page content or logs. Your AI client receives requested evidence; ShipLens makes no model calls or report uploads.
+For your own agent, import `ReviewWorkspace` from `shiplens/review`. The six core methods are demonstrated in `node node_modules/shiplens/examples/review.mjs` after starting the bundled demo server. Saved cases parameterize fill inputs; use test data and masks for any values echoed into page content or logs. Your AI client receives requested evidence; ShipLens makes no model calls or report uploads.
 
 [AI workflow](https://shiplens.nimokit.com/#/docs/ai-workflow) · [MCP setup and tools](https://shiplens.nimokit.com/#/docs/mcp) · [Complete review API and runnable example](https://shiplens.nimokit.com/#/docs/review-api)
 
 This is workflow infrastructure, not an automatic visual judge or browser-session recorder. We have not measured an accuracy, latency or token advantage over using a model with generic browser tools directly.
+
+## Review workflow in 0.4
+
+- **Scoped evidence:** add `selector` to a requirement to capture a unique visible component, with the same masks and per-device citation rules.
+- **Repair comparison:** `compareRuns` pairs before/after evidence. Only matching scope, complete artifacts and new caller judgments can produce a resolved/regressed transition.
+- **Portable cases:** list/search/tag cases, inspect plans, export relative-page JSON and import it into a new host configuration. Inputs stay parameterized; no credentials or previous passes are transferred.
+- **Acceptance reports:** export HTML with before/after images, JSON or Markdown. `gate` combines recorded requirement statuses with machine checks and evidence availability.
+- **Runtime controls:** progress, cancellation, total review deadlines, historical run discovery and `shiplens doctor` setup diagnostics.
+
+```sh
+shiplens review --help
+shiplens doctor --config shiplens.config.json
+# After starting the packaged example server:
+node node_modules/shiplens/examples/workflow.mjs
+```
+
+The replay example intentionally stays pending; its gate is blocked until fresh assessments are supplied. CLI review commands also work without an MCP client. Existing root exports and the six original review methods remain compatible. Read [scoped evidence](https://shiplens.nimokit.com/#/docs/scoped-review), [case library](https://shiplens.nimokit.com/#/docs/case-library) and [reports / CI / runtime](https://shiplens.nimokit.com/#/docs/acceptance-ops) for every argument, result and runnable example.
 
 ## Quick start
 

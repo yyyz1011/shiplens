@@ -88,6 +88,18 @@ try {
     );
     assert.match(reviewExample.stdout, /status: 'pending'/);
     assert.match(reviewExample.stdout, /comparable: true/);
+    const workflow = await exec(process.execPath, ['node_modules/shiplens/examples/workflow.mjs'], {
+      cwd: installed,
+      env: {
+        ...process.env,
+        SHIPLENS_EXAMPLE_URL: `http://127.0.0.1:${demo.address().port}`,
+        SHIPLENS_EXAMPLE_OUTPUT: path.join(temp, 'workflow-example'),
+      },
+    });
+    assert.match(workflow.stdout, /gate: 'blocked'/);
+    assert.match(workflow.stdout, /transition: 'awaiting-review'/);
+    const doctor = JSON.parse((await exec(binary, ['doctor'], { cwd: installed })).stdout);
+    assert.equal(doctor.passed, true);
     const { Client } = await import('@modelcontextprotocol/client');
     const { StdioClientTransport } = await import('@modelcontextprotocol/client/stdio');
     const client = new Client({ name: 'package-check', version: '1.0.0' });
@@ -107,7 +119,7 @@ try {
           ],
         }),
       );
-      assert.equal((await client.listTools()).tools.length, 6);
+      assert.equal((await client.listTools()).tools.length, 17);
     } finally {
       await client.close();
     }

@@ -3,6 +3,7 @@ import { code, p, h, note, table } from './markup.js';
 export { escape } from './markup.js';
 import { interactionDocs, ignoreDocs, exampleDocs } from './workflow-docs.js';
 import { aiWorkflowDocs, mcpDocs, reviewApiDocs } from './review-docs.js';
+import { scopedReviewDocs, caseLibraryDocs, acceptanceOpsDocs } from './lifecycle-docs.js';
 import { apiDocs } from './api-docs.js';
 export function getDocs() {
   return [
@@ -447,6 +448,9 @@ export function getDocs() {
     aiWorkflowDocs(),
     mcpDocs(),
     reviewApiDocs(),
+    scopedReviewDocs(),
+    caseLibraryDocs(),
+    acceptanceOpsDocs(),
     apiDocs(),
     exampleDocs(),
     {

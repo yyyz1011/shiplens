@@ -20,7 +20,13 @@ import { VERSION } from './version.js';
 import { performStep } from './interactions.js';
 import { applySuppressions, isExpired } from './suppressions.js';
 
-export async function scan(input) {
+export async function scan(input, { signal } = {}) {
+  return scanWithEvidence(input, { signal });
+}
+
+// Internal capture scopes are supplied by validated review requirements.
+export async function scanWithEvidence(input, { scopes = [], signal } = {}) {
+  signal?.throwIfAborted();
   const o = validateOptions(input);
   const baseline = o.baseline ? JSON.parse(await readFile(o.baseline, 'utf8')) : null;
   if (baseline) validateBaseline(baseline);
@@ -53,6 +59,14 @@ export async function scan(input) {
     throw new Error(
       'Chromium could not start. Run "shiplens browsers" (Linux: shiplens browsers --with-deps), then retry.',
     );
+  }
+  const abort = () => {
+    void browser.close().catch(() => {});
+  };
+  signal?.addEventListener('abort', abort, { once: true });
+  if (signal?.aborted) {
+    await browser.close();
+    signal.throwIfAborted();
   }
   const r = {
     schemaVersion: 2,
@@ -106,6 +120,7 @@ export async function scan(input) {
       for (const viewport of devices) {
         const scenarios = [null, ...o.flows.filter((flow) => flow.page === url)];
         for (const [scenarioIndex, flow] of scenarios.entries()) {
+          signal?.throwIfAborted();
           o.onProgress?.({
             url: redact(url),
             viewport,
@@ -185,6 +200,60 @@ export async function scan(input) {
             } catch {
               markIncomplete('DOM evidence unavailable.');
               add('evidence-failed', 'warning', 'DOM evidence unavailable.', 'observation');
+            }
+          };
+          const captureRegions = async (result, name, step) => {
+            const targets = scopes.filter(
+              (s) =>
+                s.page === url &&
+                s.flow === flow?.name &&
+                s.step === step &&
+                s.viewports.includes(viewport),
+            );
+            if (!targets.length) return;
+            result.regions = [];
+            for (const [index, scope] of targets.entries()) {
+              signal?.throwIfAborted();
+              const region = {
+                criterionId: scope.id,
+                selector: scope.selector,
+                screenshot: null,
+                observation: null,
+                complete: false,
+                notes: [],
+              };
+              result.regions.push(region);
+              let root;
+              try {
+                if (!maskValid) throw new Error('Invalid mask');
+                const locator = page.locator(scope.selector);
+                if ((await locator.count()) !== 1)
+                  throw new Error('Scope must match exactly one element');
+                await locator.waitFor({ state: 'visible', timeout: o.timeout });
+                const box = await locator.boundingBox();
+                if (!box || box.width * box.height > 12000000 || box.height > 12000)
+                  throw new Error('Scope exceeds image budget');
+                const shotName = `screenshots/${name}-scope-${index}.png`;
+                await locator.screenshot({
+                  path: path.join(directory, shotName),
+                  mask: masks(),
+                  timeout: o.timeout,
+                  animations: 'disabled',
+                });
+                root = await locator.elementHandle();
+                if (!root) throw new Error('Scope detached');
+                const observation = `observations/${name}-scope-${index}.json`;
+                await captureObservation(page, masks(), path.join(directory, observation), root);
+                region.screenshot = shotName;
+                region.observation = observation;
+                region.complete = true;
+              } catch {
+                region.notes.push(
+                  'Region unavailable: require one visible element within the image budget and valid masks.',
+                );
+              } finally {
+                await root?.dispose().catch(() => {});
+              }
             }
           };
           const important = (req) =>
@@ -357,7 +426,9 @@ export async function scan(input) {
                     throw new Error('Interaction triggered a blocked request.');
                   check.finalUrl = redact(page.url());
                   await collect();
-                } catch {
+                } catch (error) {
+                  result.failureKind =
+                    error.name === 'TimeoutError' ? 'timeout' : 'action-or-policy';
                   result.status = 'failed';
                   result.detail =
                     'Action, expectation or observation failed; check the selector, timeout, expected state and blocked requests.';
@@ -376,7 +447,9 @@ export async function scan(input) {
                     timeout: step.timeout ?? o.timeout,
                     animations: 'disabled',
                   });
-                } catch {
+                } catch (error) {
+                  result.failureKind =
+                    error.name === 'TimeoutError' ? 'timeout' : 'action-or-policy';
                   result.status = 'failed';
                   result.screenshot = null;
                   result.detail = 'Step screenshot unavailable.';
@@ -388,6 +461,7 @@ export async function scan(input) {
                     finding.screenshot = null;
                 }
                 await observe(result, `${prefix}-step-${currentStep}`);
+                await captureRegions(result, `${prefix}-step-${currentStep}`, currentStep);
                 if (result.status === 'failed') {
                   for (let rest = index + 1; rest < flow.steps.length; rest++)
                     check.steps.push({
@@ -477,6 +551,8 @@ export async function scan(input) {
               f.screenshot = null;
           }
           await observe(check, prefix);
+          await captureRegions(check, prefix, undefined);
+          signal?.throwIfAborted();
           active = false;
           await ctx.close();
         }
@@ -511,9 +587,11 @@ export async function scan(input) {
           'Scroll coverage is partial. Absent findings cannot be treated as resolved.';
       }
     }
+    signal?.throwIfAborted();
     await writeReports({ ...r, lang: o.lang }, directory);
     return { ...r, lang: o.lang, runDirectory: directory };
   } finally {
+    signal?.removeEventListener('abort', abort);
     await browser.close();
   }
 }

@@ -15,6 +15,8 @@ const help = `
   shiplens browsers [--with-deps]  Install Chromium (and Linux dependencies)
   shiplens mcp --config <file>    Serve AI review tools over stdio
   shiplens init                   Create shiplens.config.json
+  shiplens review --help          Acceptance review, cases, reports and CI gate
+  shiplens doctor [--config file] Check local setup without printing credentials
 
   --page <path-or-url>            Add explicit same-origin pages (repeatable)
   --no-crawl                     Only inspect explicitly requested pages
@@ -42,6 +44,10 @@ const help = `
   Interactions run only through explicit flows in JSON configuration.
 `;
 async function main() {
+  if (['review', 'doctor'].includes(process.argv[2])) {
+    const { reviewCli, doctor } = await import('./review-cli.js');
+    return (process.argv[2] === 'review' ? reviewCli : doctor)(process.argv.slice(3));
+  }
   if (process.argv[2] === 'mcp') {
     const { startMcp } = await import('./mcp.js');
     return startMcp(process.argv.slice(3));

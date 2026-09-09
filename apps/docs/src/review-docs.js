@@ -103,8 +103,8 @@ export function mcpDocs() {
     group: t('AI review', 'AI 验收'),
     title: t('MCP setup & tools', 'MCP 配置与工具'),
     description: t(
-      'Six project-scoped tools for your existing image-capable AI client.',
-      '六个限定项目范围的工具，供现有支持图片的 AI 客户端调用。',
+      'Seventeen project-scoped tools for your existing image-capable AI client.',
+      '十七个限定项目范围的工具，供现有支持图片的 AI 客户端调用。',
     ),
     body:
       h('install', 'Install in the target project', '安装到目标项目') +
@@ -156,10 +156,10 @@ export function mcpDocs() {
         ),
       ) +
       p(
-        'Replace both absolute paths. Use the absolute Node executable if your client does not inherit PATH. Other clients use different configuration formats; the process command and arguments are the same. Restart or reconnect the client, then confirm all six tools are listed. The server uses stdout only for MCP protocol messages and supports legacy and modern MCP clients.',
-        '替换两个绝对路径。客户端未继承 PATH 时，使用 Node 可执行文件的绝对路径。其他客户端可能采用不同配置格式，但启动命令与参数相同。重启或重新连接后，确认六个工具全部出现。服务的 stdout 只用于 MCP 协议消息，支持旧版及新版 MCP 客户端。',
+        'Replace both absolute paths. Use the absolute Node executable if your client does not inherit PATH. Other clients use different configuration formats; the process command and arguments are the same. Restart or reconnect the client, then confirm all 17 tools are listed. The server uses stdout only for MCP protocol messages and supports legacy and modern MCP clients.',
+        '替换两个绝对路径。客户端未继承 PATH 时，使用 Node 可执行文件的绝对路径。其他客户端可能采用不同配置格式，但启动命令与参数相同。重启或重新连接后，确认十七个工具全部出现。服务的 stdout 只用于 MCP 协议消息，支持旧版及新版 MCP 客户端。',
       ) +
-      h('tools', 'All six tools', '全部六个工具') +
+      h('tools', 'Six core review tools', '六个核心验收工具') +
       table([
         [
           'shiplens_collect',
@@ -196,14 +196,18 @@ export function mcpDocs() {
         'The server also exposes the review_website prompt. The package contains AGENT_GUIDE.md. Full parameter limits, return fields and a runnable example appear in the <a href="#/docs/review-api">review API reference</a>. MCP failures return isError: true; they are never reported as a passing check.',
         '服务还提供 review_website 提示词，包内附带 AGENT_GUIDE.md。完整参数限制、返回字段及可运行示例见 <a href="#/docs/review-api">验收 API 参考</a>。MCP 调用失败返回 isError: true，不会被记为检查通过。',
       ) +
+      p(
+        'Additional tools cover <a href="#/docs/scoped-review">comparisons</a>, <a href="#/docs/case-library">case/run discovery and portable plans</a>, and <a href="#/docs/acceptance-ops">reports, gates, status and cancellation</a>.',
+        '新增工具覆盖<a href="#/docs/scoped-review">修复对比</a>、<a href="#/docs/case-library">案例与轮次查询及迁移</a>、<a href="#/docs/acceptance-ops">报告、验收检查、状态与取消</a>。',
+      ) +
       h('storage', 'Artifacts and recovery', '产物与恢复') +
       p(
         'Review state is stored in &lt;output&gt;/reviews: runs/&lt;runId&gt;/run.json, append-only assessments, cases/&lt;caseId&gt;.json and scans/ with original browser reports. Relative configuration paths resolve beside the config. Default output is .shiplens beside that file. Restarting preserves runs and cases; use stored IDs to resume. The review workflow uses its source run as the recheck baseline; config baseline and failOn do not determine AI judgments.',
         '验收状态保存在 &lt;output&gt;/reviews：runs/&lt;runId&gt;/run.json、只追加的 assessments、cases/&lt;caseId&gt;.json 及保存浏览器报告的 scans/。配置内相对路径以配置所在目录为基准，默认 output 为该目录下的 .shiplens。重启后仍保留结果与案例，可用已有 ID 恢复。复查以案例来源轮次为基线；配置的 baseline 与 failOn 不决定 AI 判断。',
       ) +
       note(
-        'One writer per workspace. Busy operations return an error; retry after completion. Following a crash, remove .lock only after that writer has stopped. A scan may exceed your client’s default timeout; configure a suitable timeout and small page/step budgets. Disconnecting does not guarantee cancellation. Use test data and masks: inputs echoed elsewhere, logs, notes and your client’s tool history may contain sensitive content.',
-        '每个工作区同一时刻仅允许一个写入操作，忙碌时返回错误，完成后再重试。进程崩溃后，确认写入进程已停止才能删除 .lock。扫描可能超过客户端默认超时，请设置合理超时与较小页面、步骤预算；断开连接不保证取消扫描。使用测试数据与遮罩：其他位置回显的输入、日志、备注和客户端工具历史可能包含敏感内容。',
+        'One writer per workspace. Busy operations return an error; retry after completion. Following a crash, remove .lock only after that writer has stopped. A scan may exceed your client’s default timeout; configure a suitable timeout and small page/step budgets. Use shiplens_cancel or client cancellation; MCP scans also have a 120-second total deadline. Use test data and masks: inputs echoed elsewhere, logs, notes and your client’s tool history may contain sensitive content.',
+        '每个工作区同一时刻仅允许一个写入操作，忙碌时返回错误，完成后再重试。进程崩溃后，确认写入进程已停止才能删除 .lock。扫描可能超过客户端默认超时，请设置合理超时与较小页面、步骤预算；可调用 shiplens_cancel 或由客户端发送取消，MCP 扫描另有 120 秒总时限。使用测试数据与遮罩：其他位置回显的输入、日志、备注和客户端工具历史可能包含敏感内容。',
       ),
   };
 }
@@ -229,8 +233,8 @@ export function reviewApiDocs() {
         'TypeScript / ESM',
       ) +
       p(
-        'directory is required and resolves from the process working directory. options uses <a href="#/docs/api?section=options">ScanOptions</a>; the constructor validates and copies it. Review collection forces captureDom: true, writes scans inside directory/scans and does not invoke onProgress. Browser installation is still required. Root imports remain scan, validateOptions and compareBaseline; the review API is a separate entry point.',
-        'directory 必填，相对路径基于进程工作目录。options 使用 <a href="#/docs/api?section=options">ScanOptions</a>，构造器校验并复制参数。验收采集强制 captureDom: true，将扫描写入 directory/scans，不调用 onProgress。仍需安装浏览器。根入口保留 scan、validateOptions、compareBaseline，验收 API 使用独立入口。',
+        'directory is required and resolves from the process working directory. options uses <a href="#/docs/api?section=options">ScanOptions</a>; the constructor validates and copies it. Review collection forces captureDom: true, writes scans inside directory/scans and uses per-call runtime.onProgress for progress. Browser installation is still required. Root imports remain scan, validateOptions and compareBaseline; the review API is a separate entry point.',
+        'directory 必填，相对路径基于进程工作目录。options 使用 <a href="#/docs/api?section=options">ScanOptions</a>，构造器校验并复制参数。验收采集强制 captureDom: true，将扫描写入 directory/scans，通过每次调用的 runtime.onProgress 提供进度。仍需安装浏览器。根入口保留 scan、validateOptions、compareBaseline，验收 API 使用独立入口。',
       ) +
       h('collect', 'collect({ requirements, flows? })', 'collect({ requirements, flows? })') +
       code(
@@ -308,16 +312,20 @@ export function reviewApiDocs() {
         "const next = await workspace.recheck({ caseId: saved.caseId });\n// For a case with fill steps, supply each saved.requiredInputs key:\n// await workspace.recheck({ caseId: saved.caseId, inputs: { input_1: 'test query' } });\nconsole.log(next.requirements.map(item => item.status)); // pending\nconst previous = await workspace.getRun(next.previousRunId);",
       ) +
       p(
-        'Returns Promise&lt;ReviewRun&gt; from a new scan. inputs is a string-to-string object; every required key must be supplied, unknown keys reject. No environment fallback. Changed host configuration rejects the case; changed inputs or imported auth state may make machine baselines non-comparable. Rechecks always compare against the saved sourceRunId, not the last replay. New assessment history is empty. All methods reject with Error for invalid IDs, missing artifacts or invalid state; mutations also reject while a workspace writer is active.',
-        '新扫描返回 Promise&lt;ReviewRun&gt;。inputs 为字符串键值对象，每个必需键都要提供，未知键会拒绝，不从环境变量兜底。宿主配置改变会拒绝案例；输入或导入登录态改变可能使机器基线不可比。复查始终对比保存时的 sourceRunId，不是上次重放。新判断历史为空。ID 无效、产物缺失或状态错误时，各方法均以 Error 拒绝；工作区有其他写入操作时，修改方法也会拒绝。',
+        'Returns Promise&lt;ReviewRun&gt; from a new scan. inputs is a string-to-string object; every required key must be supplied, unknown keys reject. No environment fallback. Changed host configuration rejects the case; changed inputs or imported auth state may make machine baselines non-comparable. Rechecks default to sourceRunId; optional previousRunId selects a later run from the same case. Imported cases have no source baseline. New assessment history is empty. All methods reject with Error for invalid IDs, missing artifacts or invalid state; mutations also reject while a workspace writer is active.',
+        '新扫描返回 Promise&lt;ReviewRun&gt;。inputs 为字符串键值对象，每个必需键都要提供，未知键会拒绝，不从环境变量兜底。宿主配置改变会拒绝案例；输入或导入登录态改变可能使机器基线不可比。复查默认对比 sourceRunId，可用 previousRunId 选择同一案例后续轮次；导入案例无来源基线。新判断历史为空。ID 无效、产物缺失或状态错误时，各方法均以 Error 拒绝；工作区有其他写入操作时，修改方法也会拒绝。',
+      ) +
+      p(
+        'See <a href="#/docs/scoped-review">scoped capture and comparison</a>, <a href="#/docs/case-library">all case-library methods</a>, and <a href="#/docs/acceptance-ops">exportReport, gate and runtime controls</a> for the 0.4 additions and complete examples.',
+        '0.4 新增 API 与完整案例见<a href="#/docs/scoped-review">局部取证与对比</a>、<a href="#/docs/case-library">用例库方法</a>及<a href="#/docs/acceptance-ops">exportReport、gate 与运行控制</a>。',
       ) +
       h('example', 'Run the complete packaged example', '运行完整的包内案例') +
       code(
         'npm install --save-dev shiplens\nnpx shiplens browsers\n# Terminal 1\nnode node_modules/shiplens/examples/server.mjs\n# Terminal 2\nnode node_modules/shiplens/examples/review.mjs',
       ) +
       p(
-        'This example exercises all six methods against the packaged demo and writes .shiplens/demo-review/demo-result.json. Its explicit string check demonstrates the API; it is not a model judgment or proof of visual quality. Replace that block with your assistant’s image-and-requirement assessment. The second run intentionally remains pending.',
-        '案例针对包内演示站执行全部六个方法，并写入 .shiplens/demo-review/demo-result.json。显式字符串检查仅演示 API，不是模型判断，也不能证明视觉质量。实际使用时应替换为助手结合截图和需求的判断。第二轮故意保留为 pending。',
+        'This example exercises the six core methods against the packaged demo and writes .shiplens/demo-review/demo-result.json. Its explicit string check demonstrates the API; it is not a model judgment or proof of visual quality. Replace that block with your assistant’s image-and-requirement assessment. The second run intentionally remains pending.',
+        '案例针对包内演示站执行六个核心方法，并写入 .shiplens/demo-review/demo-result.json。显式字符串检查仅演示 API，不是模型判断，也不能证明视觉质量。实际使用时应替换为助手结合截图和需求的判断。第二轮故意保留为 pending。',
       ) +
       code(reviewExample, 'node_modules/shiplens/examples/review.mjs'),
   };
