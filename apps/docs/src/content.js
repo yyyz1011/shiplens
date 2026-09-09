@@ -5,6 +5,7 @@ import { interactionDocs, ignoreDocs, exampleDocs } from './workflow-docs.js';
 import { aiWorkflowDocs, mcpDocs, reviewApiDocs } from './review-docs.js';
 import { scopedReviewDocs, caseLibraryDocs, acceptanceOpsDocs } from './lifecycle-docs.js';
 import { apiDocs } from './api-docs.js';
+import { checkedDocs } from './checked-docs.js';
 import { benchmarkDocs } from './benchmark-docs.js';
 export function getDocs() {
   return [
@@ -448,6 +449,7 @@ export function getDocs() {
     },
     aiWorkflowDocs(),
     benchmarkDocs(),
+    checkedDocs(),
     mcpDocs(),
     reviewApiDocs(),
     scopedReviewDocs(),

@@ -5,3 +5,5 @@ apps/docs/public/example
 package-lock.json
 apps/docs/public/review-example
 apps/docs/public/benchmark
+
+apps/docs/public/checked-review

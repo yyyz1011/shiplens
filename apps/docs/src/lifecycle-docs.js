@@ -87,8 +87,8 @@ const report = await workspace.exportReport({
         ],
       ]) +
       p(
-        'recheck({ caseId, inputs?, previousRunId? }) defaults to the saved source run. Supply a later run from the same case to compare the next repair; mismatched cases, requirements or host profiles reject. Imported cases have no source baseline. All rechecks start pending. MCP equivalents: shiplens_compare_runs and shiplens_recheck.',
-        'recheck({ caseId, inputs?, previousRunId? }) 默认使用保存时的来源轮次。可传入同一案例的后续轮次来验证下一次修复；不同案例、验收定义或宿主配置会拒绝。导入的案例没有来源基线，所有复查仍从 pending 开始。对应 MCP：shiplens_compare_runs、shiplens_recheck。',
+        'recheck({ caseId, inputs?, previousRunId? }) defaults to the saved source run. Supply a later run from the same case to compare the next repair; mismatched cases, requirements or host profiles reject. Imported cases have no source baseline. Manual judgments start pending; configured checks re-evaluate new evidence. MCP equivalents: shiplens_compare_runs and shiplens_recheck.',
+        'recheck({ caseId, inputs?, previousRunId? }) 默认使用保存时的来源轮次。可传入同一案例的后续轮次来验证下一次修复；不同案例、验收定义或宿主配置会拒绝。导入的案例没有来源基线，manual 判断从 pending 开始，配置的断言重新检查新证据。对应 MCP：shiplens_compare_runs、shiplens_recheck。',
       ),
   );
 }
@@ -311,8 +311,8 @@ const run = await promise;`) +
         'MCP 的 shiplens_status、shiplens_cancel 使用 {} 参数，采集总时限为 120 秒并响应客户端取消通知。CLI 处理 SIGINT/SIGTERM，可设置 --timeout-ms。进程被强制终止可能留下 .lock，确认写入进程已停止后才能删除。doctor 检查 Node、浏览器安装、配置、锁存在情况及提供的登录态结构，不启动浏览器，也不验证登录是否有效或网站是否可访问。',
       ) +
       p(
-        'MCP shiplens_export_report and shiplens_gate use the same argument objects as the API methods. Tool failures return isError: true; a blocked gate is a successful tool response with passed: false. All 17 tools are documented across the MCP, scoped evidence, case library and this page.',
-        'MCP shiplens_export_report 与 shiplens_gate 使用与 API 相同的参数对象。工具执行错误返回 isError: true；gate 阻塞属于正常返回，passed: false。全部 17 个工具分布在 MCP、局部证据、用例库及本页文档中。',
+        'MCP shiplens_export_report and shiplens_gate use the same argument objects as the API methods. Tool failures return isError: true; a blocked gate is a successful tool response with passed: false. All 18 tools are documented across the MCP, scoped evidence, case library and this page.',
+        'MCP shiplens_export_report 与 shiplens_gate 使用与 API 相同的参数对象。工具执行错误返回 isError: true；gate 阻塞属于正常返回，passed: false。全部 18 个工具分布在 MCP、局部证据、用例库及本页文档中。',
       ) +
       h('example', 'Run the packaged end-to-end example', '运行包内端到端案例') +
       code(

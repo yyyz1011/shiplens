@@ -98,6 +98,16 @@ try {
     });
     assert.match(workflow.stdout, /gate: 'blocked'/);
     assert.match(workflow.stdout, /transition: 'awaiting-review'/);
+    const checks = await exec(process.execPath, ['node_modules/shiplens/examples/checks.mjs'], {
+      cwd: installed,
+      env: {
+        ...process.env,
+        SHIPLENS_EXAMPLE_URL: `http://127.0.0.1:${demo.address().port}`,
+        SHIPLENS_EXAMPLE_OUTPUT: path.join(temp, 'checks-example'),
+      },
+    });
+    assert.match(checks.stdout, /callerAssessments: 0/);
+    assert.match(checks.stdout, /gate: true/);
     const doctor = JSON.parse((await exec(binary, ['doctor'], { cwd: installed })).stdout);
     assert.equal(doctor.passed, true);
     const { Client } = await import('@modelcontextprotocol/client');
@@ -119,7 +129,7 @@ try {
           ],
         }),
       );
-      assert.equal((await client.listTools()).tools.length, 17);
+      assert.equal((await client.listTools()).tools.length, 18);
     } finally {
       await client.close();
     }

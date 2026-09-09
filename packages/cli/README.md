@@ -14,7 +14,7 @@ Your existing assistant supplies the reasoning; ShipLens supplies repeatable evi
 shiplens mcp --config /absolute/project/shiplens.config.json
 ```
 
-Seventeen tools support the review lifecycle. The core tools collect requirement-scoped evidence, read PNG images and bounded DOM, record cited pass/fail/needs-evidence assessments, retrieve history, save cases and recheck. A pass requires complete evidence for every requested device. Rechecks start pending; prior passes are never silently reused. Machine diagnostics remain separate from AI judgments.
+Eighteen tools support the review lifecycle. The core tools collect requirement-scoped evidence, read PNG images and bounded DOM, record cited pass/fail/needs-evidence assessments, retrieve history, save cases and recheck. A pass requires complete evidence for every requested device. Manual judgments start pending on recheck; configured checks re-evaluate fresh evidence. Prior passes are never silently reused. Machine diagnostics remain separate from AI judgments.
 
 For your own agent, import `ReviewWorkspace` from `shiplens/review`. The six core methods are demonstrated in `node node_modules/shiplens/examples/review.mjs` after starting the bundled demo server. Saved cases parameterize fill inputs; use test data and masks for any values echoed into page content or logs. Your AI client receives requested evidence; ShipLens makes no model calls or report uploads.
 
@@ -183,3 +183,9 @@ The documentation includes English/Chinese and light/dark controls, defaults to 
 Changes merged into `master` pass checks before automatic npm publication and GitHub Pages deployment. Each new source commit gets the next patch version, unless the source package declares a higher version. Retries of an already published commit reuse its version. Releases record the source commit; registry versions are authoritative.
 
 MIT licensed.
+
+## Checked acceptance (0.5)
+
+Scoped requirements accept `checks: [{ operator: 'equals' | 'contains' | 'excludes', value: 'expected text' }]`. Comparisons normalize whitespace and preserve case over visible unmasked evidence. Failed/incomplete checks block caller passes. Manual review remains the default; opt into `evaluation: 'checks'` only when text assertions fully describe the requirement. Missing or truncated proof cannot pass. Check-only results are fresh deterministic evaluations, not AI judgments, and cannot be overwritten through assess.
+
+Use `ReviewWorkspace.reviewPacket({ runId })` or MCP `shiplens_review_packet` to batch unresolved evidence. Follow nextOffset and read omitted evidence individually. `includeImages` defaults true, `includePassed` false, limit 6 (max 10), maxBytes 2 MiB (16 KiB–8 MiB). The CLI equivalent is `shiplens review packet --config config.json --run RUN_ID`. See [parameters, return values, examples and measured results](https://shiplens.nimokit.com/#/docs/checked-review). The package contains `examples/checks.mjs`.

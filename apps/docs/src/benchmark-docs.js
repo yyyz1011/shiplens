@@ -48,6 +48,10 @@ export function benchmarkDocs() {
         'This is an author-run, synthetic, deterministic workflow benchmark. No AI model was invoked. It is not a GPT-only versus GPT + ShipLens trial, an independent evaluation or a customer-project result.',
         '这是由项目作者运行的合成场景、确定性工作流测试，没有调用 AI 模型。它不是“只用 GPT”与“GPT + ShipLens”的对照，不是独立评测，也不代表客户真实项目表现。',
       ) +
+      p(
+        'This page preserves the 0.4.0 baseline. See the <a href="#/docs/checked-review?section=measured">0.5 protocol comparison</a> for configured-check guards and batched evidence operations.',
+        '本页保留 0.4.0 基线结果。配置断言约束和批量证据的后续结果见<a href="#/docs/checked-review?section=measured">0.5 流程对照</a>。',
+      ) +
       h('results', 'Measured results', '实际测试结果') +
       p(
         `Measured engine: ShipLens ${m.shiplens}; ${m.repetitions} repetitions × ${m.fixtureCount} fixture patterns × 2 states × 2 viewports per arm. The 25 defective observations repeat five failing device/state combinations; they are not 25 unique bugs.`,

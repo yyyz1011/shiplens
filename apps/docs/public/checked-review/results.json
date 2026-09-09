@@ -1,0 +1,4352 @@
+{
+  "metadata": {
+    "id": "checked-review-v1",
+    "timestamp": "2026-09-09T16:18:09.026Z",
+    "node": "v25.9.0",
+    "cpu": "Apple M4",
+    "platform": "darwin/arm64",
+    "chromium": "153.0.8010.12",
+    "repetitions": 5,
+    "runnerSha256": "81e202127a4c78a329ea57d8092214547909c9312a747f9910b6ab482383b617",
+    "sourceBaseCommit": "84bb32488a6e372cb8952eb700cbd7c509e2a459",
+    "candidate": "0.5.0",
+    "baseline": "npm shiplens@0.4.1",
+    "model": null,
+    "disclosure": "Author-run synthetic protocol test. Five explicitly configured text requirements and one deliberately unasserted text requirement. Caller assessments are scripted, not model evaluations. API calls are SDK/MCP-operation counts, not model calls, tokens or a lower bound on calls with custom wrappers. Playwright already supports reusable assertions. Different output scopes; no overall superiority or accuracy claim. Browser startup, evidence, judgments, case save and final gate timed; package installation, exports and safety probes excluded. Sequential arms rotate order; no warmup exclusion. Engine source changes relative to sourceBaseCommit must be obtained from the release containing this runner."
+  },
+  "summary": {
+    "playwright": {
+      "trials": 5,
+      "failedTrials": 0,
+      "medianCycleMs": 2281.651249999999,
+      "minCycleMs": 2247.9922499999957,
+      "maxCycleMs": 2711.7751660000004,
+      "reviewApiCallsPerCycle": null,
+      "callerAssessmentsPerCycle": null,
+      "observations": 120,
+      "missed": 0,
+      "falseAlarms": 0,
+      "falsePassRejections": null
+    },
+    "0.4.1": {
+      "trials": 5,
+      "failedTrials": 0,
+      "medianCycleMs": 2525.834208,
+      "minCycleMs": 2400.118791000001,
+      "maxCycleMs": 2833.3987500000003,
+      "reviewApiCallsPerCycle": 40,
+      "callerAssessmentsPerCycle": 12,
+      "observations": 120,
+      "missed": 0,
+      "falseAlarms": 0,
+      "falsePassRejections": 0
+    },
+    "0.5.0": {
+      "trials": 5,
+      "failedTrials": 0,
+      "medianCycleMs": 2496.052917000001,
+      "minCycleMs": 2348.8287920000002,
+      "maxCycleMs": 2706.3664170000047,
+      "reviewApiCallsPerCycle": 8,
+      "callerAssessmentsPerCycle": 2,
+      "observations": 120,
+      "missed": 0,
+      "falseAlarms": 0,
+      "falsePassRejections": 5
+    }
+  },
+  "trials": [
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "order": [
+        "playwright",
+        "0.4.1",
+        "0.5.0"
+      ],
+      "apiCalls": {},
+      "callerAssessments": 0,
+      "phases": [
+        {
+          "phase": "before",
+          "ms": 1573.1090829999998
+        },
+        {
+          "phase": "after",
+          "ms": 1138.657166
+        }
+      ],
+      "error": null,
+      "ms": 2711.7751660000004,
+      "totalApiCalls": 0
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "order": [
+        "playwright",
+        "0.4.1",
+        "0.5.0"
+      ],
+      "apiCalls": {
+        "collect": 1,
+        "readEvidence": 24,
+        "assess": 12,
+        "saveCase": 1,
+        "recheck": 1,
+        "gate": 1
+      },
+      "callerAssessments": 12,
+      "phases": [
+        {
+          "phase": "before",
+          "ms": 1462.1153329999997
+        },
+        {
+          "phase": "after",
+          "ms": 1361.3980000000001
+        }
+      ],
+      "error": null,
+      "gatePassed": true,
+      "ms": 2833.3987500000003,
+      "falsePassRejected": false,
+      "totalApiCalls": 40
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "order": [
+        "playwright",
+        "0.4.1",
+        "0.5.0"
+      ],
+      "apiCalls": {
+        "collect": 1,
+        "reviewPacket": 2,
+        "assess": 2,
+        "saveCase": 1,
+        "recheck": 1,
+        "gate": 1
+      },
+      "callerAssessments": 2,
+      "phases": [
+        {
+          "phase": "before",
+          "ms": 1334.6025410000002
+        },
+        {
+          "phase": "after",
+          "ms": 1205.88875
+        }
+      ],
+      "error": null,
+      "gatePassed": true,
+      "ms": 2552.3346250000004,
+      "falsePassRejected": true,
+      "totalApiCalls": 8
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "order": [
+        "0.4.1",
+        "0.5.0",
+        "playwright"
+      ],
+      "apiCalls": {
+        "collect": 1,
+        "readEvidence": 24,
+        "assess": 12,
+        "saveCase": 1,
+        "recheck": 1,
+        "gate": 1
+      },
+      "callerAssessments": 12,
+      "phases": [
+        {
+          "phase": "before",
+          "ms": 1187.7846250000002
+        },
+        {
+          "phase": "after",
+          "ms": 1205.3294580000002
+        }
+      ],
+      "error": null,
+      "gatePassed": true,
+      "ms": 2400.118791000001,
+      "falsePassRejected": false,
+      "totalApiCalls": 40
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "order": [
+        "0.4.1",
+        "0.5.0",
+        "playwright"
+      ],
+      "apiCalls": {
+        "collect": 1,
+        "reviewPacket": 2,
+        "assess": 2,
+        "saveCase": 1,
+        "recheck": 1,
+        "gate": 1
+      },
+      "callerAssessments": 2,
+      "phases": [
+        {
+          "phase": "before",
+          "ms": 1283.391334
+        },
+        {
+          "phase": "after",
+          "ms": 1187.641334
+        }
+      ],
+      "error": null,
+      "gatePassed": true,
+      "ms": 2486.8457089999993,
+      "falsePassRejected": true,
+      "totalApiCalls": 8
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "order": [
+        "0.4.1",
+        "0.5.0",
+        "playwright"
+      ],
+      "apiCalls": {},
+      "callerAssessments": 0,
+      "phases": [
+        {
+          "phase": "before",
+          "ms": 1139.2018750000007
+        },
+        {
+          "phase": "after",
+          "ms": 1108.9529999999995
+        }
+      ],
+      "error": null,
+      "ms": 2248.1581250000017,
+      "totalApiCalls": 0
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "order": [
+        "0.5.0",
+        "playwright",
+        "0.4.1"
+      ],
+      "apiCalls": {
+        "collect": 1,
+        "reviewPacket": 2,
+        "assess": 2,
+        "saveCase": 1,
+        "recheck": 1,
+        "gate": 1
+      },
+      "callerAssessments": 2,
+      "phases": [
+        {
+          "phase": "before",
+          "ms": 1195.6351670000004
+        },
+        {
+          "phase": "after",
+          "ms": 1142.2146250000005
+        }
+      ],
+      "error": null,
+      "gatePassed": true,
+      "ms": 2348.8287920000002,
+      "falsePassRejected": true,
+      "totalApiCalls": 8
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "order": [
+        "0.5.0",
+        "playwright",
+        "0.4.1"
+      ],
+      "apiCalls": {},
+      "callerAssessments": 0,
+      "phases": [
+        {
+          "phase": "before",
+          "ms": 1113.2623749999984
+        },
+        {
+          "phase": "after",
+          "ms": 1190.8937920000026
+        }
+      ],
+      "error": null,
+      "ms": 2304.162625000001,
+      "totalApiCalls": 0
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "order": [
+        "0.5.0",
+        "playwright",
+        "0.4.1"
+      ],
+      "apiCalls": {
+        "collect": 1,
+        "readEvidence": 24,
+        "assess": 12,
+        "saveCase": 1,
+        "recheck": 1,
+        "gate": 1
+      },
+      "callerAssessments": 12,
+      "phases": [
+        {
+          "phase": "before",
+          "ms": 1219.0894590000025
+        },
+        {
+          "phase": "after",
+          "ms": 1297.8037079999995
+        }
+      ],
+      "error": null,
+      "gatePassed": true,
+      "ms": 2525.834208,
+      "falsePassRejected": false,
+      "totalApiCalls": 40
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "order": [
+        "playwright",
+        "0.4.1",
+        "0.5.0"
+      ],
+      "apiCalls": {},
+      "callerAssessments": 0,
+      "phases": [
+        {
+          "phase": "before",
+          "ms": 1176.059874999999
+        },
+        {
+          "phase": "after",
+          "ms": 1105.5835000000006
+        }
+      ],
+      "error": null,
+      "ms": 2281.651249999999,
+      "totalApiCalls": 0
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "order": [
+        "playwright",
+        "0.4.1",
+        "0.5.0"
+      ],
+      "apiCalls": {
+        "collect": 1,
+        "readEvidence": 24,
+        "assess": 12,
+        "saveCase": 1,
+        "recheck": 1,
+        "gate": 1
+      },
+      "callerAssessments": 12,
+      "phases": [
+        {
+          "phase": "before",
+          "ms": 1182.575334000001
+        },
+        {
+          "phase": "after",
+          "ms": 1263.0194589999992
+        }
+      ],
+      "error": null,
+      "gatePassed": true,
+      "ms": 2452.512917,
+      "falsePassRejected": false,
+      "totalApiCalls": 40
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "order": [
+        "playwright",
+        "0.4.1",
+        "0.5.0"
+      ],
+      "apiCalls": {
+        "collect": 1,
+        "reviewPacket": 2,
+        "assess": 2,
+        "saveCase": 1,
+        "recheck": 1,
+        "gate": 1
+      },
+      "callerAssessments": 2,
+      "phases": [
+        {
+          "phase": "before",
+          "ms": 1299.6020830000016
+        },
+        {
+          "phase": "after",
+          "ms": 1181.6500420000011
+        }
+      ],
+      "error": null,
+      "gatePassed": true,
+      "ms": 2496.052917000001,
+      "falsePassRejected": true,
+      "totalApiCalls": 8
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "order": [
+        "0.4.1",
+        "0.5.0",
+        "playwright"
+      ],
+      "apiCalls": {
+        "collect": 1,
+        "readEvidence": 24,
+        "assess": 12,
+        "saveCase": 1,
+        "recheck": 1,
+        "gate": 1
+      },
+      "callerAssessments": 12,
+      "phases": [
+        {
+          "phase": "before",
+          "ms": 1297.2884999999987
+        },
+        {
+          "phase": "after",
+          "ms": 1293.3649169999953
+        }
+      ],
+      "error": null,
+      "gatePassed": true,
+      "ms": 2602.3125830000026,
+      "falsePassRejected": false,
+      "totalApiCalls": 40
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "order": [
+        "0.4.1",
+        "0.5.0",
+        "playwright"
+      ],
+      "apiCalls": {
+        "collect": 1,
+        "reviewPacket": 2,
+        "assess": 2,
+        "saveCase": 1,
+        "recheck": 1,
+        "gate": 1
+      },
+      "callerAssessments": 2,
+      "phases": [
+        {
+          "phase": "before",
+          "ms": 1338.0782499999987
+        },
+        {
+          "phase": "after",
+          "ms": 1348.6609160000007
+        }
+      ],
+      "error": null,
+      "gatePassed": true,
+      "ms": 2706.3664170000047,
+      "falsePassRejected": true,
+      "totalApiCalls": 8
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "order": [
+        "0.4.1",
+        "0.5.0",
+        "playwright"
+      ],
+      "apiCalls": {},
+      "callerAssessments": 0,
+      "phases": [
+        {
+          "phase": "before",
+          "ms": 1127.5266250000059
+        },
+        {
+          "phase": "after",
+          "ms": 1120.4628329999978
+        }
+      ],
+      "error": null,
+      "ms": 2247.9922499999957,
+      "totalApiCalls": 0
+    }
+  ],
+  "observations": [
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "fail",
+      "text": "$29",
+      "imageSha256": "a5017880d72bacd9054e78bb67dccb70b5662553666303d0e609f423f013f2d5"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "fail",
+      "text": "$29",
+      "imageSha256": "6f810f80d35c2b7a0d265427d1a74bc74626f0c9b654b474c5619455b42a70dc"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "$19",
+      "imageSha256": "249d000c74fc0275eb46f1be992de05abfdde25511237e4b2932dd70d2f2de95"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "$19",
+      "imageSha256": "f0968a3f2faa2637cb0eb3d72cf6393e1ff053c4a65415859ce9ec05fa59e038"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 1,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "fail",
+      "oracleStatus": "fail",
+      "text": "$29",
+      "imageSha256": "a5017880d72bacd9054e78bb67dccb70b5662553666303d0e609f423f013f2d5"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "fail",
+      "oracleStatus": "fail",
+      "text": "$29",
+      "imageSha256": "6f810f80d35c2b7a0d265427d1a74bc74626f0c9b654b474c5619455b42a70dc"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "$19",
+      "imageSha256": "249d000c74fc0275eb46f1be992de05abfdde25511237e4b2932dd70d2f2de95"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "$19",
+      "imageSha256": "f0968a3f2faa2637cb0eb3d72cf6393e1ff053c4a65415859ce9ec05fa59e038"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "fail",
+      "oracleStatus": "fail",
+      "text": "$29",
+      "imageSha256": "a5017880d72bacd9054e78bb67dccb70b5662553666303d0e609f423f013f2d5"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "fail",
+      "oracleStatus": "fail",
+      "text": "$29",
+      "imageSha256": "6f810f80d35c2b7a0d265427d1a74bc74626f0c9b654b474c5619455b42a70dc"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "$19",
+      "imageSha256": "249d000c74fc0275eb46f1be992de05abfdde25511237e4b2932dd70d2f2de95"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "$19",
+      "imageSha256": "f0968a3f2faa2637cb0eb3d72cf6393e1ff053c4a65415859ce9ec05fa59e038"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 1,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "fail",
+      "oracleStatus": "fail",
+      "text": "$29",
+      "imageSha256": "a5017880d72bacd9054e78bb67dccb70b5662553666303d0e609f423f013f2d5"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "fail",
+      "oracleStatus": "fail",
+      "text": "$29",
+      "imageSha256": "6f810f80d35c2b7a0d265427d1a74bc74626f0c9b654b474c5619455b42a70dc"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "$19",
+      "imageSha256": "249d000c74fc0275eb46f1be992de05abfdde25511237e4b2932dd70d2f2de95"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "$19",
+      "imageSha256": "f0968a3f2faa2637cb0eb3d72cf6393e1ff053c4a65415859ce9ec05fa59e038"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "fail",
+      "oracleStatus": "fail",
+      "text": "$29",
+      "imageSha256": "a5017880d72bacd9054e78bb67dccb70b5662553666303d0e609f423f013f2d5"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "fail",
+      "oracleStatus": "fail",
+      "text": "$29",
+      "imageSha256": "6f810f80d35c2b7a0d265427d1a74bc74626f0c9b654b474c5619455b42a70dc"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "$19",
+      "imageSha256": "249d000c74fc0275eb46f1be992de05abfdde25511237e4b2932dd70d2f2de95"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "$19",
+      "imageSha256": "f0968a3f2faa2637cb0eb3d72cf6393e1ff053c4a65415859ce9ec05fa59e038"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 2,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "fail",
+      "text": "$29",
+      "imageSha256": "a5017880d72bacd9054e78bb67dccb70b5662553666303d0e609f423f013f2d5"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "fail",
+      "text": "$29",
+      "imageSha256": "6f810f80d35c2b7a0d265427d1a74bc74626f0c9b654b474c5619455b42a70dc"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "$19",
+      "imageSha256": "249d000c74fc0275eb46f1be992de05abfdde25511237e4b2932dd70d2f2de95"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "$19",
+      "imageSha256": "f0968a3f2faa2637cb0eb3d72cf6393e1ff053c4a65415859ce9ec05fa59e038"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 2,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "fail",
+      "oracleStatus": "fail",
+      "text": "$29",
+      "imageSha256": "a5017880d72bacd9054e78bb67dccb70b5662553666303d0e609f423f013f2d5"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "fail",
+      "oracleStatus": "fail",
+      "text": "$29",
+      "imageSha256": "6f810f80d35c2b7a0d265427d1a74bc74626f0c9b654b474c5619455b42a70dc"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "$19",
+      "imageSha256": "249d000c74fc0275eb46f1be992de05abfdde25511237e4b2932dd70d2f2de95"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "$19",
+      "imageSha256": "f0968a3f2faa2637cb0eb3d72cf6393e1ff053c4a65415859ce9ec05fa59e038"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "fail",
+      "text": "$29",
+      "imageSha256": "a5017880d72bacd9054e78bb67dccb70b5662553666303d0e609f423f013f2d5"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "fail",
+      "text": "$29",
+      "imageSha256": "6f810f80d35c2b7a0d265427d1a74bc74626f0c9b654b474c5619455b42a70dc"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "$19",
+      "imageSha256": "249d000c74fc0275eb46f1be992de05abfdde25511237e4b2932dd70d2f2de95"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "$19",
+      "imageSha256": "f0968a3f2faa2637cb0eb3d72cf6393e1ff053c4a65415859ce9ec05fa59e038"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 3,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "fail",
+      "oracleStatus": "fail",
+      "text": "$29",
+      "imageSha256": "a5017880d72bacd9054e78bb67dccb70b5662553666303d0e609f423f013f2d5"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "fail",
+      "oracleStatus": "fail",
+      "text": "$29",
+      "imageSha256": "6f810f80d35c2b7a0d265427d1a74bc74626f0c9b654b474c5619455b42a70dc"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "$19",
+      "imageSha256": "249d000c74fc0275eb46f1be992de05abfdde25511237e4b2932dd70d2f2de95"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "$19",
+      "imageSha256": "f0968a3f2faa2637cb0eb3d72cf6393e1ff053c4a65415859ce9ec05fa59e038"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 3,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "fail",
+      "text": "$29",
+      "imageSha256": "a5017880d72bacd9054e78bb67dccb70b5662553666303d0e609f423f013f2d5"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "fail",
+      "text": "$29",
+      "imageSha256": "6f810f80d35c2b7a0d265427d1a74bc74626f0c9b654b474c5619455b42a70dc"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "$19",
+      "imageSha256": "249d000c74fc0275eb46f1be992de05abfdde25511237e4b2932dd70d2f2de95"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "$19",
+      "imageSha256": "f0968a3f2faa2637cb0eb3d72cf6393e1ff053c4a65415859ce9ec05fa59e038"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 4,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "fail",
+      "oracleStatus": "fail",
+      "text": "$29",
+      "imageSha256": "a5017880d72bacd9054e78bb67dccb70b5662553666303d0e609f423f013f2d5"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "fail",
+      "oracleStatus": "fail",
+      "text": "$29",
+      "imageSha256": "6f810f80d35c2b7a0d265427d1a74bc74626f0c9b654b474c5619455b42a70dc"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "$19",
+      "imageSha256": "249d000c74fc0275eb46f1be992de05abfdde25511237e4b2932dd70d2f2de95"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "$19",
+      "imageSha256": "f0968a3f2faa2637cb0eb3d72cf6393e1ff053c4a65415859ce9ec05fa59e038"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "fail",
+      "oracleStatus": "fail",
+      "text": "$29",
+      "imageSha256": "a5017880d72bacd9054e78bb67dccb70b5662553666303d0e609f423f013f2d5"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "fail",
+      "oracleStatus": "fail",
+      "text": "$29",
+      "imageSha256": "6f810f80d35c2b7a0d265427d1a74bc74626f0c9b654b474c5619455b42a70dc"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "$19",
+      "imageSha256": "249d000c74fc0275eb46f1be992de05abfdde25511237e4b2932dd70d2f2de95"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "$19",
+      "imageSha256": "f0968a3f2faa2637cb0eb3d72cf6393e1ff053c4a65415859ce9ec05fa59e038"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 4,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "fail",
+      "oracleStatus": "fail",
+      "text": "$29",
+      "imageSha256": "a5017880d72bacd9054e78bb67dccb70b5662553666303d0e609f423f013f2d5"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "fail",
+      "oracleStatus": "fail",
+      "text": "$29",
+      "imageSha256": "6f810f80d35c2b7a0d265427d1a74bc74626f0c9b654b474c5619455b42a70dc"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "$19",
+      "imageSha256": "249d000c74fc0275eb46f1be992de05abfdde25511237e4b2932dd70d2f2de95"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "$19",
+      "imageSha256": "f0968a3f2faa2637cb0eb3d72cf6393e1ff053c4a65415859ce9ec05fa59e038"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.4.1",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "fail",
+      "oracleStatus": "fail",
+      "text": "$29",
+      "imageSha256": "a5017880d72bacd9054e78bb67dccb70b5662553666303d0e609f423f013f2d5"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "fail",
+      "oracleStatus": "fail",
+      "text": "$29",
+      "imageSha256": "6f810f80d35c2b7a0d265427d1a74bc74626f0c9b654b474c5619455b42a70dc"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "$19",
+      "imageSha256": "249d000c74fc0275eb46f1be992de05abfdde25511237e4b2932dd70d2f2de95"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "$19",
+      "imageSha256": "f0968a3f2faa2637cb0eb3d72cf6393e1ff053c4a65415859ce9ec05fa59e038"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 5,
+      "arm": "0.5.0",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "oracleStatus": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "fail",
+      "text": "$29",
+      "imageSha256": "a5017880d72bacd9054e78bb67dccb70b5662553666303d0e609f423f013f2d5"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "fail",
+      "text": "$29",
+      "imageSha256": "6f810f80d35c2b7a0d265427d1a74bc74626f0c9b654b474c5619455b42a70dc"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "before",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "$19",
+      "imageSha256": "249d000c74fc0275eb46f1be992de05abfdde25511237e4b2932dd70d2f2de95"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "In stock",
+      "imageSha256": "ad68a01fa7f20a211129884fa429ff339ce8fcc92477839215edbe27336c1b36"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Delivery included",
+      "imageSha256": "bdb57c4c6afd7f27636af8168067e47dfd3b836c34fa48370d647e5154edcd2d"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "2a7834e340a88c1b73feb1347fb298a507c9eea5a690f07d5556535bd054488f"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Continue",
+      "imageSha256": "2168150c640ec8d7bba980c716a8d5cbd4f0a874bda36fc5a10916f129539eb9"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "desktop",
+      "status": "pass",
+      "text": "Summary ready",
+      "imageSha256": "69bfff104798eac70e9ab79cac2e6e7e05068dc8014cb9d3a0db02a3453d3ede"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-0",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "$19",
+      "imageSha256": "f0968a3f2faa2637cb0eb3d72cf6393e1ff053c4a65415859ce9ec05fa59e038"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-1",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "In stock",
+      "imageSha256": "ab3d5d9955aa1ff322dfe077bc0f971f7055677d29157fb668445d422e52b77d"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-2",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Delivery included",
+      "imageSha256": "fe21af8213436fdd1f40ac15e86ddb5b34e57e16a9218e93ee075ba8fd653586"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-3",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Returns accepted",
+      "imageSha256": "3b9fda29991bcab57ebe6cfe324a0b6af447c68885fdb310223b51a7973e1351"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-4",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Continue",
+      "imageSha256": "afe3285cd7d820fe2e9df0f7ca3e112807ba67bca3774de8dbe9f524df8f660f"
+    },
+    {
+      "repeat": 5,
+      "arm": "playwright",
+      "phase": "after",
+      "criterionId": "criterion-5",
+      "viewport": "mobile",
+      "status": "pass",
+      "text": "Summary ready",
+      "imageSha256": "fd66b8dbfd59ab2cd00cdf61c650a77b4f48f87eeeae79956d9cfec52529a98c"
+    }
+  ]
+}

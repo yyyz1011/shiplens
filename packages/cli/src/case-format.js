@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { checksSchema } from './acceptance-checks.js';
 const text = (max) => z.string().trim().min(1).max(max);
 export const requirementSchema = z.strictObject({
   id: text(80),
@@ -7,6 +8,8 @@ export const requirementSchema = z.strictObject({
   flow: text(80).optional(),
   step: z.int().min(1).max(30).optional(),
   selector: text(2000).optional(),
+  checks: checksSchema.optional(),
+  evaluation: z.enum(['manual', 'checks']).optional(),
   viewports: z
     .array(z.enum(['desktop', 'mobile']))
     .min(1)
