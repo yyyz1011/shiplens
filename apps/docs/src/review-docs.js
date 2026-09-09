@@ -88,6 +88,10 @@ export function aiWorkflowDocs() {
         'Exploration, selector discovery and visual reasoning stay with your assistant. Cases save explicit supplied steps; they do not record an external browser session or repair selectors automatically. DOM observations omit frames and shadow DOM, input values and masked subtrees. Text or element truncation prevents a pass; use narrower checks or needs-evidence. These are scoped acceptance checks, not whole-site certification.',
         '探索、发现选择器和视觉推理仍由助手负责。案例保存显式提供的步骤，不录制外部浏览器会话，也不自动修复选择器。页面结构不遍历 iframe 或 Shadow DOM，不收集输入值与遮罩子树。文本或元素截断不能支持通过结论，应缩小范围或记为 needs-evidence。这是有范围的验收检查，不是全站认证。',
       ) +
+      p(
+        'For explicit text requirements, see <a href="#/docs/checked-review">checks and batched review packets</a>. Text checks can run automatically; manual criteria still require fresh judgments.',
+        '明确的文本要求可使用<a href="#/docs/checked-review">断言与批量证据</a>。文本断言可自动执行，manual 项仍须重新判断。',
+      ) +
       h('comparison', 'Evaluate the benefit on your own project', '在自己的项目上验证收益') +
       p(
         'Our <a href="#/docs/benchmark">published workflow benchmark</a> compares a reusable Playwright script with ShipLens on three synthetic fixtures. It includes timings, raw data and evidence-integrity failures. Both use deterministic text checks; no model accuracy or cost claim is established.',
@@ -160,7 +164,7 @@ export function mcpDocs() {
         ),
       ) +
       p(
-        'Replace both absolute paths. Use the absolute Node executable if your client does not inherit PATH. Other clients use different configuration formats; the process command and arguments are the same. Restart or reconnect the client, then confirm all 17 tools are listed. The server uses stdout only for MCP protocol messages and supports legacy and modern MCP clients.',
+        'Replace both absolute paths. Use the absolute Node executable if your client does not inherit PATH. Other clients use different configuration formats; the process command and arguments are the same. Restart or reconnect the client, then confirm all 18 tools are listed. The server uses stdout only for MCP protocol messages and supports legacy and modern MCP clients.',
         '替换两个绝对路径。客户端未继承 PATH 时，使用 Node 可执行文件的绝对路径。其他客户端可能采用不同配置格式，但启动命令与参数相同。重启或重新连接后，确认十七个工具全部出现。服务的 stdout 只用于 MCP 协议消息，支持旧版及新版 MCP 客户端。',
       ) +
       h('tools', 'Six core review tools', '六个核心验收工具') +

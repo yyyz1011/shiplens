@@ -279,6 +279,13 @@ test('review CLI supports portable workflows and refuses pending CI acceptance',
     await writeFile(input, JSON.stringify({ requirements, flows }));
     const call = (args) => exec(process.execPath, [cli, 'review', ...args, '--config', config]);
     const run = JSON.parse((await call(['collect', '--input', input])).stdout);
+    await writeFile(input, JSON.stringify({ limit: 1, includeImages: false }));
+    const packet = JSON.parse(
+      (await call(['packet', '--run', run.runId, '--input', input])).stdout,
+    );
+    assert.equal(packet.items.length, 1);
+    assert.equal(packet.items[0].image, undefined);
+    assert.equal(packet.nextOffset, 1);
     await assert.rejects(
       call(['gate', '--run', run.runId]),
       (error) =>

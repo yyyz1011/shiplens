@@ -311,8 +311,8 @@ const run = await promise;`) +
         'MCP 的 shiplens_status、shiplens_cancel 使用 {} 参数，采集总时限为 120 秒并响应客户端取消通知。CLI 处理 SIGINT/SIGTERM，可设置 --timeout-ms。进程被强制终止可能留下 .lock，确认写入进程已停止后才能删除。doctor 检查 Node、浏览器安装、配置、锁存在情况及提供的登录态结构，不启动浏览器，也不验证登录是否有效或网站是否可访问。',
       ) +
       p(
-        'MCP shiplens_export_report and shiplens_gate use the same argument objects as the API methods. Tool failures return isError: true; a blocked gate is a successful tool response with passed: false. All 17 tools are documented across the MCP, scoped evidence, case library and this page.',
-        'MCP shiplens_export_report 与 shiplens_gate 使用与 API 相同的参数对象。工具执行错误返回 isError: true；gate 阻塞属于正常返回，passed: false。全部 17 个工具分布在 MCP、局部证据、用例库及本页文档中。',
+        'MCP shiplens_export_report and shiplens_gate use the same argument objects as the API methods. Tool failures return isError: true; a blocked gate is a successful tool response with passed: false. All 18 tools are documented across the MCP, scoped evidence, case library and this page.',
+        'MCP shiplens_export_report 与 shiplens_gate 使用与 API 相同的参数对象。工具执行错误返回 isError: true；gate 阻塞属于正常返回，passed: false。全部 18 个工具分布在 MCP、局部证据、用例库及本页文档中。',
       ) +
       h('example', 'Run the packaged end-to-end example', '运行包内端到端案例') +
       code(

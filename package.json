@@ -27,7 +27,8 @@
     "demo:interactions": "node scripts/demo-interactions.mjs",
     "demo:review": "node scripts/demo-review.mjs",
     "benchmark:workflow": "node benchmarks/workflow/run.mjs",
-    "benchmark:verify": "node benchmarks/workflow/verify.mjs"
+    "benchmark:verify": "node benchmarks/workflow/verify.mjs && node benchmarks/checked-review/verify.mjs",
+    "benchmark:checked": "node benchmarks/checked-review/run.mjs"
   },
   "devDependencies": {
     "@modelcontextprotocol/client": "2.0.0",

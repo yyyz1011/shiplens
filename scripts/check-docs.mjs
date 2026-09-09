@@ -41,6 +41,7 @@ try {
           '/#/docs/api',
           '/#/docs/ai-workflow',
           '/#/docs/benchmark',
+          '/#/docs/checked-review',
           '/#/docs/mcp',
           '/#/docs/review-api',
           '/#/docs/scoped-review',
@@ -86,7 +87,8 @@ try {
             route === '/#/docs/mcp' ||
             route === '/#/docs/review-api' ||
             route === '/#/docs/acceptance-ops' ||
-            route === '/#/docs/benchmark'
+            route === '/#/docs/benchmark' ||
+            route === '/#/docs/checked-review'
           )
             await page.screenshot({
               path: `${output}/${device}-${locale}-${theme}-${route === '/' ? 'home' : route.includes('quickstart') ? 'docs' : route.includes('/docs/') ? route.split('/').at(-1) : 'report'}.png`,
@@ -103,7 +105,7 @@ try {
       assert.ok(apiText.includes(method + '('), `Public API is undocumented: ${method}`);
     await page.goto(base + '/#/docs/review-api');
     let reviewText = await page.locator('.reading-article').innerText();
-    for (const section of ['scoped-review', 'case-library', 'acceptance-ops']) {
+    for (const section of ['scoped-review', 'case-library', 'acceptance-ops', 'checked-review']) {
       await page.goto(base + '/#/docs/' + section);
       reviewText += '\n' + (await page.locator('.reading-article').innerText());
     }

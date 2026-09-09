@@ -236,7 +236,7 @@ test('saved cases parameterize fill values and restart safely; evidence cannot e
     }
   }));
 
-test('MCP stdio works with official legacy and modern clients, including PNG evidence and all 17 tools', () =>
+test('MCP stdio works with official legacy and modern clients, including PNG evidence and all 18 tools', () =>
   fixture(async ({ directory, options }) => {
     const config = path.join(directory, 'shiplens.config.json');
     await writeFile(config, JSON.stringify({ ...options, viewport: 'desktop', output: 'output' }));
@@ -253,7 +253,7 @@ test('MCP stdio works with official legacy and modern clients, including PNG evi
       try {
         await client.connect(transport);
         assert.equal(client.getProtocolEra(), mode === 'legacy' ? 'legacy' : 'modern');
-        assert.equal((await client.listTools()).tools.length, 17);
+        assert.equal((await client.listTools()).tools.length, 18);
         assert.ok(
           (await client.getPrompt({ name: 'review_website' })).messages[0].content.text.includes(
             'untrusted',
@@ -264,7 +264,22 @@ test('MCP stdio works with official legacy and modern clients, including PNG evi
           assert.ok(!result.isError, JSON.stringify(result));
           return result;
         };
-        const run = (await call('collect', { requirements: criteria, flows })).structuredContent;
+        const run = (
+          await call('collect', {
+            requirements: criteria.map((r) => ({
+              ...r,
+              checks: [{ operator: 'contains', value: 'Three-day itinerary' }],
+            })),
+            flows,
+          })
+        ).structuredContent;
+        const packet = await call('review_packet', { runId: run.runId });
+        assert.equal(
+          packet.content.filter((c) => c.type === 'image').length,
+          packet.structuredContent.items.length,
+        );
+        assert.equal(packet.structuredContent.items[0].imageIndex, 0);
+        assert.equal(packet.structuredContent.items[0].image, undefined);
         const evidence = run.evidence.find((e) => e.criterionIds.length);
         const proof = await call('read_evidence', {
           runId: run.runId,

@@ -7,6 +7,20 @@ export interface Requirement {
   step?: number;
   selector?: string;
   viewports?: Array<'desktop' | 'mobile'>;
+  checks?: Array<{ operator: 'equals' | 'contains' | 'excludes'; value: string }>;
+  evaluation?: 'manual' | 'checks';
+}
+export interface CheckVerification {
+  source: 'deterministic-checks';
+  status: AssessmentStatus;
+  evidenceIds: string[];
+  results: Array<{
+    viewport: 'desktop' | 'mobile';
+    evidenceId?: string;
+    checkIndex?: number;
+    status: AssessmentStatus;
+    reason: string;
+  }>;
 }
 export type AssessmentStatus = 'pass' | 'fail' | 'needs-evidence';
 export interface Assessment {
@@ -50,6 +64,7 @@ export interface ReviewRun {
       viewports: Array<'desktop' | 'mobile'>;
       status: AssessmentStatus | 'pending';
       assessment: Assessment | null;
+      verification?: CheckVerification;
     }
   >;
   evidence: Evidence[];
@@ -99,6 +114,14 @@ export class ReviewWorkspace {
     runtime?: ReviewRuntime,
   ): Promise<ReviewRun>;
   getRun(runId: string): Promise<ReviewRun>;
+  reviewPacket(input: {
+    runId: string;
+    offset?: number;
+    limit?: number;
+    includeImages?: boolean;
+    includePassed?: boolean;
+    maxBytes?: number;
+  }): Promise<ReviewPacket>;
   readEvidence(input: {
     runId: string;
     evidenceId: string;
@@ -155,6 +178,17 @@ export class ReviewWorkspace {
     gate: AcceptanceGate;
     warnings: string[];
   }>;
+}
+
+export interface ReviewPacket {
+  runId: string;
+  requirements: Array<Omit<ReviewRun['requirements'][number], 'assessment'>>;
+  total: number;
+  offset: number;
+  nextOffset: number | null;
+  items: Array<EvidenceResult & { omitted: string[]; readSeparately: boolean }>;
+  bytes: number;
+  note: string;
 }
 
 export interface ReviewRuntime {

@@ -94,3 +94,19 @@ review.gate({ runId: 'id', failOn: 'none' });
 review
   .saveCase({ runId: 'id', name: 'Legacy signature' })
   .then((saved) => review.getRun(saved.sourceRunId));
+
+review.collect({
+  requirements: [
+    { ...requirement, checks: [{ operator: 'equals', value: 'Checkout' }], evaluation: 'checks' },
+  ],
+});
+review.reviewPacket({ runId: 'id', limit: 6, maxBytes: 2097152 }).then((packet) => {
+  const next: number | null = packet.nextOffset;
+  const state: string | undefined = packet.requirements[0]?.verification?.status;
+  void next;
+  void state;
+});
+review.collect({
+  // @ts-expect-error Checks do not accept executable scripts or regular expressions.
+  requirements: [{ ...requirement, checks: [{ operator: 'regex', value: '.*' }] }],
+});

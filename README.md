@@ -187,3 +187,9 @@ MIT licensed.
 ## Measured workflow comparison
 
 Read the [reproducible workflow benchmark](https://shiplens.nimokit.com/#/docs/benchmark) for Playwright versus ShipLens on three synthetic fixtures, including raw data, all evidence, timings and limitations. Both use deterministic text checks; these results do not establish an AI accuracy or cost advantage. Reproduce with `npm run benchmark:workflow` from this repository.
+
+## Explicit checks and fewer evidence operations (0.5)
+
+Add `checks: [{ operator: 'equals', value: '$19' }]` to a scoped requirement to reject contradictory caller passes. `evaluation: 'checks'` opts an entirely text-defined requirement into fresh automatic evaluation; manual review remains the default. `reviewPacket({ runId })` batches unresolved evidence with explicit pagination and byte omissions. MCP offers `shiplens_review_packet` with native images; CLI offers `shiplens review packet`.
+
+[API, examples and measured protocol results](https://shiplens.nimokit.com/#/docs/checked-review): one synthetic mixed workflow used 8 review API operations instead of 40, with 2 scripted caller receipts instead of 12. It did not establish a speed, token or model-accuracy advantage. Playwright already provides reusable assertions; ShipLens adds the packaged acceptance/evidence workflow.

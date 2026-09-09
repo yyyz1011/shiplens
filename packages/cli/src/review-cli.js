@@ -89,6 +89,7 @@ const methods = {
   run: 'getRun',
   runs: 'listRuns',
   evidence: 'readEvidence',
+  packet: 'reviewPacket',
   assess: 'assess',
   save: 'saveCase',
   recheck: 'recheck',
@@ -135,7 +136,7 @@ export async function reviewCli(args) {
     'timeout-ms': ['collect', 'recheck'],
     previous: ['compare', 'recheck', 'report'],
     case: ['case', 'update', 'export', 'recheck'],
-    run: ['run', 'evidence', 'assess', 'save', 'compare', 'report', 'gate'],
+    run: ['run', 'evidence', 'packet', 'assess', 'save', 'compare', 'report', 'gate'],
   }))
     if (values[flag] !== undefined && !commands.includes(command))
       throw new Error(`--${flag} is not supported by this review command.`);
