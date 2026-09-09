@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "kind": "shiplens-case",
+  "name": "Itinerary release check",
+  "tags": ["release"],
+  "requirements": [
+    {
+      "id": "itinerary",
+      "description": "Opened details include the three-day itinerary.",
+      "page": "/",
+      "flow": "open-details",
+      "step": 1,
+      "selector": "#details-panel",
+      "checks": [{ "operator": "contains", "value": "Three-day itinerary" }],
+      "evaluation": "checks"
+    }
+  ],
+  "flows": [
+    {
+      "name": "open-details",
+      "page": "/",
+      "steps": [{ "action": "click", "selector": "#details" }]
+    }
+  ]
+}

@@ -108,6 +108,66 @@ try {
     });
     assert.match(checks.stdout, /callerAssessments: 0/);
     assert.match(checks.stdout, /gate: true/);
+    const verified = await exec(process.execPath, ['node_modules/shiplens/examples/verify.mjs'], {
+      cwd: installed,
+      env: {
+        ...process.env,
+        SHIPLENS_EXAMPLE_URL: `http://127.0.0.1:${demo.address().port}`,
+        SHIPLENS_EXAMPLE_OUTPUT: path.join(temp, 'verify-example'),
+      },
+    });
+    const verification = JSON.parse(verified.stdout);
+    assert.equal(verification.gate.passed, true);
+    assert.equal(verification.plan.automaticRequirements.length, 1);
+    assert.equal(verification.next, null);
+    const inputPlan = JSON.parse(
+      await (
+        await import('node:fs/promises')
+      ).readFile(path.join(installed, 'node_modules/shiplens/examples/acceptance.json'), 'utf8'),
+    );
+    inputPlan.flows[0].steps.push({ action: 'fill', selector: '#query', valueFromInput: 'query' });
+    await writeFile(path.join(installed, 'acceptance.json'), JSON.stringify(inputPlan));
+    await writeFile(
+      path.join(installed, 'inputs.json'),
+      JSON.stringify({ query: 'Sample destination' }),
+    );
+    await writeFile(
+      path.join(installed, 'verify-config.json'),
+      JSON.stringify({
+        url: `http://127.0.0.1:${demo.address().port}`,
+        viewport: 'both',
+        crawl: false,
+        output: path.join(temp, 'named-input-example'),
+      }),
+    );
+    const namedInputExample = JSON.parse(
+      (
+        await exec(
+          binary,
+          [
+            'review',
+            'verify',
+            '--config',
+            'verify-config.json',
+            '--plan',
+            'acceptance.json',
+            '--input',
+            'inputs.json',
+            '--format',
+            'html',
+            '--lang',
+            'en',
+            '--fail-on',
+            'warning',
+            '--timeout-ms',
+            '180000',
+          ],
+          { cwd: installed },
+        )
+      ).stdout,
+    );
+    assert.equal(namedInputExample.gate.passed, true);
+    assert.equal(namedInputExample.plan.requiredInputs[0].key, 'query');
     const doctor = JSON.parse((await exec(binary, ['doctor'], { cwd: installed })).stdout);
     assert.equal(doctor.passed, true);
     const { Client } = await import('@modelcontextprotocol/client');
@@ -129,7 +189,7 @@ try {
           ],
         }),
       );
-      assert.equal((await client.listTools()).tools.length, 18);
+      assert.equal((await client.listTools()).tools.length, 20);
     } finally {
       await client.close();
     }

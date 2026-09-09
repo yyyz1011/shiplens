@@ -88,6 +88,15 @@ review.exportCase({ caseId: 'id' }).then((data) => review.importCase({ data }));
 review.compareRuns({ runId: 'id', previousRunId: 'id' });
 review.exportReport({ runId: 'id', previousRunId: 'id', format: 'html', lang: 'zh' });
 review.gate({ runId: 'id', failOn: 'warning' });
+review.exportCase({ caseId: 'id' }).then(async (data) => {
+  const info = review.validatePlan({ data });
+  const digest: string = info.sha256;
+  const verified = await review.verify({ data, format: 'json', inputs: {} }, { timeoutMs: 180000 });
+  const passed: boolean = verified.gate.passed;
+  if (verified.next) review.reviewPacket(verified.next.input);
+  void digest;
+  void passed;
+});
 // @ts-expect-error Unsupported gate thresholds must fail in consumers.
 review.gate({ runId: 'id', failOn: 'none' });
 

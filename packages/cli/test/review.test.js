@@ -236,7 +236,7 @@ test('saved cases parameterize fill values and restart safely; evidence cannot e
     }
   }));
 
-test('MCP stdio works with official legacy and modern clients, including PNG evidence and all 18 tools', () =>
+test('MCP stdio works with official legacy and modern clients, including PNG evidence and all 20 tools', () =>
   fixture(async ({ directory, options }) => {
     const config = path.join(directory, 'shiplens.config.json');
     await writeFile(config, JSON.stringify({ ...options, viewport: 'desktop', output: 'output' }));
@@ -253,7 +253,7 @@ test('MCP stdio works with official legacy and modern clients, including PNG evi
       try {
         await client.connect(transport);
         assert.equal(client.getProtocolEra(), mode === 'legacy' ? 'legacy' : 'modern');
-        assert.equal((await client.listTools()).tools.length, 18);
+        assert.equal((await client.listTools()).tools.length, 20);
         assert.ok(
           (await client.getPrompt({ name: 'review_website' })).messages[0].content.text.includes(
             'untrusted',
@@ -305,6 +305,14 @@ test('MCP stdio works with official legacy and modern clients, including PNG evi
         );
         await call('update_case', { caseId: saved.caseId, tags: ['mcp'] });
         const portable = (await call('export_case', { caseId: saved.caseId })).structuredContent;
+        const plan = (await call('validate_plan', { data: portable })).structuredContent;
+        assert.deepEqual(plan.manualRequirements, ['details']);
+        const verified = (await call('verify', { data: portable, format: 'json' }))
+          .structuredContent;
+        assert.equal(verified.plan.sha256, plan.sha256);
+        assert.equal(verified.gate.passed, false);
+        assert.equal(verified.unresolved[0].status, 'pending');
+        assert.equal(verified.next.method, 'reviewPacket');
         await call('import_case', { data: portable });
         assert.equal((await call('status', {})).structuredContent.running, false);
         assert.equal((await call('cancel', {})).structuredContent.requested, false);

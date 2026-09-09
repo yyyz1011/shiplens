@@ -245,7 +245,7 @@ export class ReviewWorkspace {
     this.#active?.controller.abort(new Error('Review cancelled. No completed run was created.'));
     return { requested: running };
   }
-  async #collect({ requirements, flows, previousRunId, caseId }, runtime) {
+  async #collect({ requirements, flows, previousRunId, caseId, planSource }, runtime) {
     const validated = validateOptions({ ...this.#options, flows });
     const criteria = this.#requirements(requirements, validated);
     const options = validateOptions({
@@ -329,6 +329,7 @@ export class ReviewWorkspace {
       plan: this.#plan(options),
       ...(previousRunId ? { previousRunId } : {}),
       ...(caseId ? { caseId } : {}),
+      ...(planSource ? { planSource } : {}),
     };
     runtime.signal.throwIfAborted();
     this.#active.newRunId = runId;
@@ -371,6 +372,7 @@ export class ReviewWorkspace {
       createdAt: manifest.createdAt,
       previousRunId: manifest.previousRunId,
       caseId: manifest.caseId,
+      ...(manifest.planSource ? { planSource: manifest.planSource } : {}),
       requirements,
       evidence: manifest.evidence.filter((entry) => entry.criterionIds.length),
       otherEvidenceCount: manifest.evidence.filter((entry) => !entry.criterionIds.length).length,
@@ -620,6 +622,26 @@ export class ReviewWorkspace {
       };
     });
   }
+  #resolveInputs(saved, inputs) {
+    if (
+      !inputs ||
+      typeof inputs !== 'object' ||
+      Array.isArray(inputs) ||
+      Object.keys(inputs).some((key) => !saved.requiredInputs.some((item) => item.key === key))
+    )
+      throw new Error('Provide only the required named inputs.');
+    return saved.flows.map((flow) => ({
+      ...flow,
+      steps: flow.steps.map((step) => {
+        if (!step.valueFromInput) return step;
+        const { valueFromInput, ...rest } = step;
+        const value = inputs[valueFromInput];
+        if (typeof value !== 'string' || value.length > 10000)
+          throw new Error('Missing string input or value exceeds 10000 characters.');
+        return { ...rest, value };
+      }),
+    }));
+  }
   async recheck({ caseId, inputs = {}, previousRunId }, runtime = {}) {
     return this.#mutate(async () => {
       const saved = await this.#read(`cases/${id(caseId)}.json`);
@@ -627,24 +649,7 @@ export class ReviewWorkspace {
         throw new Error(
           'Case configuration differs from this workspace. Collect and assess a new case.',
         );
-      if (
-        !inputs ||
-        typeof inputs !== 'object' ||
-        Array.isArray(inputs) ||
-        Object.keys(inputs).some((key) => !saved.requiredInputs.some((item) => item.key === key))
-      )
-        throw new Error('Provide only the required named inputs.');
-      const flows = saved.flows.map((flow) => ({
-        ...flow,
-        steps: flow.steps.map((step) => {
-          if (!step.valueFromInput) return step;
-          const { valueFromInput, ...rest } = step;
-          const value = inputs[valueFromInput];
-          if (typeof value !== 'string' || value.length > 10000)
-            throw new Error('Missing string input or value exceeds 10000 characters.');
-          return { ...rest, value };
-        }),
-      }));
+      const flows = this.#resolveInputs(saved, inputs);
       if (previousRunId) {
         const previous = await this.#manifest(previousRunId);
         if (
@@ -765,51 +770,76 @@ export class ReviewWorkspace {
       flows: saved.flows.map((f) => ({ ...f, page: relative(f.page) })),
     });
   }
+  #bindPlan(data) {
+    const portable = parseCase(data);
+    const requiredInputs = [],
+      seen = new Set();
+    const relative = (page) => {
+      if (
+        !page.startsWith('/') ||
+        page.startsWith('//') ||
+        page.includes('\\') ||
+        redact(page) !== page
+      )
+        throw new Error(
+          'Portable pages must use non-secret relative paths starting with a single /.',
+        );
+      return page;
+    };
+    const flows = portable.flows.map((f) => ({
+      ...f,
+      page: relative(f.page),
+      steps: f.steps.map((s) => {
+        if (s.action === 'fill') {
+          if (s.value !== undefined || !s.valueFromInput || seen.has(s.valueFromInput))
+            throw new Error(
+              'Every imported fill must have a unique valueFromInput and no raw value.',
+            );
+          seen.add(s.valueFromInput);
+          requiredInputs.push({ key: s.valueFromInput, flow: f.name, selector: s.selector });
+          const { valueFromInput, ...rest } = s;
+          return { ...rest, value: '' };
+        }
+        if (s.valueFromInput !== undefined) throw new Error('Only fill can use valueFromInput.');
+        return s;
+      }),
+    }));
+    const validated = validateOptions({ ...this.#options, flows });
+    const requirements = this.#requirements(
+      portable.requirements.map((r) => ({ ...r, page: relative(r.page) })),
+      validated,
+    );
+    // Validate origin, exclusions and the complete page budget now, before any execution.
+    validateOptions({
+      ...validated,
+      pages: [...validated.pages, ...requirements.map((r) => r.page)],
+    });
+    return {
+      portable,
+      requirements,
+      requiredInputs,
+      flows: validated.flows.map((f, i) => ({ ...f, steps: portable.flows[i].steps })),
+    };
+  }
+  validatePlan({ data }) {
+    const bound = this.#bindPlan(data);
+    return this.#planInfo(bound);
+  }
+  #planInfo({ portable, requirements, requiredInputs, flows }) {
+    return {
+      name: portable.name,
+      sha256: digest(canonical(portable)),
+      requirementCount: requirements.length,
+      flowCount: flows.length,
+      requiredInputs,
+      automaticRequirements: requirements.filter((r) => r.evaluation === 'checks').map((r) => r.id),
+      manualRequirements: requirements.filter((r) => r.evaluation !== 'checks').map((r) => r.id),
+      note: 'Validates the plan against host policy only. No browser, login, selector or business correctness check.',
+    };
+  }
   async importCase({ data }) {
     return this.#mutate(async () => {
-      const portable = parseCase(data);
-      const requiredInputs = [],
-        seen = new Set();
-      const relative = (page) => {
-        if (
-          !page.startsWith('/') ||
-          page.startsWith('//') ||
-          page.includes('\\') ||
-          redact(page) !== page
-        )
-          throw new Error(
-            'Portable pages must use non-secret relative paths starting with a single /.',
-          );
-        return page;
-      };
-      const flows = portable.flows.map((f) => ({
-        ...f,
-        page: relative(f.page),
-        steps: f.steps.map((s) => {
-          if (s.action === 'fill') {
-            if (s.value !== undefined || !s.valueFromInput || seen.has(s.valueFromInput))
-              throw new Error(
-                'Every imported fill must have a unique valueFromInput and no raw value.',
-              );
-            seen.add(s.valueFromInput);
-            requiredInputs.push({ key: s.valueFromInput, flow: f.name, selector: s.selector });
-            const { valueFromInput, ...rest } = s;
-            return { ...rest, value: '' };
-          }
-          if (s.valueFromInput !== undefined) throw new Error('Only fill can use valueFromInput.');
-          return s;
-        }),
-      }));
-      const validated = validateOptions({ ...this.#options, flows });
-      const requirements = this.#requirements(
-        portable.requirements.map((r) => ({ ...r, page: relative(r.page) })),
-        validated,
-      );
-      // Validate origin, exclusions and the complete page budget now, before any execution.
-      validateOptions({
-        ...validated,
-        pages: [...validated.pages, ...requirements.map((r) => r.page)],
-      });
+      const { portable, requirements, requiredInputs, flows } = this.#bindPlan(data);
       const saved = {
         schemaVersion: 1,
         caseId: randomUUID(),
@@ -820,10 +850,47 @@ export class ReviewWorkspace {
         profile: this.#profile,
         requirements,
         requiredInputs,
-        flows: validated.flows.map((f, i) => ({ ...f, steps: portable.flows[i].steps })),
+        flows,
       };
       await this.#write(`cases/${saved.caseId}.json`, saved);
       return this.#caseInfo(saved);
+    });
+  }
+  async verify(
+    { data, inputs = {}, failOn = 'error', format = 'html', lang = 'en' },
+    runtime = {},
+  ) {
+    if (
+      !['error', 'warning'].includes(failOn) ||
+      !['html', 'json', 'markdown'].includes(format) ||
+      !['en', 'zh'].includes(lang)
+    )
+      throw new Error('Use error/warning threshold, html/json/markdown format and en/zh lang.');
+    const bound = this.#bindPlan(data),
+      plan = this.#planInfo(bound);
+    const flows = this.#resolveInputs(bound, inputs);
+    return this.#mutate(async () => {
+      const run = await this.#execute(
+        {
+          requirements: bound.requirements,
+          flows,
+          planSource: { name: plan.name, sha256: plan.sha256 },
+        },
+        runtime,
+      );
+      runtime.signal?.throwIfAborted();
+      const report = await this.#exportReport({ runId: run.runId, format, lang, failOn });
+      const unresolved = run.requirements
+        .filter((r) => r.status !== 'pass')
+        .map((r) => ({ criterionId: r.id, status: r.status, verification: r.verification }));
+      return {
+        runId: run.runId,
+        plan,
+        gate: report.gate,
+        report,
+        unresolved,
+        next: unresolved.length ? { method: 'reviewPacket', input: { runId: run.runId } } : null,
+      };
     });
   }
   async compareRuns({ runId, previousRunId }) {
@@ -947,7 +1014,10 @@ export class ReviewWorkspace {
     result.passed = !result.reasons.length;
     return result;
   }
-  async exportReport({
+  async exportReport(input) {
+    return this.#mutate(() => this.#exportReport(input));
+  }
+  async #exportReport({
     runId,
     previousRunId,
     format = 'html',
@@ -961,57 +1031,55 @@ export class ReviewWorkspace {
       !['en', 'zh'].includes(lang)
     )
       throw new Error('Use html/json/markdown format, boolean includeImages and en/zh lang.');
-    return this.#mutate(async () => {
-      const run = await this.getRun(runId),
-        gate = await this.gate({ runId, failOn });
-      const comparison = previousRunId ? await this.compareRuns({ runId, previousRunId }) : null;
-      const priorRun = previousRunId ? await this.getRun(previousRunId) : null;
-      const captures = [],
-        warnings = [];
-      let bytes = 0;
-      if (format === 'html')
-        for (const [captureRun, evidence] of [
-          ...run.evidence.map((e) => [run, e]),
-          ...(priorRun?.evidence.map((e) => [priorRun, e]) || []),
-        ]) {
-          try {
-            const proof = await this.readEvidence({
-              runId: captureRun.runId,
-              evidenceId: evidence.evidenceId,
-              includeImage: includeImages,
-            });
-            if (proof.image) {
-              bytes += Buffer.byteLength(proof.image.data, 'base64');
-              if (bytes > 12 * 1024 * 1024) {
-                delete proof.image;
-                warnings.push('Image budget exceeded; additional images omitted.');
-              }
+    const run = await this.getRun(runId),
+      gate = await this.gate({ runId, failOn });
+    const comparison = previousRunId ? await this.compareRuns({ runId, previousRunId }) : null;
+    const priorRun = previousRunId ? await this.getRun(previousRunId) : null;
+    const captures = [],
+      warnings = [];
+    let bytes = 0;
+    if (format === 'html')
+      for (const [captureRun, evidence] of [
+        ...run.evidence.map((e) => [run, e]),
+        ...(priorRun?.evidence.map((e) => [priorRun, e]) || []),
+      ]) {
+        try {
+          const proof = await this.readEvidence({
+            runId: captureRun.runId,
+            evidenceId: evidence.evidenceId,
+            includeImage: includeImages,
+          });
+          if (proof.image) {
+            bytes += Buffer.byteLength(proof.image.data, 'base64');
+            if (bytes > 12 * 1024 * 1024) {
+              delete proof.image;
+              warnings.push('Image budget exceeded; additional images omitted.');
             }
-            captures.push(proof);
-          } catch {
-            captures.push({ evidence, observation: null, findings: [] });
-            warnings.push('An original evidence artifact is unavailable.');
           }
+          captures.push(proof);
+        } catch {
+          captures.push({ evidence, observation: null, findings: [] });
+          warnings.push('An original evidence artifact is unavailable.');
         }
-      const contents =
-        format === 'html'
-          ? acceptanceHtml(run, gate, captures, lang, comparison)
-          : format === 'markdown'
-            ? acceptanceMarkdown(run, gate) +
-              (comparison ? '\n## Comparison\n\n```json\n' + json(comparison) + '```\n' : '')
-            : json({ schemaVersion: 1, run, gate, comparison });
-      const extension = { html: 'html', json: 'json', markdown: 'md' }[format];
-      const parent = await this.#file(`runs/${id(runId)}`);
-      const filename = `${randomUUID()}.${extension}`;
-      await writeFile(path.join(parent, filename), contents, { flag: 'wx', mode: 0o600 });
-      return {
-        runId,
-        format,
-        file: `runs/${runId}/${filename}`,
-        bytes: Buffer.byteLength(contents),
-        gate,
-        warnings: [...new Set(warnings)],
-      };
-    });
+      }
+    const contents =
+      format === 'html'
+        ? acceptanceHtml(run, gate, captures, lang, comparison)
+        : format === 'markdown'
+          ? acceptanceMarkdown(run, gate) +
+            (comparison ? '\n## Comparison\n\n```json\n' + json(comparison) + '```\n' : '')
+          : json({ schemaVersion: 1, run, gate, comparison });
+    const extension = { html: 'html', json: 'json', markdown: 'md' }[format];
+    const parent = await this.#file(`runs/${id(runId)}`);
+    const filename = `${randomUUID()}.${extension}`;
+    await writeFile(path.join(parent, filename), contents, { flag: 'wx', mode: 0o600 });
+    return {
+      runId,
+      format,
+      file: `runs/${runId}/${filename}`,
+      bytes: Buffer.byteLength(contents),
+      gate,
+      warnings: [...new Set(warnings)],
+    };
   }
 }

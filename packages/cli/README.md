@@ -14,7 +14,7 @@ Your existing assistant supplies the reasoning; ShipLens supplies repeatable evi
 shiplens mcp --config /absolute/project/shiplens.config.json
 ```
 
-Eighteen tools support the review lifecycle. The core tools collect requirement-scoped evidence, read PNG images and bounded DOM, record cited pass/fail/needs-evidence assessments, retrieve history, save cases and recheck. A pass requires complete evidence for every requested device. Manual judgments start pending on recheck; configured checks re-evaluate fresh evidence. Prior passes are never silently reused. Machine diagnostics remain separate from AI judgments.
+Twenty tools support the review lifecycle. The core tools collect requirement-scoped evidence, read PNG images and bounded DOM, record cited pass/fail/needs-evidence assessments, retrieve history, save cases and recheck. A pass requires complete evidence for every requested device. Manual judgments start pending on recheck; configured checks re-evaluate fresh evidence. Prior passes are never silently reused. Machine diagnostics remain separate from AI judgments.
 
 For your own agent, import `ReviewWorkspace` from `shiplens/review`. The six core methods are demonstrated in `node node_modules/shiplens/examples/review.mjs` after starting the bundled demo server. Saved cases parameterize fill inputs; use test data and masks for any values echoed into page content or logs. Your AI client receives requested evidence; ShipLens makes no model calls or report uploads.
 
@@ -189,3 +189,18 @@ MIT licensed.
 Scoped requirements accept `checks: [{ operator: 'equals' | 'contains' | 'excludes', value: 'expected text' }]`. Comparisons normalize whitespace and preserve case over visible unmasked evidence. Failed/incomplete checks block caller passes. Manual review remains the default; opt into `evaluation: 'checks'` only when text assertions fully describe the requirement. Missing or truncated proof cannot pass. Check-only results are fresh deterministic evaluations, not AI judgments, and cannot be overwritten through assess.
 
 Use `ReviewWorkspace.reviewPacket({ runId })` or MCP `shiplens_review_packet` to batch unresolved evidence. Follow nextOffset and read omitted evidence individually. `includeImages` defaults true, `includePassed` false, limit 6 (max 10), maxBytes 2 MiB (16 KiB–8 MiB). The CLI equivalent is `shiplens review packet --config config.json --run RUN_ID`. See [parameters, return values, examples and measured results](https://shiplens.nimokit.com/#/docs/checked-review). The package contains `examples/checks.mjs`.
+
+## One-command verification (0.6)
+
+Keep a reviewed portable case JSON in source control and run it on a fresh machine without importing a case or passing run IDs between commands. Host URL and request policy remain in the configuration.
+
+```sh
+npx shiplens review plan --config shiplens.config.json --plan acceptance.json
+npx shiplens review verify --config shiplens.config.json --plan acceptance.json
+```
+
+`plan` validates without browser requests or artifact writes. `verify` collects fresh evidence, computes the gate and writes an HTML report. stdout returns `runId`, `plan`, `gate`, `report`, `unresolved` and `next`. Exit 0 means passed, 1 means a completed but blocked gate, and 2 means the command could not complete. `report.file` resolves under `<output>/reviews`. Optional `--input` reads named runtime values from a JSON object; `--format`, `--lang`, `--fail-on` and `--timeout-ms` configure the result.
+
+API: `workspace.validatePlan({data})` and `await workspace.verify({data, inputs, format})`. MCP: `shiplens_validate_plan` and `shiplens_verify`. Manual requirements deliberately remain pending. Empty unresolved evidence does not clear machine findings. Reports include the parsed plan fingerprint and remain immutable snapshots.
+
+Try `node node_modules/shiplens/examples/verify.mjs` with the bundled example server running. The package includes `examples/acceptance.json`. [Full parameters, CLI/API examples, inputs and CI integration](https://shiplens.nimokit.com/#/docs/portable-plans).

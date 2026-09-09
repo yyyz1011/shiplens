@@ -59,6 +59,7 @@ export interface ReviewRun {
   createdAt: string;
   previousRunId?: string;
   caseId?: string;
+  planSource?: { name: string; sha256: string };
   requirements: Array<
     Requirement & {
       viewports: Array<'desktop' | 'mobile'>;
@@ -109,6 +110,17 @@ export interface SavedCase {
 }
 export class ReviewWorkspace {
   constructor(config: { directory: string; options: ScanOptions });
+  validatePlan(input: { data: PortableCase }): PlanInfo;
+  verify(
+    input: {
+      data: PortableCase;
+      inputs?: Record<string, string>;
+      failOn?: 'error' | 'warning';
+      format?: 'html' | 'json' | 'markdown';
+      lang?: 'en' | 'zh';
+    },
+    runtime?: ReviewRuntime,
+  ): Promise<PlanVerification>;
   collect(
     input: { requirements: Requirement[]; flows?: InteractionFlow[] },
     runtime?: ReviewRuntime,
@@ -189,6 +201,29 @@ export interface ReviewPacket {
   items: Array<EvidenceResult & { omitted: string[]; readSeparately: boolean }>;
   bytes: number;
   note: string;
+}
+
+export interface PlanInfo {
+  name: string;
+  sha256: string;
+  requirementCount: number;
+  flowCount: number;
+  requiredInputs: RequiredInput[];
+  automaticRequirements: string[];
+  manualRequirements: string[];
+  note: string;
+}
+export interface PlanVerification {
+  runId: string;
+  plan: PlanInfo;
+  gate: AcceptanceGate;
+  report: Awaited<ReturnType<ReviewWorkspace['exportReport']>>;
+  unresolved: Array<{
+    criterionId: string;
+    status: AssessmentStatus | 'pending';
+    verification?: CheckVerification;
+  }>;
+  next: { method: 'reviewPacket'; input: { runId: string } } | null;
 }
 
 export interface ReviewRuntime {
