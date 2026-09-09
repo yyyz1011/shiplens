@@ -40,6 +40,7 @@ try {
           '/#/docs/ci',
           '/#/docs/api',
           '/#/docs/ai-workflow',
+          '/#/docs/benchmark',
           '/#/docs/mcp',
           '/#/docs/review-api',
           '/#/docs/scoped-review',
@@ -84,7 +85,8 @@ try {
             route === '/#/docs/flows' ||
             route === '/#/docs/mcp' ||
             route === '/#/docs/review-api' ||
-            route === '/#/docs/acceptance-ops'
+            route === '/#/docs/acceptance-ops' ||
+            route === '/#/docs/benchmark'
           )
             await page.screenshot({
               path: `${output}/${device}-${locale}-${theme}-${route === '/' ? 'home' : route.includes('quickstart') ? 'docs' : route.includes('/docs/') ? route.split('/').at(-1) : 'report'}.png`,
