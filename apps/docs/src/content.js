@@ -9,10 +9,91 @@ export const code = (text, label = 'Terminal') =>
 const p = (en, zh) => `<p>${t(en, zh)}</p>`;
 const h = (id, en, zh) => `<h2 id="${id}">${t(en, zh)}</h2>`;
 const note = (en, zh) => `<aside class="note"><span>i</span><div>${t(en, zh)}</div></aside>`;
-const table = (rows) =>
-  `<div class="table-scroll"><table><thead><tr><th>${t('Option', '参数')}</th><th>${t('Behavior', '行为')}</th></tr></thead><tbody>${rows.map(([key, en, zh]) => `<tr><td><code>${key}</code></td><td>${t(en, zh)}</td></tr>`).join('')}</tbody></table></div>`;
+const table = (rows, labels = [t('Option', '参数'), t('Behavior', '行为')]) =>
+  `<div class="table-scroll"><table><thead><tr><th>${labels[0]}</th><th>${labels[1]}</th></tr></thead><tbody>${rows.map(([key, en, zh]) => `<tr><td><code>${key}</code></td><td>${t(en, zh)}</td></tr>`).join('')}</tbody></table></div>`;
 export function getDocs() {
   return [
+    {
+      id: 'introduction',
+      group: t('Get started', '开始使用'),
+      title: t('Browser evidence before you ship.', '用浏览器证据，检查每次交付。'),
+      description: t(
+        'Check your website in a real browser. Find delivery issues, keep the evidence, and verify the next version.',
+        '用真实浏览器检查网站，发现交付问题、保存现场证据，并在修复后重新验证。',
+      ),
+      body:
+        `<div class="reading-meta"><span>Node.js 22.12+</span><span>JavaScript / TypeScript</span><span>MIT</span></div>` +
+        code('npm install -g shiplens\nshiplens browsers\nshiplens http://localhost:3000') +
+        p(
+          'No AI provider or API key is required. ShipLens uses browser events and measurements; you can share the Markdown report with your own coding assistant.',
+          '无需配置 AI 模型或 API Key。ShipLens 使用浏览器事件和页面测量进行检查；生成的 Markdown 报告可以交给你自己的编码助手。',
+        ) +
+        h('start', 'Choose your starting point', '选择你的起点') +
+        `<div class="reading-paths">${[
+          [
+            'quickstart',
+            'Run your first check',
+            '运行第一次检查',
+            'Install Chromium, scan a URL and open your report.',
+            '安装浏览器、检查网址、打开报告。',
+          ],
+          [
+            'configuration',
+            'Define the scope',
+            '配置检查范围',
+            'Specify routes, test sessions and readiness conditions.',
+            '指定路由、测试登录态和就绪条件。',
+          ],
+          [
+            'reports',
+            'Read the evidence',
+            '理解报告与证据',
+            'Understand findings, coverage and baseline comparison.',
+            '了解问题、覆盖范围和基线对比。',
+          ],
+          [
+            'ci',
+            'Integrate into your workflow',
+            '接入工作流程',
+            'Use the CLI in CI, or import the JavaScript API.',
+            '通过 CLI 接入 CI，或使用 JavaScript API。',
+          ],
+        ]
+          .map(
+            ([id, en, zh, desc, descZh]) =>
+              `<a href="#/docs/${id}"><strong>${t(en, zh)} <span aria-hidden="true">→</span></strong><span>${t(desc, descZh)}</span></a>`,
+          )
+          .join('')}</div>` +
+        h('checks', 'What ShipLens checks', 'ShipLens 检查什么') +
+        `<ul><li>${t('Unhandled JavaScript errors, HTTP failures and broken resources.', '未处理的 JavaScript 异常、HTTP 失败和失效资源。')}</li><li>${t('Visible broken images, suspicious blank pages and horizontal overflow.', '可见坏图、疑似白屏和横向溢出。')}</li><li>${t('Desktop and mobile viewports, with page and element screenshots.', '桌面与手机视口，以及页面和元素截图。')}</li><li>${t('New and existing findings, with coverage checks before marking anything resolved.', '新增与仍存在的问题；标记已解决前，先核对覆盖范围。')}</li></ul>` +
+        h('outputs', 'One scan, three report formats', '一次检查，三种报告') +
+        table(
+          [
+            [
+              'HTML',
+              'Read findings, filter severity and inspect screenshots.',
+              '阅读问题、筛选级别和查看截图。',
+            ],
+            [
+              'JSON',
+              'Consume structured findings and completion state in scripts.',
+              '在脚本中读取结构化问题和完成状态。',
+            ],
+            [
+              'Markdown',
+              'Give reproducible evidence to your coding assistant.',
+              '为编码助手提供可复现的证据。',
+            ],
+          ],
+          [t('Format', '格式'), t('Use', '用途')],
+        ) +
+        h('limits', 'Know the boundaries', '了解能力边界') +
+        p(
+          'ShipLens is a delivery smoke check. It does not verify business workflows, authorization, payment accuracy or every browser. Mobile uses Chromium emulation. A clean report describes the observed scope, not complete product acceptance.',
+          'ShipLens 是交付冒烟检查工具，不验证业务流程、权限、支付金额或所有浏览器。手机视口使用 Chromium 模拟。零问题仅描述已观察到的范围，不能替代完整产品验收。',
+        ) +
+        `<a class="inline-link" href="#/docs/rules">${t('See all rules and coverage limits', '查看全部规则与覆盖限制')} →</a>`,
+    },
     {
       id: 'quickstart',
       group: t('Get started', '开始使用'),

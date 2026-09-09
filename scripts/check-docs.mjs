@@ -75,7 +75,7 @@ try {
         }
       }
     await page.locator('#language-select').selectOption('en');
-    await page.locator('.nav-actions .search-trigger').click();
+    await page.locator('.reading-toolbar .search-trigger').click();
     await page.locator('#search-input').fill('exit codes');
     await page.locator('.search-result').filter({ hasText: 'CLI reference' }).click();
     await page.getByRole('heading', { name: 'CLI reference', exact: true }).waitFor();
@@ -92,24 +92,38 @@ try {
     assert.ok(
       (await page.evaluate(() => navigator.clipboard.readText())).includes('horizontal-overflow'),
     );
-    await page.locator('.nav-actions .search-trigger').click();
+    await page.locator('.reading-toolbar .search-trigger').click();
     await page.getByPlaceholder('搜索文档、规则或命令…').fill('退出码');
     await page.locator('.search-result').filter({ hasText: '命令行参考' }).click();
     await page.getByRole('heading', { name: '命令行参考', exact: true }).waitFor();
     assert.equal(await page.locator('h1').innerText(), '命令行参考');
     await page.locator('.copy-button').first().click();
     assert.ok((await page.evaluate(() => navigator.clipboard.readText())).includes('shiplens'));
-    await page.locator('.nav-actions .search-trigger').click();
+    await page.locator('.reading-toolbar .search-trigger').click();
     await page.getByPlaceholder('搜索文档、规则或命令…').fill('unlikely-search-0000');
     assert.ok(await page.locator('.search-empty').isVisible());
     await page.keyboard.press('Escape');
     assert.ok(!(await page.locator('#search-dialog').isVisible()));
     if (device === 'mobile') {
-      await page.locator('.menu-toggle').click();
-      assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'), 'true');
-      await page.locator('.mobile-nav a').filter({ hasText: '概览' }).click();
-      await page.locator('.hero').waitFor();
+      await page.locator('.docs-menu-trigger').click();
+      assert.ok(await page.locator('#docs-drawer').isVisible());
+      await page.keyboard.press('Escape');
+      assert.ok(!(await page.locator('#docs-drawer').isVisible()));
+      await page.locator('.docs-menu-trigger').click();
+      await page.locator('#docs-drawer a[href="#/"]').click();
+      await page.locator('.reading-paths').waitFor();
+      assert.ok(!(await page.locator('#docs-drawer').isVisible()));
     }
+    await page.goto(base + '/#/docs/cli?section=exit-codes');
+    await page.locator('#exit-codes').waitFor();
+    await page.waitForFunction(() => document.activeElement?.id === 'exit-codes');
+    const anchorTop = await page
+      .locator('#exit-codes')
+      .evaluate((el) => el.getBoundingClientRect().top);
+    assert.ok(
+      anchorTop >= 64 && anchorTop < viewport.height - 64,
+      `Anchor hidden by navigation: ${anchorTop}`,
+    );
     await page.goto(base + '/example/index.html');
     await page.locator('.finding').first().waitFor();
     await page.locator('[data-filter="warning"]').click();
@@ -145,7 +159,8 @@ try {
           'search navigation',
           'empty search',
           'escape close',
-          'mobile menu',
+          'mobile drawer and escape',
+          'deep links to document sections',
           'real report filters',
           'real screenshot load',
         ],
