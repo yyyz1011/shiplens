@@ -9,6 +9,7 @@ export const DEFAULTS = Object.freeze({
   exclude: [],
   pages: [],
   crawl: true,
+  captureDom: false,
   scroll: true,
   scrollSteps: 6,
   waitFor: '',
@@ -34,8 +35,14 @@ export const RULES = [
   'navigation-failed',
   'screenshot-failed',
   'interaction-failed',
+  'evidence-failed',
 ];
-export const OPERATIONAL_RULES = ['navigation-failed', 'screenshot-failed', 'interaction-failed'];
+export const OPERATIONAL_RULES = [
+  'navigation-failed',
+  'screenshot-failed',
+  'interaction-failed',
+  'evidence-failed',
+];
 export const hash = (value) => createHash('sha256').update(value).digest('hex').slice(0, 16);
 const sensitive =
   /token|secret|password|credential|api[_-]?key|authorization|session|signature|cookie/i;
@@ -73,7 +80,7 @@ export function validateOptions(input = {}) {
     if (!Number.isInteger(o[key]) || o[key] < min || o[key] > max)
       throw new Error(`${key} must be an integer from ${min} to ${max}.`);
   }
-  for (const key of ['crawl', 'scroll'])
+  for (const key of ['crawl', 'scroll', 'captureDom'])
     if (typeof o[key] !== 'boolean') throw new Error(`${key} must be a boolean.`);
   if (!['desktop', 'mobile', 'both'].includes(o.viewport))
     throw new Error('viewport must be desktop, mobile or both.');

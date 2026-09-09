@@ -1,4 +1,5 @@
 export const RULE_TITLES = {
+  'evidence-failed': ['DOM evidence unavailable', '页面结构证据未能保存'],
   'interaction-failed': ['Interaction step failed', '交互步骤失败'],
   'runtime-error': ['Unhandled page error', '页面脚本运行异常'],
   'console-error': ['Console error', '浏览器控制台报错'],

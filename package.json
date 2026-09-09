@@ -27,6 +27,7 @@
     "demo:interactions": "node scripts/demo-interactions.mjs"
   },
   "devDependencies": {
+    "@modelcontextprotocol/client": "2.0.0",
     "@types/node": "26.5.0",
     "prettier": "3.9.6",
     "typescript": "7.0.2"

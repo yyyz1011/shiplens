@@ -2,6 +2,7 @@ import { t } from './i18n.js';
 import { code, p, h, note, table } from './markup.js';
 export { escape } from './markup.js';
 import { interactionDocs, ignoreDocs, exampleDocs } from './workflow-docs.js';
+import { aiWorkflowDocs, mcpDocs, reviewApiDocs } from './review-docs.js';
 import { apiDocs } from './api-docs.js';
 export function getDocs() {
   return [
@@ -10,15 +11,15 @@ export function getDocs() {
       group: t('Get started', '开始使用'),
       title: t('Browser evidence before you ship.', '用浏览器证据，检查每次交付。'),
       description: t(
-        'Check your website in a real browser. Find delivery issues, keep the evidence, and verify the next version.',
-        '用真实浏览器检查网站，发现交付问题、保存现场证据，并在修复后重新验证。',
+        'Give your AI assistant repeatable browser evidence, cited acceptance checks and regression cases.',
+        '为你的 AI 助手提供可重复的浏览器证据、带引用的验收记录与回归案例。',
       ),
       body:
         `<div class="reading-meta"><span>Node.js 22.12+</span><span>JavaScript / TypeScript</span><span>MIT</span></div>` +
         code('npm install -g shiplens\nshiplens browsers\nshiplens http://localhost:3000') +
         p(
-          'No AI provider or API key is required. ShipLens uses browser events and measurements; you can share the Markdown report with your own coding assistant.',
-          '无需配置 AI 模型或 API Key。ShipLens 使用浏览器事件和页面测量进行检查；生成的 Markdown 报告可以交给你自己的编码助手。',
+          'Use your existing AI assistant through MCP, or run deterministic browser checks from the CLI. ShipLens captures evidence and records assessments; your model supplies the judgment. No additional model API key is required.',
+          '通过 MCP 使用现有 AI 助手，或从 CLI 运行确定性浏览器检查。ShipLens 采集证据、记录验收，模型负责判断，无需额外配置模型 API Key。',
         ) +
         h('start', 'Choose your starting point', '选择你的起点') +
         `<div class="reading-paths">${[
@@ -44,11 +45,11 @@ export function getDocs() {
             '了解问题、覆盖范围和基线对比。',
           ],
           [
-            'ci',
-            'Integrate into your workflow',
-            '接入工作流程',
-            'Use the CLI in CI, or import the JavaScript API.',
-            '通过 CLI 接入 CI，或使用 JavaScript API。',
+            'ai-workflow',
+            'Review with your AI assistant',
+            '与 AI 助手一起验收',
+            'Read images, cite judgments and replay cases with MCP.',
+            '通过 MCP 读取图片、引用证据判断并重放案例。',
           ],
         ]
           .map(
@@ -341,6 +342,11 @@ export function getDocs() {
             'No visible meaningful text, media or controls after observation.',
             '观察结束后无有意义的可见文字、媒体或控件。',
           ],
+          [
+            'evidence-failed',
+            'Optional DOM evidence could not be captured; the check is incomplete.',
+            '可选页面结构证据采集失败，检查标记为未完成。',
+          ],
           ['screenshot-failed', 'Screenshot evidence could not be saved.', '无法保存截图证据。'],
           [
             'interaction-failed',
@@ -438,6 +444,9 @@ export function getDocs() {
           'master 更新后先通过自动检查，再发布 npm 和部署 GitHub Pages。可在 GitHub 查看发布版本和产物。',
         ),
     },
+    aiWorkflowDocs(),
+    mcpDocs(),
+    reviewApiDocs(),
     apiDocs(),
     exampleDocs(),
     {
@@ -448,8 +457,8 @@ export function getDocs() {
       body:
         h('ai', 'Do I need to configure AI?', '需要配置 AI 吗？') +
         p(
-          'No. Detection is based on browser events and deterministic rules. AI-ready means you can give the Markdown evidence to an assistant you already use.',
-          '不需要。检测基于浏览器事件和确定性规则。AI-ready 指 Markdown 证据可以交给你正在使用的编码助手。',
+          'No. Detection is based on browser events and deterministic rules. Use the MCP tools or shiplens/review API to let your existing assistant read images, record cited assessments and replay cases. ShipLens does not make model calls.',
+          '不需要。检测基于浏览器事件和确定性规则。通过 MCP 工具或 shiplens/review API，让现有助手读取截图、记录带引用的判断并重放案例。ShipLens 不调用模型。',
         ) +
         h('login', 'Can it inspect pages behind login?', '可以检查登录后的页面吗？') +
         p(

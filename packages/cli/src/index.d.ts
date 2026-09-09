@@ -20,6 +20,7 @@ export interface IgnoreEntry {
   expires?: string;
 }
 export interface StepResult {
+  observation?: string;
   index: number;
   action: InteractionStep['action'];
   selector: string;
@@ -31,6 +32,7 @@ export interface ScanOptions {
   url: string;
   pages?: string[];
   crawl?: boolean;
+  captureDom?: boolean;
   maxPages?: number;
   viewport?: 'desktop' | 'mobile' | 'both';
   timeout?: number;
@@ -71,6 +73,7 @@ export interface SuppressedFinding extends Finding {
   suppression: { index: number; reason: string; expires?: string };
 }
 export interface PageCheck {
+  observation?: string;
   flow?: string;
   steps?: StepResult[];
   viewport: string;

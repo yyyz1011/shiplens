@@ -69,6 +69,10 @@ export function apiDocs() {
         'For resolution claims, use scan({ ...options, baseline: "previous/report.json" }) and inspect report.comparison.comparable and resolved. Absence alone is not evidence of repair.',
         '需要判断修复时，请使用 scan({ ...options, baseline: "previous/report.json" })，查看 report.comparison.comparable 与 resolved；仅本次未发现不能证明已修复。',
       ) +
+      p(
+        'For AI acceptance criteria and replayable cases, see the separate <a href="#/docs/review-api">shiplens/review API</a>.',
+        'AI 验收项与可重放案例见独立的 <a href="#/docs/review-api">shiplens/review API</a>。',
+      ) +
       h('options', 'Every ScanOptions field', '全部 ScanOptions 字段') +
       table([
         [
@@ -80,6 +84,11 @@ export function apiDocs() {
           'pages',
           'string[], default []; exact extra URLs/paths, including hash routes.',
           'string[]，默认 []；额外精确 URL/路径，支持 hash 路由。',
+        ],
+        [
+          'captureDom',
+          'boolean, default false; save bounded visible DOM observations beside screenshots. ReviewWorkspace enables this automatically. Failed capture produces evidence-failed and an incomplete check. PageCheck and StepResult may contain an observation relative path.',
+          'boolean，默认 false；在截图旁保存有限的可见页面结构。ReviewWorkspace 自动启用。采集失败生成 evidence-failed 并将检查标为未完成。PageCheck 与 StepResult 可包含 observation 相对路径。',
         ],
         [
           'crawl',
