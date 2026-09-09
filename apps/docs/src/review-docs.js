@@ -167,7 +167,7 @@ export function mcpDocs() {
         'Replace both absolute paths. Use the absolute Node executable if your client does not inherit PATH. Other clients use different configuration formats; the process command and arguments are the same. Restart or reconnect the client, then confirm all 18 tools are listed. The server uses stdout only for MCP protocol messages and supports legacy and modern MCP clients.',
         '替换两个绝对路径。客户端未继承 PATH 时，使用 Node 可执行文件的绝对路径。其他客户端可能采用不同配置格式，但启动命令与参数相同。重启或重新连接后，确认十八个工具全部出现。服务的 stdout 只用于 MCP 协议消息，支持旧版及新版 MCP 客户端。',
       ) +
-      h('tools', 'Six core review tools', '六个核心验收工具') +
+      h('tools', 'Seven core review tools', '七个核心验收工具') +
       table([
         [
           'shiplens_collect',
@@ -183,6 +183,11 @@ export function mcpDocs() {
           'shiplens_read_evidence',
           '{ runId, evidenceId, includeImage? } → native PNG image content (default true), bounded DOM and scoped findings (a final-state capture includes findings from earlier steps of that flow).',
           '{ runId, evidenceId, includeImage? } → 原生 PNG 图片内容（默认 true）、有限页面结构与对应机器发现（最终状态包含该流程之前步骤的发现）。',
+        ],
+        [
+          'shiplens_review_packet',
+          '{ runId, offset?, limit?, includeImages?, includePassed?, maxBytes? } → paginated unresolved evidence with native images, imageIndex mappings and explicit omissions. See <a href="#/docs/checked-review">checks & review packets</a> for limits and examples.',
+          '{ runId, offset?, limit?, includeImages?, includePassed?, maxBytes? } → 分页读取未通过项证据，含原生图片、imageIndex 对应关系和明确的省略信息。参数限制与示例见<a href="#/docs/checked-review">断言与批量证据</a>。',
         ],
         [
           'shiplens_assess',
@@ -264,6 +269,11 @@ export function reviewApiDocs() {
           'viewports',
           'Optional nonempty subset of configured desktop/mobile devices; defaults to all configured devices. Exact state/device matching is required for citations.',
           '可选配置中 desktop/mobile 的非空子集，默认全部配置设备；引用必须精确匹配状态与设备。',
+        ],
+        [
+          'checks / evaluation',
+          'Optional text expectations and manual (default) or checks evaluation. See <a href="#/docs/checked-review">checks & review packets</a> for operators, limits, verification results and a runnable example.',
+          '可选文本预期，以及 manual（默认）或 checks 验收模式。支持的运算、限制、verification 结果及可运行示例见<a href="#/docs/checked-review">断言与批量证据</a>。',
         ],
         [
           'flows',
