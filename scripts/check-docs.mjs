@@ -22,11 +22,11 @@ try {
     page.on('response', (r) => {
       if (r.status() >= 400) errors.push(`${r.status()} ${r.url()}`);
     });
-    await page.goto(base);
+    await page.goto(base + '/');
     assert.equal(await page.locator('html').getAttribute('lang'), 'en');
     for (const locale of ['en', 'zh'])
       for (const theme of ['light', 'dark']) {
-        await page.goto(base);
+        await page.goto(base + '/');
         await page.locator('#language-select').selectOption(locale);
         if ((await page.locator('html').getAttribute('data-theme')) !== theme)
           await page.locator('#theme-toggle').click();
