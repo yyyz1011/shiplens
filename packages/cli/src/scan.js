@@ -1,3 +1,4 @@
+import { captureObservation } from './observations.js';
 import { chromium } from 'playwright';
 import { mkdir, readFile, chmod } from 'node:fs/promises';
 import path from 'node:path';
@@ -44,6 +45,7 @@ export async function scan(input) {
   );
   await mkdir(path.join(directory, 'screenshots'), { recursive: true, mode: 0o700 });
   await chmod(directory, 0o700);
+  if (o.captureDom) await mkdir(path.join(directory, 'observations'), { mode: 0o700 });
   let browser;
   try {
     browser = await chromium.launch({ headless: true });
@@ -58,6 +60,7 @@ export async function scan(input) {
     target: redact(o.url),
     startedAt: new Date(started).toISOString(),
     options: {
+      ...(o.captureDom ? { captureDom: true } : {}),
       maxPages: o.maxPages,
       timeout: o.timeout,
       settle: o.settle,
@@ -172,6 +175,18 @@ export async function scan(input) {
               .filter((step) => step.action === 'fill')
               .map((step) => page.locator(step.selector)) || []),
           ];
+          const observe = async (result, name) => {
+            if (!o.captureDom) return;
+            try {
+              if (!maskValid) throw new Error('Invalid privacy mask.');
+              const filename = `observations/${name}.json`;
+              await captureObservation(page, masks(), path.join(directory, filename));
+              result.observation = filename;
+            } catch {
+              markIncomplete('DOM evidence unavailable.');
+              add('evidence-failed', 'warning', 'DOM evidence unavailable.', 'observation');
+            }
+          };
           const important = (req) =>
             ['script', 'stylesheet', 'fetch', 'xhr'].includes(req.resourceType()) &&
             new URL(req.url()).origin === origin;
@@ -372,6 +387,7 @@ export async function scan(input) {
                   for (const finding of r.findings.filter((f) => f.screenshot === shot))
                     finding.screenshot = null;
                 }
+                await observe(result, `${prefix}-step-${currentStep}`);
                 if (result.status === 'failed') {
                   for (let rest = index + 1; rest < flow.steps.length; rest++)
                     check.steps.push({
@@ -460,6 +476,7 @@ export async function scan(input) {
             for (const f of r.findings.filter((f) => f.screenshot === finalShot))
               f.screenshot = null;
           }
+          await observe(check, prefix);
           active = false;
           await ctx.close();
         }

@@ -6,6 +6,16 @@
 
 检查运行异常、失效资源、可见坏图、疑似白屏和横向溢出，生成带页面及元素截图的 HTML、JSON 和 Markdown 报告。无需配置 AI 模型或 API Key，不上传报告。
 
+## AI 验收与回归案例
+
+由现有 AI 助手理解需求和判断页面；ShipLens 提供可重复的证据与验收记录。通过 `shiplens mcp --config /项目绝对路径/shiplens.config.json` 启动六个 MCP 工具，支持采集、读取图片与页面结构、引用证据判断、查询历史、保存案例和重放。
+
+每个指定设备都要有完整证据才能提交通过；复查后的判断重新为 pending，旧结论不会自动沿用。机器诊断独立保留。自己的 Agent 可使用 `shiplens/review` 中的 `ReviewWorkspace`，包内 `examples/review.mjs` 演示全部六个方法。案例中的 fill 值转换为命名输入参数，回显内容与日志仍需测试数据及遮罩。
+
+无需额外模型 API Key；AI 客户端会收到它请求的证据，ShipLens 不调用模型或上传报告。本版不自动录制浏览器会话、不自动修复选择器，也尚未测出相对直接使用模型的准确率、耗时或 Token 优势。
+
+[AI 验收流程](https://yyyz1011.github.io/shiplens/#/docs/ai-workflow) · [MCP 配置](https://yyyz1011.github.io/shiplens/#/docs/mcp) · [完整 API 与可运行案例](https://yyyz1011.github.io/shiplens/#/docs/review-api)
+
 ## 使用
 
 需要 Node.js 22.12+，先启动被测网站。

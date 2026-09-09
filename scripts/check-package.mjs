@@ -20,7 +20,7 @@ try {
       (f) =>
         f.path.startsWith('src/') ||
         f.path.startsWith('examples/') ||
-        ['README.md', 'LICENSE', 'package.json'].includes(f.path),
+        ['README.md', 'AGENT_GUIDE.md', 'LICENSE', 'package.json'].includes(f.path),
     ),
   );
   const installed = path.join(temp, 'consumer');
@@ -74,6 +74,43 @@ try {
       },
     });
     assert.match(exampleResult.stdout, /comparable: true/);
+    const reviewExample = await exec(
+      process.execPath,
+      ['node_modules/shiplens/examples/review.mjs'],
+      {
+        cwd: installed,
+        env: {
+          ...process.env,
+          SHIPLENS_EXAMPLE_URL: `http://127.0.0.1:${demo.address().port}`,
+          SHIPLENS_EXAMPLE_OUTPUT: path.join(temp, 'review-example'),
+        },
+      },
+    );
+    assert.match(reviewExample.stdout, /status: 'pending'/);
+    assert.match(reviewExample.stdout, /comparable: true/);
+    const { Client } = await import('@modelcontextprotocol/client');
+    const { StdioClientTransport } = await import('@modelcontextprotocol/client/stdio');
+    const client = new Client({ name: 'package-check', version: '1.0.0' });
+    await writeFile(
+      path.join(installed, 'mcp.json'),
+      JSON.stringify({ url: `http://127.0.0.1:${demo.address().port}`, output: 'mcp-output' }),
+    );
+    try {
+      await client.connect(
+        new StdioClientTransport({
+          command: process.execPath,
+          args: [
+            path.join(installed, 'node_modules/shiplens/src/cli.js'),
+            'mcp',
+            '--config',
+            path.join(installed, 'mcp.json'),
+          ],
+        }),
+      );
+      assert.equal((await client.listTools()).tools.length, 6);
+    } finally {
+      await client.close();
+    }
     const config = JSON.parse(
       await (
         await import('node:fs/promises')
@@ -106,6 +143,8 @@ try {
         esmImport: true,
         executableApiExample: true,
         bundledFlowExample: true,
+        reviewSubpathExample: true,
+        installedMcpHandshake: true,
       },
       null,
       2,

@@ -13,6 +13,7 @@ const help = `
   shiplens <url> [options]
   shiplens scan <url> [options]
   shiplens browsers [--with-deps]  Install Chromium (and Linux dependencies)
+  shiplens mcp --config <file>    Serve AI review tools over stdio
   shiplens init                   Create shiplens.config.json
 
   --page <path-or-url>            Add explicit same-origin pages (repeatable)
@@ -41,6 +42,10 @@ const help = `
   Interactions run only through explicit flows in JSON configuration.
 `;
 async function main() {
+  if (process.argv[2] === 'mcp') {
+    const { startMcp } = await import('./mcp.js');
+    return startMcp(process.argv.slice(3));
+  }
   const { values: v, positionals } = parseArgs({
     allowPositionals: true,
     strict: true,
@@ -126,6 +131,7 @@ async function main() {
     'url',
     'pages',
     'crawl',
+    'captureDom',
     'maxPages',
     'viewport',
     'timeout',

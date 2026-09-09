@@ -1,7 +1,7 @@
 {
   "name": "shiplens",
-  "version": "0.2.0",
-  "description": "Local-first website delivery checks with browser evidence and AI-ready reports.",
+  "version": "0.3.0",
+  "description": "Repeatable browser evidence, AI acceptance reviews and regression cases for your existing coding assistant.",
   "type": "module",
   "bin": {
     "shiplens": "src/cli.js"
@@ -10,13 +10,18 @@
     ".": {
       "types": "./src/index.d.ts",
       "import": "./src/index.js"
+    },
+    "./review": {
+      "types": "./src/review.d.ts",
+      "import": "./src/review.js"
     }
   },
   "files": [
     "src",
     "README.md",
     "LICENSE",
-    "examples"
+    "examples",
+    "AGENT_GUIDE.md"
   ],
   "engines": {
     "node": ">=22.12.0"
@@ -32,7 +37,9 @@
     "smoke-test"
   ],
   "dependencies": {
-    "playwright": "1.63.0"
+    "@modelcontextprotocol/server": "2.0.0",
+    "playwright": "1.63.0",
+    "zod": "4.5.4"
   },
   "repository": {
     "type": "git",

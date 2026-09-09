@@ -39,6 +39,9 @@ try {
           '/#/docs/reports',
           '/#/docs/ci',
           '/#/docs/api',
+          '/#/docs/ai-workflow',
+          '/#/docs/mcp',
+          '/#/docs/review-api',
           '/#/docs/flows',
           '/#/docs/ignores',
           '/#/docs/examples',
@@ -75,7 +78,9 @@ try {
             route === '/#/docs/quickstart' ||
             route === '/#/report' ||
             route === '/#/docs/api' ||
-            route === '/#/docs/flows'
+            route === '/#/docs/flows' ||
+            route === '/#/docs/mcp' ||
+            route === '/#/docs/review-api'
           )
             await page.screenshot({
               path: `${output}/${device}-${locale}-${theme}-${route === '/' ? 'home' : route.includes('quickstart') ? 'docs' : route.includes('/docs/') ? route.split('/').at(-1) : 'report'}.png`,
@@ -90,6 +95,13 @@ try {
     const apiText = await page.locator('.reading-article').innerText();
     for (const method of Object.keys(await import('../packages/cli/src/index.js')))
       assert.ok(apiText.includes(method + '('), `Public API is undocumented: ${method}`);
+    await page.goto(base + '/#/docs/review-api');
+    const reviewText = await page.locator('.reading-article').innerText();
+    const { ReviewWorkspace } = await import('../packages/cli/src/review.js');
+    for (const method of Object.getOwnPropertyNames(ReviewWorkspace.prototype).filter(
+      (name) => name !== 'constructor',
+    ))
+      assert.ok(reviewText.includes(method + '('), `Review API is undocumented: ${method}`);
     const declarations = await readFile('packages/cli/src/index.d.ts', 'utf8');
     const optionBlock = declarations
       .split('export interface ScanOptions {')[1]

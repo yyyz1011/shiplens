@@ -6,6 +6,22 @@
 
 ShipLens checks runtime errors, failed resources, visible broken images, suspicious blank pages and horizontal overflow. It saves HTML, JSON and Markdown reports with page and element screenshots. No model account, API key, telemetry or report upload.
 
+## AI acceptance and regression cases
+
+Your existing assistant supplies the reasoning; ShipLens supplies repeatable evidence and a review ledger. Connect an image-capable MCP client to:
+
+```sh
+shiplens mcp --config /absolute/project/shiplens.config.json
+```
+
+Six tools collect requirement-scoped evidence, read PNG images and bounded DOM, record cited pass/fail/needs-evidence assessments, retrieve history, save cases and recheck. A pass requires complete evidence for every requested device. Rechecks start pending; prior passes are never silently reused. Machine diagnostics remain separate from AI judgments.
+
+For your own agent, import `ReviewWorkspace` from `shiplens/review`. All six methods are demonstrated in `node node_modules/shiplens/examples/review.mjs` after starting the bundled demo server. Saved cases parameterize fill inputs; use test data and masks for any values echoed into page content or logs. Your AI client receives requested evidence; ShipLens makes no model calls or report uploads.
+
+[AI workflow](https://yyyz1011.github.io/shiplens/#/docs/ai-workflow) · [MCP setup and tools](https://yyyz1011.github.io/shiplens/#/docs/mcp) · [Complete review API and runnable example](https://yyyz1011.github.io/shiplens/#/docs/review-api)
+
+This is workflow infrastructure, not an automatic visual judge or browser-session recorder. We have not measured an accuracy, latency or token advantage over using a model with generic browser tools directly.
+
 ## Quick start
 
 Requires **Node.js 22.12+**. Start your website first.

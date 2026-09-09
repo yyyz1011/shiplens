@@ -37,3 +37,37 @@ const invalidStep: import('../packages/cli/src/index.js').InteractionStep = {
   selector: 'input',
 };
 void invalidStep;
+
+import {
+  ReviewWorkspace,
+  type Requirement,
+  type ReviewRun,
+  type EvidenceResult,
+} from 'shiplens/review';
+const review = new ReviewWorkspace({
+  directory: '.shiplens/reviews',
+  options: { url: 'http://localhost:3000', captureDom: true },
+});
+const requirement: Requirement = {
+  id: 'heading',
+  description: 'Heading is visible',
+  page: '/',
+  viewports: ['desktop'],
+};
+const reviewRun: Promise<ReviewRun> = review.collect({ requirements: [requirement] });
+const reviewEvidence: Promise<EvidenceResult> = review.readEvidence({
+  runId: 'id',
+  evidenceId: 'e_id',
+});
+void reviewRun;
+void reviewEvidence;
+review.assess({
+  runId: 'id',
+  criterionId: 'heading',
+  status: 'needs-evidence',
+  evidenceIds: [],
+  note: 'Need mobile evidence',
+});
+review.getRun('id');
+review.saveCase({ runId: 'id', name: 'Heading' });
+review.recheck({ caseId: 'id', inputs: { input_1: 'test' } });
