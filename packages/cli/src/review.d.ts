@@ -125,6 +125,22 @@ export class ReviewWorkspace {
     input: { requirements: Requirement[]; flows?: InteractionFlow[] },
     runtime?: ReviewRuntime,
   ): Promise<ReviewRun>;
+  verifyDelivery(
+    input: { contract: DeliveryContract; inputs?: Record<string, string> },
+    runtime?: ReviewRuntime,
+  ): Promise<DeliveryResult>;
+  getDelivery(input: { deliveryId: string }): Promise<DeliveryResult>;
+  readDeliveryEvidence(input: {
+    deliveryId: string;
+    viewport: 'desktop' | 'mobile';
+    phase: 'success' | 'failure';
+  }): Promise<{
+    deliveryId: string;
+    trial: DeliveryTrial;
+    observation: Observation;
+    image: NonNullable<EvidenceResult['image']>;
+    warning: string;
+  }>;
   getRun(runId: string): Promise<ReviewRun>;
   auditChecks(input: CheckAuditInput): Promise<CheckAudit>;
   reviewPacket(input: {
@@ -359,5 +375,69 @@ export interface CheckAudit {
     unchanged: number;
   };
   bytes: number;
+  note: string;
+}
+
+export interface DeliveryContract {
+  schemaVersion: 1;
+  kind: 'shiplens-delivery';
+  name: string;
+  page: string;
+  referenceInput: string;
+  steps: PortableFlow['steps'];
+  request: { method: 'POST' | 'PUT' | 'PATCH'; path: string };
+  readback: {
+    path: string;
+    queryKey?: string;
+    items: string;
+    reference: string;
+    checks: Array<{ pointer: string; equals: string | number | boolean | null }>;
+  };
+  success: { selector: string; checks: NonNullable<Requirement['checks']> };
+  failure: { selector: string; checks: NonNullable<Requirement['checks']> };
+}
+export interface DeliveryReadback {
+  status: 'complete' | 'unavailable';
+  httpStatus?: number;
+  count?: number;
+  checks?: Array<{
+    pointer: string;
+    matched: boolean;
+    actual?: string | number | boolean | null;
+    actualOmitted?: boolean;
+  }>;
+  reason?: string;
+}
+export interface DeliveryTrial {
+  viewport: 'desktop' | 'mobile';
+  phase: 'success' | 'failure';
+  reference?: string;
+  passed: boolean;
+  status: 'pass' | 'fail' | 'needs-evidence' | 'skipped';
+  reasons: string[];
+  network?: {
+    matched: number;
+    statuses: number[];
+    failed: number;
+    blocked: number;
+    injected: number;
+  };
+  before?: DeliveryReadback | null;
+  after?: DeliveryReadback | null;
+  ui?: { passed: boolean; observedText: string; checks: boolean[] } | null;
+  successDuringFailure?: boolean;
+  evidence: { image: string; observation: string; selector: string } | null;
+}
+export interface DeliveryResult {
+  schemaVersion: 1;
+  kind: 'shiplens-delivery-result';
+  version: string;
+  deliveryId: string;
+  name: string;
+  contractSha256: string;
+  createdAt: string;
+  passed: boolean;
+  trials: DeliveryTrial[];
+  report: string;
   note: string;
 }

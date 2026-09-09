@@ -1,0 +1,1456 @@
+{
+  "schemaVersion": 1,
+  "version": "0.8.0",
+  "recordedAt": "2026-09-09T18:37:45.428Z",
+  "protocol": "One maintainer-controlled file-backed application, four deliberately implemented failure modes plus healthy control, two viewports, one repetition. UI-only baseline checks the success text. Independent full Playwright baseline performs equivalent correlation/readback/failure checks. No AI model, customer task, time, token or market measurement.",
+  "summary": {
+    "healthyViewportCases": 2,
+    "defectiveViewportCases": 8,
+    "uiOnlyFalsePasses": 8,
+    "playwrightFullFalsePasses": 0,
+    "shiplensFalsePasses": 0
+  },
+  "sources": {
+    "benchmarks/delivery-proof/run.mjs": "80c886d83ff550a641202a7ef0a1811e0c9e3e9251fd18b78c0e1306bbcde603",
+    "packages/cli/examples/delivery-server.mjs": "f2d338d9d7c5f305281050ea8d9cfb42f3c0c32e51c19156edebffe164fa8d47",
+    "packages/cli/examples/delivery.json": "ed64c117b71403c5d837d060635e2add5755e5de529b769ba5685b9a4b86118b",
+    "packages/cli/src/delivery.js": "bd398590814d9bc4be9802bc46172364364e1d982d9ba1bbac267324e4cc6ebe"
+  },
+  "contract": {
+    "schemaVersion": 1,
+    "kind": "shiplens-delivery",
+    "name": "Saving creates a record and handles failure",
+    "page": "/",
+    "referenceInput": "reference",
+    "steps": [
+      {
+        "action": "fill",
+        "selector": "#reference",
+        "valueFromInput": "reference"
+      },
+      {
+        "action": "click",
+        "selector": "#save"
+      }
+    ],
+    "request": {
+      "method": "POST",
+      "path": "/api/records"
+    },
+    "readback": {
+      "path": "/api/records",
+      "queryKey": "reference",
+      "items": "/items",
+      "reference": "/reference",
+      "checks": [
+        {
+          "pointer": "/status",
+          "equals": "saved"
+        }
+      ]
+    },
+    "success": {
+      "selector": "#status",
+      "checks": [
+        {
+          "operator": "equals",
+          "value": "Saved"
+        }
+      ]
+    },
+    "failure": {
+      "selector": "#status",
+      "checks": [
+        {
+          "operator": "contains",
+          "value": "Could not save"
+        },
+        {
+          "operator": "excludes",
+          "value": "Saved"
+        }
+      ]
+    }
+  },
+  "cases": [
+    {
+      "mode": "healthy",
+      "playwright": [
+        {
+          "viewport": "desktop",
+          "uiOnlyPassed": true,
+          "fullContractPassed": true,
+          "trials": [
+            {
+              "viewport": "desktop",
+              "phase": "success",
+              "reference": "364f965b-d282-424a-860e-cd6dff1614d7",
+              "requests": 1,
+              "statuses": [
+                201
+              ],
+              "beforeCount": 0,
+              "afterCount": 1,
+              "observedText": "Saved",
+              "passed": true
+            },
+            {
+              "viewport": "desktop",
+              "phase": "failure",
+              "reference": "c4f87037-e44b-4b66-af0b-31edf2be9700",
+              "requests": 1,
+              "statuses": [
+                503
+              ],
+              "beforeCount": 0,
+              "afterCount": 0,
+              "observedText": "Could not save. Try again.",
+              "passed": true
+            }
+          ]
+        },
+        {
+          "viewport": "mobile",
+          "uiOnlyPassed": true,
+          "fullContractPassed": true,
+          "trials": [
+            {
+              "viewport": "mobile",
+              "phase": "success",
+              "reference": "c721e233-0ab8-4732-b6e4-d8da80b64cb1",
+              "requests": 1,
+              "statuses": [
+                201
+              ],
+              "beforeCount": 0,
+              "afterCount": 1,
+              "observedText": "Saved",
+              "passed": true
+            },
+            {
+              "viewport": "mobile",
+              "phase": "failure",
+              "reference": "a1ddd1f2-3f1b-4a2d-b57b-81e3924746b1",
+              "requests": 1,
+              "statuses": [
+                503
+              ],
+              "beforeCount": 0,
+              "afterCount": 0,
+              "observedText": "Could not save. Try again.",
+              "passed": true
+            }
+          ]
+        }
+      ],
+      "shiplens": {
+        "schemaVersion": 1,
+        "kind": "shiplens-delivery-result",
+        "version": "0.8.0",
+        "deliveryId": "51037340-0a9a-40d3-a91d-2970f6d99474",
+        "name": "Saving creates a record and handles failure",
+        "contractSha256": "701c631f653956359fbca21106bc590106c8ba14767ad7e0f1c2f546755d6a6c",
+        "createdAt": "2026-09-09T18:37:30.924Z",
+        "passed": true,
+        "trials": [
+          {
+            "viewport": "desktop",
+            "phase": "success",
+            "reference": "fa7d21eb-19ba-4a18-aa69-07be4951eca0",
+            "passed": true,
+            "status": "pass",
+            "reasons": [],
+            "network": {
+              "matched": 1,
+              "statuses": [
+                201
+              ],
+              "failed": 0,
+              "blocked": 0,
+              "injected": 0
+            },
+            "before": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "after": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 1,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": true,
+                  "actual": "saved"
+                }
+              ]
+            },
+            "ui": {
+              "passed": true,
+              "observedText": "Saved",
+              "checks": [
+                true
+              ]
+            },
+            "evidence": {
+              "image": "desktop-success.png",
+              "observation": "desktop-success.json",
+              "selector": "#status"
+            }
+          },
+          {
+            "viewport": "desktop",
+            "phase": "failure",
+            "reference": "cbce6ba5-bb51-4f0d-a0c4-f114fb140942",
+            "passed": true,
+            "status": "pass",
+            "reasons": [],
+            "network": {
+              "matched": 1,
+              "statuses": [
+                503
+              ],
+              "failed": 0,
+              "blocked": 0,
+              "injected": 1
+            },
+            "before": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "after": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "ui": {
+              "passed": true,
+              "observedText": "Could not save. Try again.",
+              "checks": [
+                true,
+                true
+              ]
+            },
+            "evidence": {
+              "image": "desktop-failure.png",
+              "observation": "desktop-failure.json",
+              "selector": "#status"
+            },
+            "successDuringFailure": false
+          },
+          {
+            "viewport": "mobile",
+            "phase": "success",
+            "reference": "4b43e21c-20f7-4c20-ac7e-25ddfe429e50",
+            "passed": true,
+            "status": "pass",
+            "reasons": [],
+            "network": {
+              "matched": 1,
+              "statuses": [
+                201
+              ],
+              "failed": 0,
+              "blocked": 0,
+              "injected": 0
+            },
+            "before": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "after": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 1,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": true,
+                  "actual": "saved"
+                }
+              ]
+            },
+            "ui": {
+              "passed": true,
+              "observedText": "Saved",
+              "checks": [
+                true
+              ]
+            },
+            "evidence": {
+              "image": "mobile-success.png",
+              "observation": "mobile-success.json",
+              "selector": "#status"
+            }
+          },
+          {
+            "viewport": "mobile",
+            "phase": "failure",
+            "reference": "9bbfe063-ba3d-4f85-9ada-cae07992c46e",
+            "passed": true,
+            "status": "pass",
+            "reasons": [],
+            "network": {
+              "matched": 1,
+              "statuses": [
+                503
+              ],
+              "failed": 0,
+              "blocked": 0,
+              "injected": 1
+            },
+            "before": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "after": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "ui": {
+              "passed": true,
+              "observedText": "Could not save. Try again.",
+              "checks": [
+                true,
+                true
+              ]
+            },
+            "evidence": {
+              "image": "mobile-failure.png",
+              "observation": "mobile-failure.json",
+              "selector": "#status"
+            },
+            "successDuringFailure": false
+          }
+        ],
+        "report": "deliveries/51037340-0a9a-40d3-a91d-2970f6d99474/index.html",
+        "note": "A bounded delivery contract, not whole-site acceptance. Each success trial can create one real test record; ShipLens does not delete it. The independent GET readback proves the configured API projection, not database durability or unrelated business rules. Fault trials synthesize HTTP 503 in the browser and require an exercised request. Use disposable test data and a test environment. No model calls."
+      }
+    },
+    {
+      "mode": "lost-write",
+      "playwright": [
+        {
+          "viewport": "desktop",
+          "uiOnlyPassed": true,
+          "fullContractPassed": false,
+          "trials": [
+            {
+              "viewport": "desktop",
+              "phase": "success",
+              "reference": "7775fbf2-2260-4e58-b908-0d6a669552b8",
+              "requests": 1,
+              "statuses": [
+                201
+              ],
+              "beforeCount": 0,
+              "afterCount": 0,
+              "observedText": "Saved",
+              "passed": false
+            },
+            {
+              "viewport": "desktop",
+              "phase": "failure",
+              "reference": "d6243f17-e261-4d51-9fc7-eb6a7be36615",
+              "requests": 1,
+              "statuses": [
+                503
+              ],
+              "beforeCount": 0,
+              "afterCount": 0,
+              "observedText": "Could not save. Try again.",
+              "passed": true
+            }
+          ]
+        },
+        {
+          "viewport": "mobile",
+          "uiOnlyPassed": true,
+          "fullContractPassed": false,
+          "trials": [
+            {
+              "viewport": "mobile",
+              "phase": "success",
+              "reference": "66d1ab33-02b1-4023-80d8-9c336af38d43",
+              "requests": 1,
+              "statuses": [
+                201
+              ],
+              "beforeCount": 0,
+              "afterCount": 0,
+              "observedText": "Saved",
+              "passed": false
+            },
+            {
+              "viewport": "mobile",
+              "phase": "failure",
+              "reference": "5402b9a0-6074-4e95-b80c-d871041ac7ec",
+              "requests": 1,
+              "statuses": [
+                503
+              ],
+              "beforeCount": 0,
+              "afterCount": 0,
+              "observedText": "Could not save. Try again.",
+              "passed": true
+            }
+          ]
+        }
+      ],
+      "shiplens": {
+        "schemaVersion": 1,
+        "kind": "shiplens-delivery-result",
+        "version": "0.8.0",
+        "deliveryId": "fb35ca5d-25dd-4d3a-8a00-984de3065290",
+        "name": "Saving creates a record and handles failure",
+        "contractSha256": "701c631f653956359fbca21106bc590106c8ba14767ad7e0f1c2f546755d6a6c",
+        "createdAt": "2026-09-09T18:37:32.767Z",
+        "passed": false,
+        "trials": [
+          {
+            "viewport": "desktop",
+            "phase": "success",
+            "reference": "76a4301a-0e92-4a75-b01d-8573573c8971",
+            "passed": false,
+            "status": "fail",
+            "reasons": [
+              "persisted-record-mismatch"
+            ],
+            "network": {
+              "matched": 1,
+              "statuses": [
+                201
+              ],
+              "failed": 0,
+              "blocked": 0,
+              "injected": 0
+            },
+            "before": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "after": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "ui": {
+              "passed": true,
+              "observedText": "Saved",
+              "checks": [
+                true
+              ]
+            },
+            "evidence": {
+              "image": "desktop-success.png",
+              "observation": "desktop-success.json",
+              "selector": "#status"
+            }
+          },
+          {
+            "viewport": "desktop",
+            "phase": "failure",
+            "status": "skipped",
+            "passed": false,
+            "reasons": [
+              "success-baseline-not-passing"
+            ],
+            "evidence": null
+          },
+          {
+            "viewport": "mobile",
+            "phase": "success",
+            "reference": "ad75f97d-1eb8-439c-bdc3-eac17f251251",
+            "passed": false,
+            "status": "fail",
+            "reasons": [
+              "persisted-record-mismatch"
+            ],
+            "network": {
+              "matched": 1,
+              "statuses": [
+                201
+              ],
+              "failed": 0,
+              "blocked": 0,
+              "injected": 0
+            },
+            "before": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "after": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "ui": {
+              "passed": true,
+              "observedText": "Saved",
+              "checks": [
+                true
+              ]
+            },
+            "evidence": {
+              "image": "mobile-success.png",
+              "observation": "mobile-success.json",
+              "selector": "#status"
+            }
+          },
+          {
+            "viewport": "mobile",
+            "phase": "failure",
+            "status": "skipped",
+            "passed": false,
+            "reasons": [
+              "success-baseline-not-passing"
+            ],
+            "evidence": null
+          }
+        ],
+        "report": "deliveries/fb35ca5d-25dd-4d3a-8a00-984de3065290/index.html",
+        "note": "A bounded delivery contract, not whole-site acceptance. Each success trial can create one real test record; ShipLens does not delete it. The independent GET readback proves the configured API projection, not database durability or unrelated business rules. Fault trials synthesize HTTP 503 in the browser and require an exercised request. Use disposable test data and a test environment. No model calls."
+      }
+    },
+    {
+      "mode": "duplicate",
+      "playwright": [
+        {
+          "viewport": "desktop",
+          "uiOnlyPassed": true,
+          "fullContractPassed": false,
+          "trials": [
+            {
+              "viewport": "desktop",
+              "phase": "success",
+              "reference": "bdbf4320-c809-4f5b-a2bc-eeb38e86ef87",
+              "requests": 1,
+              "statuses": [
+                201
+              ],
+              "beforeCount": 0,
+              "afterCount": 2,
+              "observedText": "Saved",
+              "passed": false
+            },
+            {
+              "viewport": "desktop",
+              "phase": "failure",
+              "reference": "9ec775a0-e9aa-419f-a247-6a5ed0a63c01",
+              "requests": 1,
+              "statuses": [
+                503
+              ],
+              "beforeCount": 0,
+              "afterCount": 0,
+              "observedText": "Could not save. Try again.",
+              "passed": true
+            }
+          ]
+        },
+        {
+          "viewport": "mobile",
+          "uiOnlyPassed": true,
+          "fullContractPassed": false,
+          "trials": [
+            {
+              "viewport": "mobile",
+              "phase": "success",
+              "reference": "42757ee5-5ac8-46aa-a9f9-3fcc7607f6ca",
+              "requests": 1,
+              "statuses": [
+                201
+              ],
+              "beforeCount": 0,
+              "afterCount": 2,
+              "observedText": "Saved",
+              "passed": false
+            },
+            {
+              "viewport": "mobile",
+              "phase": "failure",
+              "reference": "a47a9cc4-6c42-4411-8698-63f508b8cdf9",
+              "requests": 1,
+              "statuses": [
+                503
+              ],
+              "beforeCount": 0,
+              "afterCount": 0,
+              "observedText": "Could not save. Try again.",
+              "passed": true
+            }
+          ]
+        }
+      ],
+      "shiplens": {
+        "schemaVersion": 1,
+        "kind": "shiplens-delivery-result",
+        "version": "0.8.0",
+        "deliveryId": "8ab00a3a-df0e-4619-bb15-cfe189c6f9e0",
+        "name": "Saving creates a record and handles failure",
+        "contractSha256": "701c631f653956359fbca21106bc590106c8ba14767ad7e0f1c2f546755d6a6c",
+        "createdAt": "2026-09-09T18:37:36.023Z",
+        "passed": false,
+        "trials": [
+          {
+            "viewport": "desktop",
+            "phase": "success",
+            "reference": "a5ff4af7-2bfb-40a1-9a85-10c99a3be6da",
+            "passed": false,
+            "status": "fail",
+            "reasons": [
+              "persisted-record-mismatch"
+            ],
+            "network": {
+              "matched": 1,
+              "statuses": [
+                201
+              ],
+              "failed": 0,
+              "blocked": 0,
+              "injected": 0
+            },
+            "before": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "after": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 2,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "ui": {
+              "passed": true,
+              "observedText": "Saved",
+              "checks": [
+                true
+              ]
+            },
+            "evidence": {
+              "image": "desktop-success.png",
+              "observation": "desktop-success.json",
+              "selector": "#status"
+            }
+          },
+          {
+            "viewport": "desktop",
+            "phase": "failure",
+            "status": "skipped",
+            "passed": false,
+            "reasons": [
+              "success-baseline-not-passing"
+            ],
+            "evidence": null
+          },
+          {
+            "viewport": "mobile",
+            "phase": "success",
+            "reference": "ae65bb13-0bbc-48b3-a825-a125be81af03",
+            "passed": false,
+            "status": "fail",
+            "reasons": [
+              "persisted-record-mismatch"
+            ],
+            "network": {
+              "matched": 1,
+              "statuses": [
+                201
+              ],
+              "failed": 0,
+              "blocked": 0,
+              "injected": 0
+            },
+            "before": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "after": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 2,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "ui": {
+              "passed": true,
+              "observedText": "Saved",
+              "checks": [
+                true
+              ]
+            },
+            "evidence": {
+              "image": "mobile-success.png",
+              "observation": "mobile-success.json",
+              "selector": "#status"
+            }
+          },
+          {
+            "viewport": "mobile",
+            "phase": "failure",
+            "status": "skipped",
+            "passed": false,
+            "reasons": [
+              "success-baseline-not-passing"
+            ],
+            "evidence": null
+          }
+        ],
+        "report": "deliveries/8ab00a3a-df0e-4619-bb15-cfe189c6f9e0/index.html",
+        "note": "A bounded delivery contract, not whole-site acceptance. Each success trial can create one real test record; ShipLens does not delete it. The independent GET readback proves the configured API projection, not database durability or unrelated business rules. Fault trials synthesize HTTP 503 in the browser and require an exercised request. Use disposable test data and a test environment. No model calls."
+      }
+    },
+    {
+      "mode": "false-success",
+      "playwright": [
+        {
+          "viewport": "desktop",
+          "uiOnlyPassed": true,
+          "fullContractPassed": false,
+          "trials": [
+            {
+              "viewport": "desktop",
+              "phase": "success",
+              "reference": "b6323d95-d4e9-479e-b612-fa872af55a83",
+              "requests": 1,
+              "statuses": [
+                201
+              ],
+              "beforeCount": 0,
+              "afterCount": 1,
+              "observedText": "Saved",
+              "passed": true
+            },
+            {
+              "viewport": "desktop",
+              "phase": "failure",
+              "reference": "cd785df3-6d8c-47ec-8232-55bfbe0f8636",
+              "requests": 1,
+              "statuses": [
+                503
+              ],
+              "beforeCount": 0,
+              "afterCount": 0,
+              "observedText": "Saved",
+              "passed": false
+            }
+          ]
+        },
+        {
+          "viewport": "mobile",
+          "uiOnlyPassed": true,
+          "fullContractPassed": false,
+          "trials": [
+            {
+              "viewport": "mobile",
+              "phase": "success",
+              "reference": "15626d27-5f15-4214-8579-35a3cdfa7576",
+              "requests": 1,
+              "statuses": [
+                201
+              ],
+              "beforeCount": 0,
+              "afterCount": 1,
+              "observedText": "Saved",
+              "passed": true
+            },
+            {
+              "viewport": "mobile",
+              "phase": "failure",
+              "reference": "cd753a8c-974c-474a-9d0e-0ee272a4b318",
+              "requests": 1,
+              "statuses": [
+                503
+              ],
+              "beforeCount": 0,
+              "afterCount": 0,
+              "observedText": "Saved",
+              "passed": false
+            }
+          ]
+        }
+      ],
+      "shiplens": {
+        "schemaVersion": 1,
+        "kind": "shiplens-delivery-result",
+        "version": "0.8.0",
+        "deliveryId": "6e88d2e5-1db2-4dfc-b04c-a4fdfdf0b172",
+        "name": "Saving creates a record and handles failure",
+        "contractSha256": "701c631f653956359fbca21106bc590106c8ba14767ad7e0f1c2f546755d6a6c",
+        "createdAt": "2026-09-09T18:37:37.161Z",
+        "passed": false,
+        "trials": [
+          {
+            "viewport": "desktop",
+            "phase": "success",
+            "reference": "5309909c-9f2b-4025-bf3b-bb6b9745a828",
+            "passed": true,
+            "status": "pass",
+            "reasons": [],
+            "network": {
+              "matched": 1,
+              "statuses": [
+                201
+              ],
+              "failed": 0,
+              "blocked": 0,
+              "injected": 0
+            },
+            "before": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "after": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 1,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": true,
+                  "actual": "saved"
+                }
+              ]
+            },
+            "ui": {
+              "passed": true,
+              "observedText": "Saved",
+              "checks": [
+                true
+              ]
+            },
+            "evidence": {
+              "image": "desktop-success.png",
+              "observation": "desktop-success.json",
+              "selector": "#status"
+            }
+          },
+          {
+            "viewport": "desktop",
+            "phase": "failure",
+            "reference": "bf42907e-bca3-4524-b557-7db0317f33cc",
+            "passed": false,
+            "status": "fail",
+            "reasons": [
+              "ui-expectation-failed",
+              "false-success-during-injected-failure"
+            ],
+            "network": {
+              "matched": 1,
+              "statuses": [
+                503
+              ],
+              "failed": 0,
+              "blocked": 0,
+              "injected": 1
+            },
+            "before": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "after": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "ui": {
+              "passed": false,
+              "observedText": "Saved",
+              "checks": [
+                false,
+                false
+              ]
+            },
+            "evidence": {
+              "image": "desktop-failure.png",
+              "observation": "desktop-failure.json",
+              "selector": "#status"
+            },
+            "successDuringFailure": true
+          },
+          {
+            "viewport": "mobile",
+            "phase": "success",
+            "reference": "99d033a3-468e-4997-8d0c-e093e9886a0a",
+            "passed": true,
+            "status": "pass",
+            "reasons": [],
+            "network": {
+              "matched": 1,
+              "statuses": [
+                201
+              ],
+              "failed": 0,
+              "blocked": 0,
+              "injected": 0
+            },
+            "before": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "after": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 1,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": true,
+                  "actual": "saved"
+                }
+              ]
+            },
+            "ui": {
+              "passed": true,
+              "observedText": "Saved",
+              "checks": [
+                true
+              ]
+            },
+            "evidence": {
+              "image": "mobile-success.png",
+              "observation": "mobile-success.json",
+              "selector": "#status"
+            }
+          },
+          {
+            "viewport": "mobile",
+            "phase": "failure",
+            "reference": "e3c15a44-3c4f-4ac3-8a9c-728a61c656d0",
+            "passed": false,
+            "status": "fail",
+            "reasons": [
+              "ui-expectation-failed",
+              "false-success-during-injected-failure"
+            ],
+            "network": {
+              "matched": 1,
+              "statuses": [
+                503
+              ],
+              "failed": 0,
+              "blocked": 0,
+              "injected": 1
+            },
+            "before": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "after": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "ui": {
+              "passed": false,
+              "observedText": "Saved",
+              "checks": [
+                false,
+                false
+              ]
+            },
+            "evidence": {
+              "image": "mobile-failure.png",
+              "observation": "mobile-failure.json",
+              "selector": "#status"
+            },
+            "successDuringFailure": true
+          }
+        ],
+        "report": "deliveries/6e88d2e5-1db2-4dfc-b04c-a4fdfdf0b172/index.html",
+        "note": "A bounded delivery contract, not whole-site acceptance. Each success trial can create one real test record; ShipLens does not delete it. The independent GET readback proves the configured API projection, not database durability or unrelated business rules. Fault trials synthesize HTTP 503 in the browser and require an exercised request. Use disposable test data and a test environment. No model calls."
+      }
+    },
+    {
+      "mode": "no-request",
+      "playwright": [
+        {
+          "viewport": "desktop",
+          "uiOnlyPassed": true,
+          "fullContractPassed": false,
+          "trials": [
+            {
+              "viewport": "desktop",
+              "phase": "success",
+              "reference": "217b45a9-0790-4885-82de-ca0c8a252c39",
+              "requests": 0,
+              "statuses": [],
+              "beforeCount": 0,
+              "afterCount": 0,
+              "observedText": "Saved",
+              "passed": false
+            },
+            {
+              "viewport": "desktop",
+              "phase": "failure",
+              "reference": "d9eb6a95-c417-4eb4-89a5-dc843a7f5a8c",
+              "requests": 0,
+              "statuses": [],
+              "beforeCount": 0,
+              "afterCount": 0,
+              "observedText": "Saved",
+              "passed": false
+            }
+          ]
+        },
+        {
+          "viewport": "mobile",
+          "uiOnlyPassed": true,
+          "fullContractPassed": false,
+          "trials": [
+            {
+              "viewport": "mobile",
+              "phase": "success",
+              "reference": "47b7b9de-cd8c-4735-9ea7-832312f2b604",
+              "requests": 0,
+              "statuses": [],
+              "beforeCount": 0,
+              "afterCount": 0,
+              "observedText": "Saved",
+              "passed": false
+            },
+            {
+              "viewport": "mobile",
+              "phase": "failure",
+              "reference": "11bb089e-5ef4-42bc-93f6-46790e0aa66c",
+              "requests": 0,
+              "statuses": [],
+              "beforeCount": 0,
+              "afterCount": 0,
+              "observedText": "Saved",
+              "passed": false
+            }
+          ]
+        }
+      ],
+      "shiplens": {
+        "schemaVersion": 1,
+        "kind": "shiplens-delivery-result",
+        "version": "0.8.0",
+        "deliveryId": "ecf3fd54-2f01-4165-bcbd-4e5bb24001b4",
+        "name": "Saving creates a record and handles failure",
+        "contractSha256": "701c631f653956359fbca21106bc590106c8ba14767ad7e0f1c2f546755d6a6c",
+        "createdAt": "2026-09-09T18:37:40.853Z",
+        "passed": false,
+        "trials": [
+          {
+            "viewport": "desktop",
+            "phase": "success",
+            "reference": "e650764c-5101-4855-86fe-5ae3d1d3f679",
+            "passed": false,
+            "status": "fail",
+            "reasons": [
+              "mutation-not-exercised",
+              "mutation-response-failed",
+              "persisted-record-mismatch"
+            ],
+            "network": {
+              "matched": 0,
+              "statuses": [],
+              "failed": 0,
+              "blocked": 0,
+              "injected": 0
+            },
+            "before": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "after": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "ui": {
+              "passed": true,
+              "observedText": "Saved",
+              "checks": [
+                true
+              ]
+            },
+            "evidence": {
+              "image": "desktop-success.png",
+              "observation": "desktop-success.json",
+              "selector": "#status"
+            }
+          },
+          {
+            "viewport": "desktop",
+            "phase": "failure",
+            "status": "skipped",
+            "passed": false,
+            "reasons": [
+              "success-baseline-not-passing"
+            ],
+            "evidence": null
+          },
+          {
+            "viewport": "mobile",
+            "phase": "success",
+            "reference": "97105985-2b74-494e-bb0f-af1ac7580d04",
+            "passed": false,
+            "status": "fail",
+            "reasons": [
+              "mutation-not-exercised",
+              "mutation-response-failed",
+              "persisted-record-mismatch"
+            ],
+            "network": {
+              "matched": 0,
+              "statuses": [],
+              "failed": 0,
+              "blocked": 0,
+              "injected": 0
+            },
+            "before": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "after": {
+              "status": "complete",
+              "httpStatus": 200,
+              "count": 0,
+              "checks": [
+                {
+                  "pointer": "/status",
+                  "matched": false,
+                  "actualOmitted": true
+                }
+              ]
+            },
+            "ui": {
+              "passed": true,
+              "observedText": "Saved",
+              "checks": [
+                true
+              ]
+            },
+            "evidence": {
+              "image": "mobile-success.png",
+              "observation": "mobile-success.json",
+              "selector": "#status"
+            }
+          },
+          {
+            "viewport": "mobile",
+            "phase": "failure",
+            "status": "skipped",
+            "passed": false,
+            "reasons": [
+              "success-baseline-not-passing"
+            ],
+            "evidence": null
+          }
+        ],
+        "report": "deliveries/ecf3fd54-2f01-4165-bcbd-4e5bb24001b4/index.html",
+        "note": "A bounded delivery contract, not whole-site acceptance. Each success trial can create one real test record; ShipLens does not delete it. The independent GET readback proves the configured API projection, not database durability or unrelated business rules. Fault trials synthesize HTTP 503 in the browser and require an exercised request. Use disposable test data and a test environment. No model calls."
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "healthy/report.html",
+      "sha256": "61335c012a6e6c9f00c490838082fcd59e40f100382335ba37f5d3076ad72bc1"
+    },
+    {
+      "file": "healthy/desktop-success.png",
+      "sha256": "2c55693c4997f6d1a020c75cdb4260709fa6100ef0a07ab560c4ac673f987e8a"
+    },
+    {
+      "file": "healthy/desktop-success.json",
+      "sha256": "b108462f84c2cef9dafbb7ceb57db531141332abc7e1293af4cd4329426ac12e"
+    },
+    {
+      "file": "healthy/desktop-failure.png",
+      "sha256": "dd53c0f1db7dfdebd29059f64cc4aeea3b7128bffe5eee7441c1ae9e5e82aae2"
+    },
+    {
+      "file": "healthy/desktop-failure.json",
+      "sha256": "9d222275561a1c708773b579594b0119affbc70be8e97c6d086cd426b73ce7be"
+    },
+    {
+      "file": "healthy/mobile-success.png",
+      "sha256": "3ecc94c43408c37f756541d5f779781ba9c2c70b98defd13f51735d67faf6356"
+    },
+    {
+      "file": "healthy/mobile-success.json",
+      "sha256": "be9ddcdee2a4806eddb2c6bb4a54d8bc211ca0853379481936c112115e13e2d9"
+    },
+    {
+      "file": "healthy/mobile-failure.png",
+      "sha256": "b034495f2449f27343df3c1e0694bd15ccbf2b743bcf913947f0fcacd2f65beb"
+    },
+    {
+      "file": "healthy/mobile-failure.json",
+      "sha256": "ea792799b59f23f0e8630753cfc5d9693c6936ad91a03275a305d48ad36eae74"
+    },
+    {
+      "file": "lost-write/report.html",
+      "sha256": "eceae806e4769f4a733e5d2ddedc0872135bccdfa621a345aa0728e773cba843"
+    },
+    {
+      "file": "lost-write/desktop-success.png",
+      "sha256": "2c55693c4997f6d1a020c75cdb4260709fa6100ef0a07ab560c4ac673f987e8a"
+    },
+    {
+      "file": "lost-write/desktop-success.json",
+      "sha256": "9e36b2f60f1b69a4e4f99c0b84dd5d19b901bef35d832bea653e7c8251b3daa2"
+    },
+    {
+      "file": "lost-write/mobile-success.png",
+      "sha256": "3ecc94c43408c37f756541d5f779781ba9c2c70b98defd13f51735d67faf6356"
+    },
+    {
+      "file": "lost-write/mobile-success.json",
+      "sha256": "04743f968d1785ab4fbc68b076f1e25f3c6dceef5221f38c3eecec893a88b1cf"
+    },
+    {
+      "file": "duplicate/report.html",
+      "sha256": "ed61e95ce69b7fe707e54ec875d217efea62e93aa280439119ac62956806c7ca"
+    },
+    {
+      "file": "duplicate/desktop-success.png",
+      "sha256": "2c55693c4997f6d1a020c75cdb4260709fa6100ef0a07ab560c4ac673f987e8a"
+    },
+    {
+      "file": "duplicate/desktop-success.json",
+      "sha256": "3941d01e6fb105a9738676be61f65d4c17d28cce524708b4bc67bf646a97c63e"
+    },
+    {
+      "file": "duplicate/mobile-success.png",
+      "sha256": "3ecc94c43408c37f756541d5f779781ba9c2c70b98defd13f51735d67faf6356"
+    },
+    {
+      "file": "duplicate/mobile-success.json",
+      "sha256": "ea19f71b85e70908b2445168cce32684e02cafac98ee581e21564110ce0d063c"
+    },
+    {
+      "file": "false-success/report.html",
+      "sha256": "e15cb50746b73b80255126dc5c0acd44e67e0cc7d1a405e58683893e3d0c91d5"
+    },
+    {
+      "file": "false-success/desktop-success.png",
+      "sha256": "2c55693c4997f6d1a020c75cdb4260709fa6100ef0a07ab560c4ac673f987e8a"
+    },
+    {
+      "file": "false-success/desktop-success.json",
+      "sha256": "6802a6f3c6990adac49006da0a08a27135d6940586c4942b553159dd967a6aa9"
+    },
+    {
+      "file": "false-success/desktop-failure.png",
+      "sha256": "2c55693c4997f6d1a020c75cdb4260709fa6100ef0a07ab560c4ac673f987e8a"
+    },
+    {
+      "file": "false-success/desktop-failure.json",
+      "sha256": "40a1211c8c0aad8835045a0d69102919997b9330b4e3602bbb9343484ff5dad4"
+    },
+    {
+      "file": "false-success/mobile-success.png",
+      "sha256": "3ecc94c43408c37f756541d5f779781ba9c2c70b98defd13f51735d67faf6356"
+    },
+    {
+      "file": "false-success/mobile-success.json",
+      "sha256": "6b7b5c1365175de8fc2c12858a22e50a9bde792aa1def10b2f029c048cde057a"
+    },
+    {
+      "file": "false-success/mobile-failure.png",
+      "sha256": "3ecc94c43408c37f756541d5f779781ba9c2c70b98defd13f51735d67faf6356"
+    },
+    {
+      "file": "false-success/mobile-failure.json",
+      "sha256": "91e5b8e8b7cc3a3d2aeb0eee4d5f4825b256d5b5e087a5438b25a1a8e4eabbde"
+    },
+    {
+      "file": "no-request/report.html",
+      "sha256": "7bb372a05fde7ebfcdd3f63872b3803b576c3479b9f8edd677453e35e413cd50"
+    },
+    {
+      "file": "no-request/desktop-success.png",
+      "sha256": "2c55693c4997f6d1a020c75cdb4260709fa6100ef0a07ab560c4ac673f987e8a"
+    },
+    {
+      "file": "no-request/desktop-success.json",
+      "sha256": "ec8852aed0a577bcaa277b9a45648ef61f1894fe0c168a7d7ee043e90229b3c1"
+    },
+    {
+      "file": "no-request/mobile-success.png",
+      "sha256": "3ecc94c43408c37f756541d5f779781ba9c2c70b98defd13f51735d67faf6356"
+    },
+    {
+      "file": "no-request/mobile-success.json",
+      "sha256": "4e0ff859d2b2334fb917a3e0a7d47d247b5edd41a75b88857c1fecc097cecca0"
+    }
+  ]
+}
