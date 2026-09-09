@@ -1,4 +1,5 @@
 import { t } from './i18n.js';
+import { homeDocs } from './home-docs.js';
 import { code, p, h, note, table } from './markup.js';
 export { escape } from './markup.js';
 import { interactionDocs, ignoreDocs, exampleDocs } from './workflow-docs.js';
@@ -12,95 +13,7 @@ import { planDocs } from './plan-docs.js';
 import { benchmarkDocs } from './benchmark-docs.js';
 export function getDocs() {
   return [
-    {
-      id: 'introduction',
-      group: t('Get started', '开始使用'),
-      title: t('Browser evidence before you ship.', '用浏览器证据，检查每次交付。'),
-      description: t(
-        'Give your AI assistant repeatable browser evidence, cited acceptance checks and regression cases.',
-        '为你的 AI 助手提供可重复的浏览器证据、带引用的验收记录与回归案例。',
-      ),
-      body:
-        `<div class="reading-meta"><span>Node.js 22.12+</span><span>JavaScript / TypeScript</span><span>MIT</span></div>` +
-        code('npm install -g shiplens\nshiplens browsers\nshiplens http://localhost:3000') +
-        p(
-          'Use your existing AI assistant through MCP, or run deterministic browser checks from the CLI. ShipLens captures evidence and records assessments; your model supplies the judgment. No additional model API key is required.',
-          '通过 MCP 使用现有 AI 助手，或从 CLI 运行确定性浏览器检查。ShipLens 采集证据、记录验收，模型负责判断，无需额外配置模型 API Key。',
-        ) +
-        p(
-          'A passing rule may still accept a wrong price. <a href="#/docs/check-audit">Challenge your acceptance checks with concrete counterexamples</a> from saved evidence before trusting the plan.',
-          '规则通过，也可能放过错误金额。在信任验收文件前，<a href="#/docs/check-audit">用保存证据中的具体反例检查规则盲区</a>。',
-        ) +
-        p(
-          'For forms that create records, <a href="#/docs/delivery-proof">connect the success message to an independent readback and test the failure path</a> with one delivery contract.',
-          '对于创建记录的表单，用一份保存契约<a href="#/docs/delivery-proof">关联成功提示与独立回读，并验证失败分支</a>。',
-        ) +
-        h('start', 'Choose your starting point', '选择你的起点') +
-        `<div class="reading-paths">${[
-          [
-            'quickstart',
-            'Run your first check',
-            '运行第一次检查',
-            'Install Chromium, scan a URL and open your report.',
-            '安装浏览器、检查网址、打开报告。',
-          ],
-          [
-            'configuration',
-            'Define the scope',
-            '配置检查范围',
-            'Specify routes, test sessions and readiness conditions.',
-            '指定路由、测试登录态和就绪条件。',
-          ],
-          [
-            'reports',
-            'Read the evidence',
-            '理解报告与证据',
-            'Understand findings, coverage and baseline comparison.',
-            '了解问题、覆盖范围和基线对比。',
-          ],
-          [
-            'ai-workflow',
-            'Review with your AI assistant',
-            '与 AI 助手一起验收',
-            'Read images, cite judgments and replay cases with MCP.',
-            '通过 MCP 读取图片、引用证据判断并重放案例。',
-          ],
-        ]
-          .map(
-            ([id, en, zh, desc, descZh]) =>
-              `<a href="#/docs/${id}"><strong>${t(en, zh)} <span aria-hidden="true">→</span></strong><span>${t(desc, descZh)}</span></a>`,
-          )
-          .join('')}</div>` +
-        h('checks', 'What ShipLens checks', 'ShipLens 检查什么') +
-        `<ul><li>${t('Unhandled JavaScript errors, HTTP failures and broken resources.', '未处理的 JavaScript 异常、HTTP 失败和失效资源。')}</li><li>${t('Visible broken images, suspicious blank pages and horizontal overflow.', '可见坏图、疑似白屏和横向溢出。')}</li><li>${t('Desktop and mobile viewports, with page and element screenshots.', '桌面与手机视口，以及页面和元素截图。')}</li><li>${t('New and existing findings, with coverage checks before marking anything resolved.', '新增与仍存在的问题；标记已解决前，先核对覆盖范围。')}</li><li>${t('Explicit interaction steps with per-step evidence and expiring exceptions for known issues.', '显式交互步骤与逐步证据，以及带有效期的已知问题例外。')}</li></ul>` +
-        h('outputs', 'One scan, three report formats', '一次检查，三种报告') +
-        table(
-          [
-            [
-              'HTML',
-              'Read findings, filter severity and inspect screenshots.',
-              '阅读问题、筛选级别和查看截图。',
-            ],
-            [
-              'JSON',
-              'Consume structured findings and completion state in scripts.',
-              '在脚本中读取结构化问题和完成状态。',
-            ],
-            [
-              'Markdown',
-              'Give reproducible evidence to your coding assistant.',
-              '为编码助手提供可复现的证据。',
-            ],
-          ],
-          [t('Format', '格式'), t('Use', '用途')],
-        ) +
-        h('limits', 'Know the boundaries', '了解能力边界') +
-        p(
-          'ShipLens is a delivery smoke check. It observes your configured interaction steps but does not infer business correctness, authorization, payment accuracy or every browser. Mobile uses Chromium emulation. A clean report describes the observed scope, not complete product acceptance.',
-          'ShipLens 是交付冒烟检查工具，可观察配置的交互步骤，但不自动推断业务正确性、权限、支付金额或所有浏览器。手机视口使用 Chromium 模拟。零问题仅描述已观察到的范围，不能替代完整产品验收。',
-        ) +
-        `<a class="inline-link" href="#/docs/rules">${t('See all rules and coverage limits', '查看全部规则与覆盖限制')} →</a>`,
-    },
+    homeDocs(),
     {
       id: 'quickstart',
       group: t('Get started', '开始使用'),
@@ -110,6 +23,7 @@ export function getDocs() {
         '从运行中的网站，到带有真实浏览器证据的报告。',
       ),
       body:
+        `<p class="quickstart-context">${t('New to ShipLens? <a href="#/?section=comparison">See what it checks and the comparison results</a>. For saved-record and failure-path checks, <a href="#/docs/delivery-proof?section=start">start with the save example</a>.', '第一次了解 ShipLens？<a href="#/?section=comparison">先看用途与实测对比</a>。需要验证保存记录和失败分支时，<a href="#/docs/delivery-proof?section=start">从保存验收示例开始</a>。')}</p>` +
         p(
           'Keep your website running. ShipLens uses browser events and measurements, with no AI provider or API key.',
           '让网站保持运行。ShipLens 使用浏览器事件和测量进行检查，无需配置 AI 模型或 API Key。',
