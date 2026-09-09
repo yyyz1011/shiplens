@@ -1,0 +1,215 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>ShipLens · Delivery proof</title><style>
+:root{color-scheme:light dark;font-family:system-ui,sans-serif;color:#182c47;background:#f4f7fb;--paper:#fff;--muted:#526981;--line:#dce4ef;--accent:#234eb0}*{box-sizing:border-box}body{margin:0}header{padding:20px 24px;border-bottom:1px solid var(--line);background:var(--paper);font-weight:700}main{max-width:1000px;margin:40px auto;padding:0 24px}h1{font-size:clamp(28px,5vw,40px);letter-spacing:-.025em;line-height:1.15}h2{margin:36px 0 16px;font-size:23px}p{line-height:1.65;max-width:72ch;overflow-wrap:anywhere}.muted{color:var(--muted)}section{padding:24px 0;border-bottom:1px solid var(--line)}strong{font-size:20px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--paper);padding:16px;border:1px solid var(--line);font-size:13px;line-height:1.6}figure{margin:20px 0}.capture{overflow:auto;max-height:380px;border:1px solid var(--line);background:var(--paper)}img{display:block;max-width:none}figcaption{margin-top:8px;font-size:13px;color:var(--muted);line-height:1.5}summary{cursor:pointer;padding:12px 0;font-weight:600}summary:focus-visible,.capture:focus-visible{outline:2px solid var(--accent);outline-offset:4px}::selection{background:#d5e2ff;color:#172b4a}@media(prefers-color-scheme:dark){:root{color:#e3edf7;background:#101923;--paper:#172331;--muted:#abbdd0;--line:#35465b;--accent:#b1c8ff}}@media(max-width:640px){main{margin:28px auto;padding:0 18px}}
+</style><header>ShipLens</header><main><h1>Delivery proof</h1><p>Saving creates a record and handles failure</p><strong>Contract passed</strong><p>The browser action, independent server readback and injected failure are checked separately.</p><p class="muted">51037340-0a9a-40d3-a91d-2970f6d99474</p><section><h2>desktop · Real save</h2><p>pass</p><p>Matching records before / after: 0 / 1</p><figure><div class="capture" tabindex="0" role="region" aria-label="Captured component"><img src="data:image/png;base64,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" alt="desktop · success"></div><figcaption>Captured component · scroll to inspect at original size</figcaption></figure><details><summary>Request, readback and UI evidence</summary><pre>{
+  &quot;viewport&quot;: &quot;desktop&quot;,
+  &quot;phase&quot;: &quot;success&quot;,
+  &quot;reference&quot;: &quot;fa7d21eb-19ba-4a18-aa69-07be4951eca0&quot;,
+  &quot;passed&quot;: true,
+  &quot;status&quot;: &quot;pass&quot;,
+  &quot;reasons&quot;: [],
+  &quot;network&quot;: {
+    &quot;matched&quot;: 1,
+    &quot;statuses&quot;: [
+      201
+    ],
+    &quot;failed&quot;: 0,
+    &quot;blocked&quot;: 0,
+    &quot;injected&quot;: 0
+  },
+  &quot;before&quot;: {
+    &quot;status&quot;: &quot;complete&quot;,
+    &quot;httpStatus&quot;: 200,
+    &quot;count&quot;: 0,
+    &quot;checks&quot;: [
+      {
+        &quot;pointer&quot;: &quot;/status&quot;,
+        &quot;matched&quot;: false,
+        &quot;actualOmitted&quot;: true
+      }
+    ]
+  },
+  &quot;after&quot;: {
+    &quot;status&quot;: &quot;complete&quot;,
+    &quot;httpStatus&quot;: 200,
+    &quot;count&quot;: 1,
+    &quot;checks&quot;: [
+      {
+        &quot;pointer&quot;: &quot;/status&quot;,
+        &quot;matched&quot;: true,
+        &quot;actual&quot;: &quot;saved&quot;
+      }
+    ]
+  },
+  &quot;ui&quot;: {
+    &quot;passed&quot;: true,
+    &quot;observedText&quot;: &quot;Saved&quot;,
+    &quot;checks&quot;: [
+      true
+    ]
+  },
+  &quot;evidence&quot;: {
+    &quot;image&quot;: &quot;desktop-success.png&quot;,
+    &quot;observation&quot;: &quot;desktop-success.json&quot;,
+    &quot;selector&quot;: &quot;#status&quot;
+  }
+}</pre></details></section><section><h2>desktop · Injected HTTP 503</h2><p>pass</p><p>Matching records before / after: 0 / 0</p><figure><div class="capture" tabindex="0" role="region" aria-label="Captured component"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAABBCAIAAADOhIJMAAAOJ0lEQVR4nOzcCVxN+QIH8CORkFJkKYYZvcYyMUx2kUQpWSJL9mRXsm8fZXuyb8NkH0vmeWTsW0hChEZplRTKFNpTaPF+9x6uO5WExvHe+30/zXW2/7n/c+587u/8//9zj2pmdo5AREREX5aKQERERF8cA5iIiEgCDGAiIiIJMICJiIgkwAAmIiKSAAOYiIhIAgxgIiIiCTCAiYiIJMAAJiIikgADmIiISAIMYCIiIgkwgImIiCTAACYiIpIAA5iIiEgCDGAiIiIJMICJiIgkwAAmIiKSAAOYiIhIAgxgIiIiCTCAiYiIJFAwgBOfJD1OfCqUhoioGK9j3rm5eUWuPXzyQlDIXYGkdtLb74zPVYGIiL6sMpnZOfjneVb2Wo+95y5dfxSfgNlKFdVHDuo1yXGgisqnN5G37PZavmHnnUte6upqhdc2MLZ2HGI702mEUBqSUtKCQiKbNjHUqaopfDWeJaW0thhS5KpO7Y23rXEVpJaXl2/Y2gYfd5DvAYGIiL4gVfz3+vXrMVMXXbsZ3Pj7Bq7TxiIvvY6d27Dtt0ePE1cumCL8N4i4GzN6ysJdPy9u16qZ8NWoWFHdafQgcTogMARneMTAnhoalTBbV6+m8BUoW1bF02NpWdWyAhERfVmyAPa+eA3Z0KrFD7s3LsE3Mpb07G46aZY7eonHjbD7rp6+8D8B1xllypQRvqCK6hWcHN8E8M59R3CSRw3uU0NXR/ia4HMvvPDLnysiov83sri9fD0Qr8vmTxbTF8qpqk6dMFRbW9P3yk1xSVTMw9mL1rfsZt/eavi8f26IffRYXL7mlz0jJs1X7O7ps2QLu/FnffwLv9ORUz72Y2ej57m/w/TgsKgia5P5PAvFDx71dlvhgfdq2rEf3hQLxbVIhd3/OjbQcSZ2MnjcHE+vU+JyNNZd5q/ABF5RHMPYBXZ7PTAEb23Qsodpr1FL127Pzn4pLn/yNHma62rxjYZNnBccKhuTXrhqM2qYn5+vKD7DbY3iGH2v3ho/Y4l4FHv2Hxc+Ay5xFqz02LTz36gADgfnB5XHeVZssP/wGSxJSHxWoCDqidqizijoPGd5UlKqYhUG3RUn+U5YVM8hk7ft/b34UlPnr5rvvlF+lu7g7fyuBaIvAecKH/TWPV4CERH9PWSJGxJ+z9Cgvn7tGsorDOrXDTjjOdK+lyC/Mwtf6yfP+fXs1qlr5zbHzlxCICUlp2FVwpOkqPvvMiMnL+9ezMOMzMwCb3PBLwBf9CgyadRA3eo6Q8bNKbI2ufLii1ZtCQmLGtzXql5dvQNHzx457Suu3bhjP9KxQgU1p9H2CGNX941oVmJ5syaGpm2NMYHX3lad0fGrvM97sY/sx8x6+fLVotkTzExabvf8ffHqLYJ8+BMH5X3Rv7dl50G23cOjYvoMn4ILCKOGBreCwxU3iCWnph86cb6R4beYvhkU5uDs+iAuAR3LGlUqIz7FCnyah/EJiPDNvx6wMG1rZd6huVFDHDt6IxQbHDhyFp3DNWtUUy4V/2ci6vkwLsFhcG+z9q1OeF8aOdlNXHX8rO/MhetS0zNRPV3dagj10Ih7ScmpxZeKi094FJ+IiaysF6jAxJlL1dTUxgzr+yo3Z9n6nXfvxQpERPQ3UM3NzUN71Na6SzEbeew+kJycdmTPWgwSY9bK3AQNrJ2/HZ42YZhQMsjUOno1929brlmlMmaXb9i5Zfd7W1f6ejU9N7urlS+H/lu0w06d87O3tUQ0rvXYa9mlw4alM7FNvkP/sdMWL1mzta+NeYfWzVXKqHgdP2dj0anwGLD/9SC8LnN1EfvSm//Q8MmzFEykpmX0suqMDtifmjYS5D2xoya73QwKNzNpjVlvX/8fjb7HxKWrsj6AHt064nXekp8b1K97YPsK9C3jCmDy3BWowIA+FuoV1IRPdWzf+rp6tcTpFkYNT3j7jR9hh+k/E57dDomc6+JYYPvklHSXcUNwnVG7RnXMaletsnnXQZyc6tW0F67aoqieIL9eQf/EB0sV2H9vazO36WMxMaC3BToMzvkF/KNBPYGIiEqbSk5OLv6poFaumI2C7kQin8T0FeQ5gek74VFCyaRnPH8Un9DH2kxMX7Dv272Y7c1NWiF9xenOHYwxdIqJCHlTbHA/qzf1VlFBsxUTkdGxQrH09WQte9dlm3wu30BNupt3GD7QBkt0tDUnjOzfrLFhzMN4dM+mpWdgIdqLGpUr9rQ0PXraFxGLJacvXEWqfW9Q/3lWNhqI2Ft0zCP07qLboF4dWXDeU+oA+Fg4q4r0BVubLpFRMWL3/vnLAXi1NGtXoMgPjQxQ7WraWuis/iM44pm8JzkpJQ3d6bhIwh7E9IUBvSw+WKpwlczl1x+ACyb8BQaHC0RE9DdQVVdXq19XLyIqtpiN0ETu36ub8pJ6dWr73woSSuZh3J/CX+/7rSVvh72Ptta7nxJV1awiTsTExuNVv9a7gnry6ZgHcWIT9n1M2xtPnzh80479ji4LMNvVtA1mccjogkYbcf0Wz8JF0N7FiGxYZHRd/drnfK/NcnbAwtiHsgpcvHwDf8obP4h7jHgTPolG5UrKs+ad2s5ZvOH8pesO9r1Pn7+M1nyB/mdIS8+c774JfcgFlielyDIVEatYoqWp8cFShWlpVlZM61TVfK00Fk5ERKVIdhd00yaGh09eyMjMQuNPsSL7xcsTZy99V68OemIxQpzw5C+3AiUkPsWgsTidkfn8Xam39zcpq6UrS5HEp8mKJeLA5EepLY/bJ09T9Gq9Gat+Ku9J1qup+8GyGNEcMahnaHj0WZ+rW/ceCg6Nunzi14tXbiB90feOvta6+rWysrPR4ypuj+SrVFH9vF9Ag3p1MNvdvD1ea+rKKjDRYcCwgT2Vd16pYgWhlFTV1LDo3BanvZeFKdr9K4r6DRiuJJCjMyaNMG3/EzqQ/fxvucxbieUYL8drWER07+6dxS2j7j/4YCkiIpKK7Casjm2b4xUtJOUVu/cfm7VoXVqG7HYqo4YGN2+HKZ6QhT7SW8HhRo3/gWnd6trom1XcFB0cVsTDrXR0tLS1NdGky8nNFZecufDRj15CJ7Ag6xC+olgiThs2kC1XUZH9ZiY1Pb1wweuBIafOX1EtWxZXEjOdR6L/GRcTqekZoZHRWDtupB2Wozs6KDRSUaScqqpdz67HTvue8fFv/ZOROG6KbWrqVrsZFKZRqSKSEn/otT7vey09XXaKXr7KSZV3Yn8mGwtT9DfsPXgC02YdWhXe4PadCJzM0UNtDb79RquKxo0/QsXlGIdGh/bO3474Xr2Vn5+fkPhszuL1HyxVcjg6HKNARESlRNYC7tGtE76R93mdynj+3LJzW43KlS9cDjh41NuokYFJG1k2DxvQ48DRs44uC4faWePLfYfnYTQQB/SxxKqm8hie6bZmoK1lZmbWio27inwbJ4eBbis8Js1yt+7a4f6Dx0V2/BZPv3YNtFa3e/6OodlmTQwDbssqPNjOGrmItY0MvxNkz9469Con18K0nfKzt9AoXLJm6yBbSytzk6dJyUfP+OK4EEKN5UXc1+3oZ2OOC4ila7crv511144IMwwPL5vvrFjoPGbQ7EXrnea4W5l3QIfBag/ZLU7YLV7tHKaHRty7fnovrjaEz2DStoUg/2EVPpQqGpUKb9Dsh+9x9bN8w07jH5v4XQ/c9/a3WLBqwVSboc4Ozm8esNWpvXFJSpVEUlJqK4vBGPg/smetQEREpUFV/Gfe1NFq5cujpagY4LS3tZzlPEp8FCVan3s2LVnrsXfukg2YNW7W2N11snhTcZeOrdGu2rLbC9/vSOXpk0a4LXvTkn7zIAf5K5IyKSXN89BJDKlis19WzBs3fXHhJz2UkW+t/AgI5elFcyZUUCt3+LTPjn2H0Z5DW3aWk4O4SrNKZafR9sj16a6rW/7YWE/93U+qcGXw5Fny1j1eYup0bNtiyZxJmOjUzlisOaqEva1cMGWa6+q3lRaMGhvU0av5KD6hS8c2il31s+mamZm9z+uks89yQX4L1YJZ48Ww19aqguMqW+69j5QSD6TA0y3EhruyCmrlca2AqtpYdCxyP2iyRz+IQ7Xxh0REm37Zuh3iXjBg7H1gc0BgSGR07Lff6JuZtGrcrvcHSxVZjXfVlv8PgOPCKcIxCkREVErePAta4UHc45zcvHr6tVWLejxhVvYLQf6ApwLLc3PzUlLTtKtqKR7lUSS0npNTsJnm5zxiGi3g5OS0IhuaqAZ6uYv8URDeGgPPmpoa5cv95X5vseY62lofVaXk1HR1NTXldjZqlZeXr1oaz3QcO21x4J3wy8d/LVBVZfggXrx8VSARPb1O5bzKGWJnLX4KuLDArpa7ufSxMiumVAnhRGG3fDwWEVFpUS0w/83bW6uKVDh63+xFtWzhX5QWhpCrplNV+DzIgPd186Ia74tAvHWRNSxhzQsonGGo1een743bod4+/gjOuS6OxaSvIP8gCn8WGRmZKzfu8rkS0LqFUXRsnPdFfzRbTVo3L75UCanyedFERKWqYAuYJDTDbQ0yuHuX9i5jh3xC4KGVv//wmaOnLobdvV+rRvUWTRs6OQ762h49TUREIgYwERGRBD59LJaIiIg+GQOYiIhIAgxgIiIiCTCAiYiIJMAAJiIikgADmIiISAIMYCIiIgkwgImIiCTAACYiIpIAA5iIiEgCDGAiIiIJMICJiIgkwAAmIiKSAAOYiIhIAgxgIiIiCTCAiYiIJMAAJiIikgADmIiISAIMYCIiIgkwgImIiCTAACYiIpIAA5iIiEgCDGAiIiIJMICJiIgkwAAmIiKSAAOYiIhIAgxgIiIiCfwHAAD//wfi4AkAAAAGSURBVAMAukCmaXgEisMAAAAASUVORK5CYII=" alt="desktop · failure"></div><figcaption>Captured component · scroll to inspect at original size</figcaption></figure><details><summary>Request, readback and UI evidence</summary><pre>{
+  &quot;viewport&quot;: &quot;desktop&quot;,
+  &quot;phase&quot;: &quot;failure&quot;,
+  &quot;reference&quot;: &quot;cbce6ba5-bb51-4f0d-a0c4-f114fb140942&quot;,
+  &quot;passed&quot;: true,
+  &quot;status&quot;: &quot;pass&quot;,
+  &quot;reasons&quot;: [],
+  &quot;network&quot;: {
+    &quot;matched&quot;: 1,
+    &quot;statuses&quot;: [
+      503
+    ],
+    &quot;failed&quot;: 0,
+    &quot;blocked&quot;: 0,
+    &quot;injected&quot;: 1
+  },
+  &quot;before&quot;: {
+    &quot;status&quot;: &quot;complete&quot;,
+    &quot;httpStatus&quot;: 200,
+    &quot;count&quot;: 0,
+    &quot;checks&quot;: [
+      {
+        &quot;pointer&quot;: &quot;/status&quot;,
+        &quot;matched&quot;: false,
+        &quot;actualOmitted&quot;: true
+      }
+    ]
+  },
+  &quot;after&quot;: {
+    &quot;status&quot;: &quot;complete&quot;,
+    &quot;httpStatus&quot;: 200,
+    &quot;count&quot;: 0,
+    &quot;checks&quot;: [
+      {
+        &quot;pointer&quot;: &quot;/status&quot;,
+        &quot;matched&quot;: false,
+        &quot;actualOmitted&quot;: true
+      }
+    ]
+  },
+  &quot;ui&quot;: {
+    &quot;passed&quot;: true,
+    &quot;observedText&quot;: &quot;Could not save. Try again.&quot;,
+    &quot;checks&quot;: [
+      true,
+      true
+    ]
+  },
+  &quot;evidence&quot;: {
+    &quot;image&quot;: &quot;desktop-failure.png&quot;,
+    &quot;observation&quot;: &quot;desktop-failure.json&quot;,
+    &quot;selector&quot;: &quot;#status&quot;
+  },
+  &quot;successDuringFailure&quot;: false
+}</pre></details></section><section><h2>mobile · Real save</h2><p>pass</p><p>Matching records before / after: 0 / 1</p><figure><div class="capture" tabindex="0" role="region" aria-label="Captured component"><img src="data:image/png;base64,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" alt="mobile · success"></div><figcaption>Captured component · scroll to inspect at original size</figcaption></figure><details><summary>Request, readback and UI evidence</summary><pre>{
+  &quot;viewport&quot;: &quot;mobile&quot;,
+  &quot;phase&quot;: &quot;success&quot;,
+  &quot;reference&quot;: &quot;4b43e21c-20f7-4c20-ac7e-25ddfe429e50&quot;,
+  &quot;passed&quot;: true,
+  &quot;status&quot;: &quot;pass&quot;,
+  &quot;reasons&quot;: [],
+  &quot;network&quot;: {
+    &quot;matched&quot;: 1,
+    &quot;statuses&quot;: [
+      201
+    ],
+    &quot;failed&quot;: 0,
+    &quot;blocked&quot;: 0,
+    &quot;injected&quot;: 0
+  },
+  &quot;before&quot;: {
+    &quot;status&quot;: &quot;complete&quot;,
+    &quot;httpStatus&quot;: 200,
+    &quot;count&quot;: 0,
+    &quot;checks&quot;: [
+      {
+        &quot;pointer&quot;: &quot;/status&quot;,
+        &quot;matched&quot;: false,
+        &quot;actualOmitted&quot;: true
+      }
+    ]
+  },
+  &quot;after&quot;: {
+    &quot;status&quot;: &quot;complete&quot;,
+    &quot;httpStatus&quot;: 200,
+    &quot;count&quot;: 1,
+    &quot;checks&quot;: [
+      {
+        &quot;pointer&quot;: &quot;/status&quot;,
+        &quot;matched&quot;: true,
+        &quot;actual&quot;: &quot;saved&quot;
+      }
+    ]
+  },
+  &quot;ui&quot;: {
+    &quot;passed&quot;: true,
+    &quot;observedText&quot;: &quot;Saved&quot;,
+    &quot;checks&quot;: [
+      true
+    ]
+  },
+  &quot;evidence&quot;: {
+    &quot;image&quot;: &quot;mobile-success.png&quot;,
+    &quot;observation&quot;: &quot;mobile-success.json&quot;,
+    &quot;selector&quot;: &quot;#status&quot;
+  }
+}</pre></details></section><section><h2>mobile · Injected HTTP 503</h2><p>pass</p><p>Matching records before / after: 0 / 0</p><figure><div class="capture" tabindex="0" role="region" aria-label="Captured component"><img src="data:image/png;base64,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" alt="mobile · failure"></div><figcaption>Captured component · scroll to inspect at original size</figcaption></figure><details><summary>Request, readback and UI evidence</summary><pre>{
+  &quot;viewport&quot;: &quot;mobile&quot;,
+  &quot;phase&quot;: &quot;failure&quot;,
+  &quot;reference&quot;: &quot;9bbfe063-ba3d-4f85-9ada-cae07992c46e&quot;,
+  &quot;passed&quot;: true,
+  &quot;status&quot;: &quot;pass&quot;,
+  &quot;reasons&quot;: [],
+  &quot;network&quot;: {
+    &quot;matched&quot;: 1,
+    &quot;statuses&quot;: [
+      503
+    ],
+    &quot;failed&quot;: 0,
+    &quot;blocked&quot;: 0,
+    &quot;injected&quot;: 1
+  },
+  &quot;before&quot;: {
+    &quot;status&quot;: &quot;complete&quot;,
+    &quot;httpStatus&quot;: 200,
+    &quot;count&quot;: 0,
+    &quot;checks&quot;: [
+      {
+        &quot;pointer&quot;: &quot;/status&quot;,
+        &quot;matched&quot;: false,
+        &quot;actualOmitted&quot;: true
+      }
+    ]
+  },
+  &quot;after&quot;: {
+    &quot;status&quot;: &quot;complete&quot;,
+    &quot;httpStatus&quot;: 200,
+    &quot;count&quot;: 0,
+    &quot;checks&quot;: [
+      {
+        &quot;pointer&quot;: &quot;/status&quot;,
+        &quot;matched&quot;: false,
+        &quot;actualOmitted&quot;: true
+      }
+    ]
+  },
+  &quot;ui&quot;: {
+    &quot;passed&quot;: true,
+    &quot;observedText&quot;: &quot;Could not save. Try again.&quot;,
+    &quot;checks&quot;: [
+      true,
+      true
+    ]
+  },
+  &quot;evidence&quot;: {
+    &quot;image&quot;: &quot;mobile-failure.png&quot;,
+    &quot;observation&quot;: &quot;mobile-failure.json&quot;,
+    &quot;selector&quot;: &quot;#status&quot;
+  },
+  &quot;successDuringFailure&quot;: false
+}</pre></details></section><h2>Scope and limits</h2><p>Success trials can create real test records; no automatic cleanup is performed. Readback checks the configured API projection, not database durability. Failure trials intercept the browser request with HTTP 503. This report does not certify unrelated pages, permissions or business rules.</p><p class="muted">2026-09-09T18:37:30.924Z · v0.8.0</p></main></html>

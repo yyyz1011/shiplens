@@ -44,6 +44,7 @@ try {
           '/#/docs/checked-review',
           '/#/docs/portable-plans',
           '/#/docs/check-audit',
+          '/#/docs/delivery-proof',
           '/#/docs/mcp',
           '/#/docs/review-api',
           '/#/docs/scoped-review',
@@ -92,7 +93,8 @@ try {
             route === '/#/docs/benchmark' ||
             route === '/#/docs/checked-review' ||
             route === '/#/docs/portable-plans' ||
-            route === '/#/docs/check-audit'
+            route === '/#/docs/check-audit' ||
+            route === '/#/docs/delivery-proof'
           )
             await page.screenshot({
               path: `${output}/${device}-${locale}-${theme}-${route === '/' ? 'home' : route.includes('quickstart') ? 'docs' : route.includes('/docs/') ? route.split('/').at(-1) : 'report'}.png`,
@@ -116,6 +118,7 @@ try {
       'checked-review',
       'portable-plans',
       'check-audit',
+      'delivery-proof',
     ]) {
       await page.goto(base + '/#/docs/' + section);
       reviewText += '\n' + (await page.locator('.reading-article').innerText());

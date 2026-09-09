@@ -5,6 +5,7 @@ import path from 'node:path';
 import { tmpdir } from 'node:os';
 import assert from 'node:assert/strict';
 import http from 'node:http';
+import { createDeliveryDemo } from '../packages/cli/examples/delivery-server.mjs';
 import { demoHandler } from '../packages/cli/examples/server.mjs';
 import { startFixture } from '../packages/cli/test/fixture.js';
 const exec = promisify(execFile);
@@ -186,6 +187,25 @@ try {
     );
     assert.equal(namedInputExample.gate.passed, true);
     assert.equal(namedInputExample.plan.requiredInputs[0].key, 'query');
+    const deliveryApp = await createDeliveryDemo({ directory: path.join(temp, 'delivery-app') });
+    try {
+      const delivered = JSON.parse(
+        (
+          await exec(process.execPath, ['node_modules/shiplens/examples/delivery.mjs'], {
+            cwd: installed,
+            env: {
+              ...process.env,
+              SHIPLENS_EXAMPLE_URL: deliveryApp.url,
+              SHIPLENS_EXAMPLE_OUTPUT: path.join(temp, 'delivery-example'),
+            },
+          })
+        ).stdout,
+      );
+      assert.equal(delivered.passed, true);
+      assert.equal(delivered.trials.length, 4);
+    } finally {
+      await deliveryApp.close();
+    }
     const doctor = JSON.parse((await exec(binary, ['doctor'], { cwd: installed })).stdout);
     assert.equal(doctor.passed, true);
     const { Client } = await import('@modelcontextprotocol/client');
@@ -208,7 +228,15 @@ try {
         }),
       );
       const tools = (await client.listTools()).tools;
-      assert.equal(tools.length, 21);
+      assert.equal(tools.length, 24);
+      assert.equal(
+        tools.find((t) => t.name === 'shiplens_verify_delivery').annotations.destructiveHint,
+        true,
+      );
+      assert.equal(
+        tools.find((t) => t.name === 'shiplens_read_delivery_evidence').annotations.readOnlyHint,
+        true,
+      );
       assert.equal(
         tools.find((t) => t.name === 'shiplens_audit_checks').annotations.readOnlyHint,
         true,

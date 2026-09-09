@@ -85,6 +85,9 @@ export async function doctor(args) {
   process.exitCode = result.passed ? 0 : 1;
 }
 const methods = {
+  delivery: 'verifyDelivery',
+  'delivery-run': 'getDelivery',
+  'delivery-evidence': 'readDeliveryEvidence',
   plan: 'validatePlan',
   verify: 'verify',
   collect: 'collect',
@@ -128,7 +131,7 @@ export async function reviewCli(args) {
     console.log(
       'shiplens review <' +
         Object.keys(methods).join('|') +
-        '> --config <file> [--plan <portable case JSON>] [--input <JSON file>] [--run <id>] [--case <id>] [--previous <runId>] [--format html|json|markdown] [--lang en|zh] [--fail-on error|warning] [--timeout-ms 120000]\nAll commands write JSON to stdout. plan validates without browser execution; verify reads --plan and optional named values from --input. verify/gate exit 1 while requirements or machine checks remain unresolved; command errors exit 2. audit is advisory and exits 0 when completed, including survivors; inspect pageSummary and follow nextOffset.',
+        '> --config <file> [--plan <portable case JSON>] [--input <JSON file>] [--run <id>] [--case <id>] [--previous <runId>] [--format html|json|markdown] [--lang en|zh] [--fail-on error|warning] [--timeout-ms 120000]\nAll commands write JSON to stdout. plan validates without browser execution; verify reads --plan and optional named values from --input. verify/gate exit 1 while requirements or machine checks remain unresolved; command errors exit 2. delivery reads --plan and optional named inputs, exits 1 for failed/incomplete delivery contracts; delivery-run/delivery-evidence take --input JSON with deliveryId. audit is advisory and exits 0 when completed, including survivors; inspect pageSummary and follow nextOffset.',
     );
     return;
   }
@@ -136,11 +139,11 @@ export async function reviewCli(args) {
   if (positionals.length !== 1 || !Object.hasOwn(methods, command))
     throw new Error('Unknown review command. Run shiplens review --help.');
   for (const [flag, commands] of Object.entries({
-    plan: ['plan', 'verify'],
+    plan: ['plan', 'verify', 'delivery'],
     lang: ['report', 'verify'],
     format: ['report', 'verify'],
     'fail-on': ['gate', 'report', 'verify'],
-    'timeout-ms': ['collect', 'recheck', 'verify'],
+    'timeout-ms': ['collect', 'recheck', 'verify', 'delivery'],
     previous: ['compare', 'recheck', 'report'],
     case: ['case', 'update', 'export', 'recheck'],
     run: ['run', 'evidence', 'packet', 'audit', 'assess', 'save', 'compare', 'report', 'gate'],
@@ -151,12 +154,12 @@ export async function reviewCli(args) {
   let input = values.input ? await readJson(values.input) : {};
   if (!input || typeof input !== 'object' || Array.isArray(input))
     throw new Error('Input must be a JSON object.');
-  if (['plan', 'verify'].includes(command)) {
+  if (['plan', 'verify', 'delivery'].includes(command)) {
     if (!values.plan) throw new Error('This command requires --plan <portable case JSON>.');
     if (command === 'plan' && values.input) throw new Error('plan does not accept --input.');
     input = {
-      data: await readJson(values.plan),
-      ...(command === 'verify' ? { inputs: input } : {}),
+      [command === 'delivery' ? 'contract' : 'data']: await readJson(values.plan),
+      ...(['verify', 'delivery'].includes(command) ? { inputs: input } : {}),
     };
   }
   if (command === 'import') input = { data: input };
@@ -178,6 +181,7 @@ export async function reviewCli(args) {
     });
     console.log(JSON.stringify(result));
     if (command === 'gate') process.exitCode = result.passed ? 0 : 1;
+    if (command === 'delivery') process.exitCode = result.passed ? 0 : 1;
     if (command === 'verify') process.exitCode = result.gate.passed ? 0 : 1;
   } finally {
     process.removeListener('SIGINT', abort);

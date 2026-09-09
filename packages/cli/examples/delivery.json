@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "kind": "shiplens-delivery",
+  "name": "Saving creates a record and handles failure",
+  "page": "/",
+  "referenceInput": "reference",
+  "steps": [
+    { "action": "fill", "selector": "#reference", "valueFromInput": "reference" },
+    { "action": "click", "selector": "#save" }
+  ],
+  "request": { "method": "POST", "path": "/api/records" },
+  "readback": {
+    "path": "/api/records",
+    "queryKey": "reference",
+    "items": "/items",
+    "reference": "/reference",
+    "checks": [{ "pointer": "/status", "equals": "saved" }]
+  },
+  "success": { "selector": "#status", "checks": [{ "operator": "equals", "value": "Saved" }] },
+  "failure": {
+    "selector": "#status",
+    "checks": [
+      { "operator": "contains", "value": "Could not save" },
+      { "operator": "excludes", "value": "Saved" }
+    ]
+  }
+}

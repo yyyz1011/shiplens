@@ -14,7 +14,7 @@ Your existing assistant supplies the reasoning; ShipLens supplies repeatable evi
 shiplens mcp --config /absolute/project/shiplens.config.json
 ```
 
-Twenty-one tools support the review lifecycle. The core tools collect requirement-scoped evidence, read PNG images and bounded DOM, record cited pass/fail/needs-evidence assessments, retrieve history, save cases and recheck. A pass requires complete evidence for every requested device. Manual judgments start pending on recheck; configured checks re-evaluate fresh evidence. Prior passes are never silently reused. Machine diagnostics remain separate from AI judgments.
+Twenty-four tools support the review lifecycle. The core tools collect requirement-scoped evidence, read PNG images and bounded DOM, record cited pass/fail/needs-evidence assessments, retrieve history, save cases and recheck. A pass requires complete evidence for every requested device. Manual judgments start pending on recheck; configured checks re-evaluate fresh evidence. Prior passes are never silently reused. Machine diagnostics remain separate from AI judgments.
 
 For your own agent, import `ReviewWorkspace` from `shiplens/review`. The six core methods are demonstrated in `node node_modules/shiplens/examples/review.mjs` after starting the bundled demo server. Saved cases parameterize fill inputs; use test data and masks for any values echoed into page content or logs. Your AI client receives requested evidence; ShipLens makes no model calls or report uploads.
 
@@ -219,3 +219,15 @@ node node_modules/shiplens/examples/audit.mjs
 ```
 
 Run the example server first for the packaged example. API: `await workspace.auditChecks({runId})`; MCP: `shiplens_audit_checks`. Follow every `nextOffset` page; confirm relevance against the specification before changing rules. Supports custom labeled counterexamples, explicit byte limits and numeric probe coverage. [Full usage, response contract and reproducible comparison](https://shiplens.nimokit.com/#/docs/check-audit).
+
+## Delivery proof (0.8+)
+
+Verify a save with a generated correlation field, independent cookie-authenticated JSON GET readback, and an exercised HTTP 503 failure branch. A reviewed `shiplens-delivery` contract connects UI expectations, one exact authorized mutation and one matching API record. Success trials may create real test records; there is no automatic cleanup. API readback does not certify database durability.
+
+```sh
+node node_modules/shiplens/examples/delivery-server.mjs
+# In another terminal:
+node node_modules/shiplens/examples/delivery.mjs
+```
+
+API: `verifyDelivery({contract, inputs?})`, `getDelivery({deliveryId})`, `readDeliveryEvidence({deliveryId, viewport, phase})`. MCP exposes corresponding `shiplens_verify_delivery`, `shiplens_get_delivery` and `shiplens_read_delivery_evidence` tools. [Contract, host policy, CLI/API examples and fault comparison](https://shiplens.nimokit.com/#/docs/delivery-proof).

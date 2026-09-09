@@ -135,3 +135,37 @@ review
   });
 // @ts-expect-error Custom counterexamples require an explanatory label.
 review.auditChecks({ runId: 'id', counterexamples: [{ criterionId: 'heading', text: 'bad' }] });
+
+const deliveryContract: import('shiplens/review').DeliveryContract = {
+  schemaVersion: 1,
+  kind: 'shiplens-delivery',
+  name: 'Save record',
+  page: '/',
+  referenceInput: 'reference',
+  steps: [
+    { action: 'fill', selector: '#reference', valueFromInput: 'reference' },
+    { action: 'click', selector: '#save' },
+  ],
+  request: { method: 'POST', path: '/api/records' },
+  readback: {
+    path: '/api/records',
+    items: '/items',
+    reference: '/reference',
+    checks: [{ pointer: '/status', equals: 'saved' }],
+  },
+  success: { selector: '#status', checks: [{ operator: 'equals', value: 'Saved' }] },
+  failure: { selector: '#status', checks: [{ operator: 'contains', value: 'Try again' }] },
+};
+review.verifyDelivery({ contract: deliveryContract }).then(async (result) => {
+  const passed: boolean = result.passed;
+  await review.getDelivery({ deliveryId: result.deliveryId });
+  const proof = await review.readDeliveryEvidence({
+    deliveryId: result.deliveryId,
+    viewport: 'desktop',
+    phase: 'success',
+  });
+  const image: string = proof.image.data;
+  void [passed, image];
+});
+// @ts-expect-error Readback assertions accept JSON scalar expectations only.
+deliveryContract.readback.checks.push({ pointer: '/status', equals: { value: 'saved' } });

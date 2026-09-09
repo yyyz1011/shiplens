@@ -6,6 +6,7 @@ import { aiWorkflowDocs, mcpDocs, reviewApiDocs } from './review-docs.js';
 import { scopedReviewDocs, caseLibraryDocs, acceptanceOpsDocs } from './lifecycle-docs.js';
 import { apiDocs } from './api-docs.js';
 import { checkedDocs } from './checked-docs.js';
+import { deliveryDocs } from './delivery-docs.js';
 import { auditDocs } from './audit-docs.js';
 import { planDocs } from './plan-docs.js';
 import { benchmarkDocs } from './benchmark-docs.js';
@@ -29,6 +30,10 @@ export function getDocs() {
         p(
           'A passing rule may still accept a wrong price. <a href="#/docs/check-audit">Challenge your acceptance checks with concrete counterexamples</a> from saved evidence before trusting the plan.',
           '规则通过，也可能放过错误金额。在信任验收文件前，<a href="#/docs/check-audit">用保存证据中的具体反例检查规则盲区</a>。',
+        ) +
+        p(
+          'For forms that create records, <a href="#/docs/delivery-proof">connect the success message to an independent readback and test the failure path</a> with one delivery contract.',
+          '对于创建记录的表单，用一份保存契约<a href="#/docs/delivery-proof">关联成功提示与独立回读，并验证失败分支</a>。',
         ) +
         h('start', 'Choose your starting point', '选择你的起点') +
         `<div class="reading-paths">${[
@@ -458,6 +463,7 @@ export function getDocs() {
     checkedDocs(),
     planDocs(),
     auditDocs(),
+    deliveryDocs(),
     mcpDocs(),
     reviewApiDocs(),
     scopedReviewDocs(),

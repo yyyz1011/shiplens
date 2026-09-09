@@ -1,0 +1,129 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>ShipLens · Delivery proof</title><style>
+:root{color-scheme:light dark;font-family:system-ui,sans-serif;color:#182c47;background:#f4f7fb;--paper:#fff;--muted:#526981;--line:#dce4ef;--accent:#234eb0}*{box-sizing:border-box}body{margin:0}header{padding:20px 24px;border-bottom:1px solid var(--line);background:var(--paper);font-weight:700}main{max-width:1000px;margin:40px auto;padding:0 24px}h1{font-size:clamp(28px,5vw,40px);letter-spacing:-.025em;line-height:1.15}h2{margin:36px 0 16px;font-size:23px}p{line-height:1.65;max-width:72ch;overflow-wrap:anywhere}.muted{color:var(--muted)}section{padding:24px 0;border-bottom:1px solid var(--line)}strong{font-size:20px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--paper);padding:16px;border:1px solid var(--line);font-size:13px;line-height:1.6}figure{margin:20px 0}.capture{overflow:auto;max-height:380px;border:1px solid var(--line);background:var(--paper)}img{display:block;max-width:none}figcaption{margin-top:8px;font-size:13px;color:var(--muted);line-height:1.5}summary{cursor:pointer;padding:12px 0;font-weight:600}summary:focus-visible,.capture:focus-visible{outline:2px solid var(--accent);outline-offset:4px}::selection{background:#d5e2ff;color:#172b4a}@media(prefers-color-scheme:dark){:root{color:#e3edf7;background:#101923;--paper:#172331;--muted:#abbdd0;--line:#35465b;--accent:#b1c8ff}}@media(max-width:640px){main{margin:28px auto;padding:0 18px}}
+</style><header>ShipLens</header><main><h1>Delivery proof</h1><p>Saving creates a record and handles failure</p><strong>Contract requires attention</strong><p>The browser action, independent server readback and injected failure are checked separately.</p><p class="muted">8ab00a3a-df0e-4619-bb15-cfe189c6f9e0</p><section><h2>desktop · Real save</h2><p>fail · persisted-record-mismatch</p><p>Matching records before / after: 0 / 2</p><figure><div class="capture" tabindex="0" role="region" aria-label="Captured component"><img src="data:image/png;base64,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" alt="desktop · success"></div><figcaption>Captured component · scroll to inspect at original size</figcaption></figure><details><summary>Request, readback and UI evidence</summary><pre>{
+  &quot;viewport&quot;: &quot;desktop&quot;,
+  &quot;phase&quot;: &quot;success&quot;,
+  &quot;reference&quot;: &quot;a5ff4af7-2bfb-40a1-9a85-10c99a3be6da&quot;,
+  &quot;passed&quot;: false,
+  &quot;status&quot;: &quot;fail&quot;,
+  &quot;reasons&quot;: [
+    &quot;persisted-record-mismatch&quot;
+  ],
+  &quot;network&quot;: {
+    &quot;matched&quot;: 1,
+    &quot;statuses&quot;: [
+      201
+    ],
+    &quot;failed&quot;: 0,
+    &quot;blocked&quot;: 0,
+    &quot;injected&quot;: 0
+  },
+  &quot;before&quot;: {
+    &quot;status&quot;: &quot;complete&quot;,
+    &quot;httpStatus&quot;: 200,
+    &quot;count&quot;: 0,
+    &quot;checks&quot;: [
+      {
+        &quot;pointer&quot;: &quot;/status&quot;,
+        &quot;matched&quot;: false,
+        &quot;actualOmitted&quot;: true
+      }
+    ]
+  },
+  &quot;after&quot;: {
+    &quot;status&quot;: &quot;complete&quot;,
+    &quot;httpStatus&quot;: 200,
+    &quot;count&quot;: 2,
+    &quot;checks&quot;: [
+      {
+        &quot;pointer&quot;: &quot;/status&quot;,
+        &quot;matched&quot;: false,
+        &quot;actualOmitted&quot;: true
+      }
+    ]
+  },
+  &quot;ui&quot;: {
+    &quot;passed&quot;: true,
+    &quot;observedText&quot;: &quot;Saved&quot;,
+    &quot;checks&quot;: [
+      true
+    ]
+  },
+  &quot;evidence&quot;: {
+    &quot;image&quot;: &quot;desktop-success.png&quot;,
+    &quot;observation&quot;: &quot;desktop-success.json&quot;,
+    &quot;selector&quot;: &quot;#status&quot;
+  }
+}</pre></details></section><section><h2>desktop · Injected HTTP 503</h2><p>skipped · success-baseline-not-passing</p><details><summary>Request, readback and UI evidence</summary><pre>{
+  &quot;viewport&quot;: &quot;desktop&quot;,
+  &quot;phase&quot;: &quot;failure&quot;,
+  &quot;status&quot;: &quot;skipped&quot;,
+  &quot;passed&quot;: false,
+  &quot;reasons&quot;: [
+    &quot;success-baseline-not-passing&quot;
+  ],
+  &quot;evidence&quot;: null
+}</pre></details></section><section><h2>mobile · Real save</h2><p>fail · persisted-record-mismatch</p><p>Matching records before / after: 0 / 2</p><figure><div class="capture" tabindex="0" role="region" aria-label="Captured component"><img src="data:image/png;base64,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" alt="mobile · success"></div><figcaption>Captured component · scroll to inspect at original size</figcaption></figure><details><summary>Request, readback and UI evidence</summary><pre>{
+  &quot;viewport&quot;: &quot;mobile&quot;,
+  &quot;phase&quot;: &quot;success&quot;,
+  &quot;reference&quot;: &quot;ae65bb13-0bbc-48b3-a825-a125be81af03&quot;,
+  &quot;passed&quot;: false,
+  &quot;status&quot;: &quot;fail&quot;,
+  &quot;reasons&quot;: [
+    &quot;persisted-record-mismatch&quot;
+  ],
+  &quot;network&quot;: {
+    &quot;matched&quot;: 1,
+    &quot;statuses&quot;: [
+      201
+    ],
+    &quot;failed&quot;: 0,
+    &quot;blocked&quot;: 0,
+    &quot;injected&quot;: 0
+  },
+  &quot;before&quot;: {
+    &quot;status&quot;: &quot;complete&quot;,
+    &quot;httpStatus&quot;: 200,
+    &quot;count&quot;: 0,
+    &quot;checks&quot;: [
+      {
+        &quot;pointer&quot;: &quot;/status&quot;,
+        &quot;matched&quot;: false,
+        &quot;actualOmitted&quot;: true
+      }
+    ]
+  },
+  &quot;after&quot;: {
+    &quot;status&quot;: &quot;complete&quot;,
+    &quot;httpStatus&quot;: 200,
+    &quot;count&quot;: 2,
+    &quot;checks&quot;: [
+      {
+        &quot;pointer&quot;: &quot;/status&quot;,
+        &quot;matched&quot;: false,
+        &quot;actualOmitted&quot;: true
+      }
+    ]
+  },
+  &quot;ui&quot;: {
+    &quot;passed&quot;: true,
+    &quot;observedText&quot;: &quot;Saved&quot;,
+    &quot;checks&quot;: [
+      true
+    ]
+  },
+  &quot;evidence&quot;: {
+    &quot;image&quot;: &quot;mobile-success.png&quot;,
+    &quot;observation&quot;: &quot;mobile-success.json&quot;,
+    &quot;selector&quot;: &quot;#status&quot;
+  }
+}</pre></details></section><section><h2>mobile · Injected HTTP 503</h2><p>skipped · success-baseline-not-passing</p><details><summary>Request, readback and UI evidence</summary><pre>{
+  &quot;viewport&quot;: &quot;mobile&quot;,
+  &quot;phase&quot;: &quot;failure&quot;,
+  &quot;status&quot;: &quot;skipped&quot;,
+  &quot;passed&quot;: false,
+  &quot;reasons&quot;: [
+    &quot;success-baseline-not-passing&quot;
+  ],
+  &quot;evidence&quot;: null
+}</pre></details></section><h2>Scope and limits</h2><p>Success trials can create real test records; no automatic cleanup is performed. Readback checks the configured API projection, not database durability. Failure trials intercept the browser request with HTTP 503. This report does not certify unrelated pages, permissions or business rules.</p><p class="muted">2026-09-09T18:37:36.023Z · v0.8.0</p></main></html>

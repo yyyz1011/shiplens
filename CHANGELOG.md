@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.0
+
+- Add reusable delivery contracts connecting one authorized browser mutation to a generated correlation marker, independent JSON API readback and an exercised HTTP 503 failure trial. Require an absent precondition, one matching saved record, explicit UI feedback and no false success during failure.
+- Expose verifyDelivery/getDelivery/readDeliveryEvidence through TypeScript, CLI and MCP, with per-layer results and a standalone HTML report. Incomplete and skipped trials cannot pass. Results are bounded snapshots; successful trials can create real test records and do not perform cleanup.
+- Include a file-backed application example and an independently scripted Playwright comparison covering four deliberate defects, healthy controls and both viewports. Publish bilingual contract documentation and original evidence.
+
 ## 0.7.0
 
 - Challenge passing text checks with offline counterexamples from saved evidence through `auditChecks`, `review audit`, and `shiplens_audit_checks`. Report concrete surviving numeric/text variants, custom unacceptable states, baseline eligibility, per-device proof identifiers, pagination and byte limits. Audits are advisory and never modify acceptance or evidence.
