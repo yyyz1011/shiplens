@@ -7,7 +7,7 @@ The public repository is `yyyz1011/shiplens`, the default branch is `master`, th
 `.github/workflows/release.yml` runs for pull requests, master pushes and manual dispatches.
 
 1. Browser tests run on Linux/Node 22, Windows/Node 24 and macOS/Node 24.
-2. Linux quality checks verify formatting, TypeScript declarations, independent tarball installation, documentation build and 72 language/theme/viewport/route cases plus interactions.
+2. Linux quality checks verify formatting, TypeScript declarations, independent tarball installation, documentation build and 104 language/theme/viewport/route cases plus interactions.
 3. On master, `NPM_TRUSTED_PUBLISHING=true` enables npm publication through GitHub OIDC, without a stored npm token.
 4. `scripts/prepare-release.mjs` checks the registry. A new commit gets the next patch version, or a higher explicitly configured stable version. A published `gitHead` reuses its version on retry. Registry/network failures stop publication.
 5. The exact tarball is published with provenance and attached to a GitHub release targeting the source commit.

@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 2,
+  "version": "0.2.0",
+  "target": "http://127.0.0.1:55174/",
+  "startedAt": "2026-09-09T13:07:47.541Z",
+  "options": {
+    "maxPages": 10,
+    "timeout": 1000,
+    "settle": 50,
+    "viewport": "desktop",
+    "exclude": [],
+    "pages": ["http://127.0.0.1:55174/"],
+    "crawl": false,
+    "scroll": false,
+    "scrollSteps": 6,
+    "waitFor": "",
+    "allowRequests": [],
+    "ignoreRules": [],
+    "mask": [],
+    "authProfile": "anonymous",
+    "targetProfile": "5212481af949928b",
+    "flowsProfile": "0b933fbaf6059f39",
+    "ignoreProfile": "a96dce18c2780216"
+  },
+  "pages": [
+    {
+      "url": "http://127.0.0.1:55174/",
+      "discoveredFrom": "explicit",
+      "checks": [
+        {
+          "viewport": "desktop",
+          "status": "complete",
+          "screenshot": "screenshots/1-desktop.png",
+          "blockedRequests": 0,
+          "scrollTruncated": false,
+          "notes": [],
+          "httpStatus": 200,
+          "finalUrl": "http://127.0.0.1:55174/",
+          "screenshotMode": "full-page"
+        },
+        {
+          "viewport": "desktop",
+          "status": "complete",
+          "screenshot": "screenshots/1-desktop-flow-1.png",
+          "blockedRequests": 0,
+          "scrollTruncated": false,
+          "notes": [],
+          "flow": "search-and-details",
+          "steps": [
+            {
+              "index": 1,
+              "action": "fill",
+              "selector": "#query",
+              "status": "passed",
+              "screenshot": "screenshots/1-desktop-flow-1-step-1.png"
+            },
+            {
+              "index": 2,
+              "action": "press",
+              "selector": "#query",
+              "status": "passed",
+              "screenshot": "screenshots/1-desktop-flow-1-step-2.png"
+            },
+            {
+              "index": 3,
+              "action": "expectText",
+              "selector": "#result",
+              "status": "passed",
+              "screenshot": "screenshots/1-desktop-flow-1-step-3.png"
+            },
+            {
+              "index": 4,
+              "action": "click",
+              "selector": "#details",
+              "status": "passed",
+              "screenshot": "screenshots/1-desktop-flow-1-step-4.png"
+            }
+          ],
+          "httpStatus": 200,
+          "finalUrl": "http://127.0.0.1:55174/",
+          "screenshotMode": "full-page"
+        },
+        {
+          "viewport": "desktop",
+          "status": "incomplete",
+          "screenshot": "screenshots/1-desktop-flow-2.png",
+          "blockedRequests": 0,
+          "scrollTruncated": false,
+          "notes": [
+            "Flow broken-button, step 2: Action, expectation or observation failed; check the selector, timeout, expected state and blocked requests."
+          ],
+          "flow": "broken-button",
+          "steps": [
+            {
+              "index": 1,
+              "action": "click",
+              "selector": "#broken",
+              "status": "passed",
+              "screenshot": "screenshots/1-desktop-flow-2-step-1.png"
+            },
+            {
+              "index": 2,
+              "action": "expectText",
+              "selector": "#result",
+              "status": "failed",
+              "screenshot": "screenshots/1-desktop-flow-2-step-2.png",
+              "detail": "Action, expectation or observation failed; check the selector, timeout, expected state and blocked requests."
+            },
+            {
+              "index": 3,
+              "action": "click",
+              "selector": "#details",
+              "status": "skipped",
+              "screenshot": null
+            }
+          ],
+          "httpStatus": 200,
+          "finalUrl": "http://127.0.0.1:55174/",
+          "screenshotMode": "full-page"
+        },
+        {
+          "viewport": "desktop",
+          "status": "complete",
+          "screenshot": "screenshots/1-desktop-flow-3.png",
+          "blockedRequests": 0,
+          "scrollTruncated": false,
+          "notes": [],
+          "flow": "known-diagnostic",
+          "steps": [
+            {
+              "index": 1,
+              "action": "click",
+              "selector": "#known",
+              "status": "passed",
+              "screenshot": "screenshots/1-desktop-flow-3-step-1.png"
+            }
+          ],
+          "httpStatus": 200,
+          "finalUrl": "http://127.0.0.1:55174/",
+          "screenshotMode": "full-page"
+        }
+      ],
+      "title": "ShipLens interaction example"
+    }
+  ],
+  "findings": [
+    {
+      "code": "runtime-error",
+      "severity": "error",
+      "title": "Unhandled page error",
+      "detail": "Demo interaction error",
+      "subject": "Demo interaction error",
+      "url": "http://127.0.0.1:55174/",
+      "viewport": "desktop",
+      "screenshot": "screenshots/1-desktop-flow-2-step-1.png",
+      "flow": "broken-button",
+      "step": 1,
+      "fingerprint": "590a58d3770369ad"
+    },
+    {
+      "code": "interaction-failed",
+      "severity": "error",
+      "title": "Interaction step failed",
+      "detail": "Action, expectation or observation failed; check the selector, timeout, expected state and blocked requests.",
+      "subject": "step:2",
+      "url": "http://127.0.0.1:55174/",
+      "viewport": "desktop",
+      "screenshot": "screenshots/1-desktop-flow-2-step-2.png",
+      "flow": "broken-button",
+      "step": 2,
+      "selector": "#result",
+      "fingerprint": "3108de8f21ee3799"
+    }
+  ],
+  "skipped": [],
+  "truncated": false,
+  "remainingPages": 0,
+  "durationMs": 2513,
+  "completedAt": "2026-09-09T13:07:50.054Z",
+  "suppressed": [
+    {
+      "code": "console-error",
+      "severity": "warning",
+      "title": "Console error",
+      "detail": "Demo known diagnostic",
+      "subject": "Demo known diagnostic",
+      "url": "http://127.0.0.1:55174/",
+      "viewport": "desktop",
+      "screenshot": "screenshots/1-desktop-flow-3-step-1.png",
+      "flow": "known-diagnostic",
+      "step": 1,
+      "fingerprint": "37a7f1625351aea8",
+      "suppression": {
+        "index": 1,
+        "reason": "Synthetic known diagnostic used to demonstrate precise ignores",
+        "expires": "2099-01-01"
+      }
+    }
+  ],
+  "ignoreWarnings": [],
+  "summary": {
+    "suppressed": 1,
+    "pages": 1,
+    "checks": 4,
+    "errors": 2,
+    "warnings": 0,
+    "incomplete": 1,
+    "groups": 2,
+    "scrollLimited": 0
+  },
+  "lang": "en"
+}

@@ -32,11 +32,34 @@ shiplens http://localhost:3000/dashboard \
 shiplens http://localhost:3000 --baseline .shiplens/<previous-run>/report.json
 ```
 
+## 交互检查与精确忽略
+
+通过 JSON 配置或 `scan()` 的 `flows` 定义点击、填写、按键、选择、等待和文字预期。每个流程使用隔离浏览器上下文，逐步保存截图；操作或预期失败后，后续步骤标为未执行。
+
+`ignore` 支持按规则、页面、视口、选择器、错误子串或指纹精确匹配，并记录原因与可选有效期。命中问题保留在 `suppressed` 中，不计入活动问题；过期后自动恢复。导航、截图和交互执行失败不可忽略。
+
+```sh
+npm install --save-dev --save-exact shiplens
+npx shiplens browsers
+node node_modules/shiplens/examples/server.mjs
+```
+
+保持演示站运行，在另一终端执行：
+
+```sh
+npx shiplens --config node_modules/shiplens/examples/flows.json --output .shiplens
+node node_modules/shiplens/examples/api.mjs
+```
+
+包提供三个公开 API：`scan()` 执行检查，`validateOptions()` 校验并规范参数，`compareBaseline()` 比较问题指纹。后者不判断覆盖与修复状态，需要通过 `scan()` 的 `baseline` 选项获得完整对比。
+
+[完整 API 参考](https://yyyz1011.github.io/shiplens/#/docs/api) · [交互步骤](https://yyyz1011.github.io/shiplens/#/docs/flows) · [精确忽略](https://yyyz1011.github.io/shiplens/#/docs/ignores) · [可运行案例](https://yyyz1011.github.io/shiplens/#/docs/examples)
+
 ## 能力边界
 
 支持指定页面、hash 路由、Playwright Cookie/localStorage 登录态、就绪选择器、有限滚动、精确请求白名单、规则忽略、截图遮盖及基线对比。
 
-工具不点击按钮、不提交表单。写入类请求默认阻止，只应放行确认是只读查询的精确接口。需要在自己的开发或测试环境运行。报告区分问题、未完成检查和覆盖限制；“本次未观察到”不会在范围不同或检查未完成时冒充“已修复”。
+未配置 flows 时不点击按钮、不提交表单；配置后仅执行指定步骤。写入类请求仍默认阻止，只应放行测试场景需要的精确接口。需要在自己的开发或测试环境运行。报告区分问题、未完成检查和覆盖限制；“本次未观察到”不会在范围不同或检查未完成时冒充“已修复”。
 
 不验证支付流程、业务正确性、权限、安全漏洞、完整无障碍或所有浏览器兼容性。手机视口是 Chromium 模拟，不等于真机验收。零问题不代表所有功能均正确。
 

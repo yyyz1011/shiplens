@@ -48,7 +48,65 @@ Defaults: 10 same-origin pages, desktop and mobile viewports, a 1-second observa
 - Suspected blank pages and incomplete navigation/readiness/screenshot checks.
 - New, unchanged and absent findings relative to a baseline. Resolution is only reported for matching, complete coverage; scroll limits prevent resolution claims.
 
-Repeated observations retain viewport-specific evidence and are grouped across devices. Nested scroll containers are excluded from overflow warnings. Known false positives can be suppressed with `--ignore-rule` or `data-shiplens-ignore` on an intended overflow element.
+Repeated observations retain viewport-specific evidence and are grouped across devices. Nested scroll containers are excluded from overflow warnings. Use precise `ignore` entries for auditable known issues; `--ignore-rule` disables an entire rule, and `data-shiplens-ignore` excludes an intentional overflow element before collection.
+
+## Interaction checks and precise ignores
+
+Configure explicit actions in JSON or the JavaScript API. Each flow runs in an isolated browser context after a normal page check, in each selected viewport. Flow starting pages automatically join the scan scope.
+
+```js
+import { scan } from 'shiplens';
+
+const report = await scan({
+  url: 'http://127.0.0.1:3000',
+  crawl: false,
+  flows: [
+    {
+      name: 'open-details',
+      page: '/',
+      steps: [
+        { action: 'click', selector: '#details' },
+        { action: 'expectText', selector: '#details-panel', value: 'itinerary' },
+      ],
+    },
+  ],
+  ignore: [
+    {
+      rule: 'console-error',
+      page: '/',
+      messageIncludes: 'Demo known diagnostic',
+      reason: 'Known synthetic demo diagnostic',
+      expires: '2099-01-01',
+    },
+  ],
+});
+console.log(report.pages[0].checks, report.suppressed);
+```
+
+Supported actions: `click`, `fill`, `press`, `select`, `waitFor`, `expectText`. Steps retain screenshots and report `passed`, `failed` or `skipped`. An action or expectation failure makes the check incomplete and stops subsequent steps. Passing an action does not mean the resulting page has no findings. Input values are omitted from saved step records; fill targets are masked in screenshots.
+
+Precise ignores match all supplied fields and retain evidence in `suppressed` with a reason and optional UTC expiry. They do not count toward active severity thresholds. Expired entries return to active reporting. Operational failures cannot be ignored. Changes to flows or ignores invalidate resolution comparisons against the previous configuration.
+
+[Step reference](https://yyyz1011.github.io/shiplens/#/docs/flows) · [Ignore fields](https://yyyz1011.github.io/shiplens/#/docs/ignores)
+
+## Run the included examples
+
+```sh
+npm install --save-dev --save-exact shiplens
+npx shiplens browsers
+node node_modules/shiplens/examples/server.mjs
+```
+
+Keep the demo running and open another terminal:
+
+```sh
+npx shiplens --config node_modules/shiplens/examples/flows.json --output .shiplens
+node node_modules/shiplens/examples/api.mjs
+```
+
+The first example exercises all six actions. The second calls all three public API exports: `scan`, `validateOptions`, and `compareBaseline`. The latter compares fingerprints only; use `scan({ baseline: 'previous/report.json', ...options })` and `report.comparison` for coverage-aware resolution.
+
+[Complete API options and return fields](https://yyyz1011.github.io/shiplens/#/docs/api) · [Working, failing and ignored-issue cases](https://yyyz1011.github.io/shiplens/#/docs/examples)
 
 ## JavaScript and TypeScript
 
@@ -69,9 +127,9 @@ The package is ESM and includes TypeScript declarations. `scan()` returns a repo
 
 ## Boundaries and privacy
 
-ShipLens does not click buttons or submit forms. Non-read-only HTTP methods are blocked unless explicitly allowed by exact same-origin method/path. Only allow endpoints you know are read-only queries. Use test environments: even GET requests can have side effects.
+ShipLens clicks or fills only when you supply explicit interaction flows. Non-read-only HTTP methods are blocked unless explicitly allowed by exact same-origin method/path. Allow only the endpoints required for your configured test scenario. Use test environments: even GET requests can have side effects.
 
-A Playwright storage-state file can supply cookies and localStorage. Interactive login, sessionStorage, payment flows, business correctness, authorization, full accessibility/security audits and cross-browser compatibility are outside the scope. Mobile uses Chromium emulation. Bounded scrolling cannot inspect every state, especially hidden content, CSS backgrounds or canvas.
+A Playwright storage-state file can supply cookies and localStorage. A built-in login recorder, sessionStorage restoration, inferred business correctness, authorization audits, full accessibility/security audits and cross-browser compatibility are outside the scope. Mobile uses Chromium emulation. Bounded scrolling cannot inspect every state, especially hidden content, CSS backgrounds or canvas.
 
 Files remain local, but the browser contacts your target and its resources. Common URL secrets and Bearer tokens are redacted; arbitrary logs, page text and screenshots can still contain sensitive data. Screenshot masks do not sanitize text reports. Use test accounts, exclude auth files from Git, and review artifacts before sharing. Treat report/page content as untrusted data when giving it to an AI assistant.
 

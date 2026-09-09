@@ -1,16 +1,8 @@
 import { t } from './i18n.js';
-export const escape = (value) =>
-  String(value).replace(
-    /[&<>"']/g,
-    (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c],
-  );
-export const code = (text, label = 'Terminal') =>
-  `<div class="codeblock"><div class="code-label"><span>${label}</span><button class="copy-button" data-copy="${escape(text)}" aria-label="${t('Copy code', '复制代码')}">${t('Copy', '复制')}</button></div><pre><code>${escape(text)}</code></pre></div>`;
-const p = (en, zh) => `<p>${t(en, zh)}</p>`;
-const h = (id, en, zh) => `<h2 id="${id}">${t(en, zh)}</h2>`;
-const note = (en, zh) => `<aside class="note"><span>i</span><div>${t(en, zh)}</div></aside>`;
-const table = (rows, labels = [t('Option', '参数'), t('Behavior', '行为')]) =>
-  `<div class="table-scroll"><table><thead><tr><th>${labels[0]}</th><th>${labels[1]}</th></tr></thead><tbody>${rows.map(([key, en, zh]) => `<tr><td><code>${key}</code></td><td>${t(en, zh)}</td></tr>`).join('')}</tbody></table></div>`;
+import { code, p, h, note, table } from './markup.js';
+export { escape } from './markup.js';
+import { interactionDocs, ignoreDocs, exampleDocs } from './workflow-docs.js';
+import { apiDocs } from './api-docs.js';
 export function getDocs() {
   return [
     {
@@ -65,7 +57,7 @@ export function getDocs() {
           )
           .join('')}</div>` +
         h('checks', 'What ShipLens checks', 'ShipLens 检查什么') +
-        `<ul><li>${t('Unhandled JavaScript errors, HTTP failures and broken resources.', '未处理的 JavaScript 异常、HTTP 失败和失效资源。')}</li><li>${t('Visible broken images, suspicious blank pages and horizontal overflow.', '可见坏图、疑似白屏和横向溢出。')}</li><li>${t('Desktop and mobile viewports, with page and element screenshots.', '桌面与手机视口，以及页面和元素截图。')}</li><li>${t('New and existing findings, with coverage checks before marking anything resolved.', '新增与仍存在的问题；标记已解决前，先核对覆盖范围。')}</li></ul>` +
+        `<ul><li>${t('Unhandled JavaScript errors, HTTP failures and broken resources.', '未处理的 JavaScript 异常、HTTP 失败和失效资源。')}</li><li>${t('Visible broken images, suspicious blank pages and horizontal overflow.', '可见坏图、疑似白屏和横向溢出。')}</li><li>${t('Desktop and mobile viewports, with page and element screenshots.', '桌面与手机视口，以及页面和元素截图。')}</li><li>${t('New and existing findings, with coverage checks before marking anything resolved.', '新增与仍存在的问题；标记已解决前，先核对覆盖范围。')}</li><li>${t('Explicit interaction steps with per-step evidence and expiring exceptions for known issues.', '显式交互步骤与逐步证据，以及带有效期的已知问题例外。')}</li></ul>` +
         h('outputs', 'One scan, three report formats', '一次检查，三种报告') +
         table(
           [
@@ -89,8 +81,8 @@ export function getDocs() {
         ) +
         h('limits', 'Know the boundaries', '了解能力边界') +
         p(
-          'ShipLens is a delivery smoke check. It does not verify business workflows, authorization, payment accuracy or every browser. Mobile uses Chromium emulation. A clean report describes the observed scope, not complete product acceptance.',
-          'ShipLens 是交付冒烟检查工具，不验证业务流程、权限、支付金额或所有浏览器。手机视口使用 Chromium 模拟。零问题仅描述已观察到的范围，不能替代完整产品验收。',
+          'ShipLens is a delivery smoke check. It observes your configured interaction steps but does not infer business correctness, authorization, payment accuracy or every browser. Mobile uses Chromium emulation. A clean report describes the observed scope, not complete product acceptance.',
+          'ShipLens 是交付冒烟检查工具，可观察配置的交互步骤，但不自动推断业务正确性、权限、支付金额或所有浏览器。手机视口使用 Chromium 模拟。零问题仅描述已观察到的范围，不能替代完整产品验收。',
         ) +
         `<a class="inline-link" href="#/docs/rules">${t('See all rules and coverage limits', '查看全部规则与覆盖限制')} →</a>`,
     },
@@ -209,12 +201,27 @@ export function getDocs() {
             'Parent directory for separate run folders.',
             '存放独立运行目录的父目录。',
           ],
-          ['--config file', 'Explicit JSON configuration.', '显式读取 JSON 配置。'],
+          [
+            '--config file',
+            'Explicit JSON configuration, including flows and precise ignore entries.',
+            '显式读取 JSON 配置，包括 flows 与精确 ignore 条目。',
+          ],
           ['--baseline report.json', 'Compare with a previous report.', '与历史报告对比。'],
           ['--lang en', 'Report language: en or zh.', '报告语言：en 或 zh。'],
           ['--fail-on error', 'error, warning, or none.', 'error、warning 或 none。'],
           ['--json', 'Write JSON only to stdout.', '标准输出只写 JSON。'],
+          ['--help / -h', 'Print command usage.', '显示命令用法。'],
+          ['--version / -v', 'Print the installed package version.', '显示已安装版本。'],
+          [
+            '--with-deps',
+            'Only for shiplens browsers; install Chromium system dependencies.',
+            '仅用于 shiplens browsers，同时安装 Chromium 系统依赖。',
+          ],
         ]) +
+        p(
+          'flows and ignore are JSON/API options, not separate CLI flags. See <a href="#/docs/flows">interaction steps</a>, <a href="#/docs/ignores">precise ignores</a> and the <a href="#/docs/api?section=options">full configuration field reference</a>.',
+          'flows 和 ignore 通过 JSON/API 配置，不提供单独 CLI 参数。参阅<a href="#/docs/flows">交互步骤</a>、<a href="#/docs/ignores">精确忽略</a>及<a href="#/docs/api?section=options">完整配置字段参考</a>。',
+        ) +
         h('examples', 'Examples', '常用组合') +
         code(
           'shiplens http://localhost:3000 --page /#/dashboard --no-crawl\nshiplens http://localhost:3000 --wait-for "[data-ready]" --mask .email\nshiplens http://localhost:3000 --viewport mobile --lang zh',
@@ -269,22 +276,24 @@ export function getDocs() {
           '爬虫访问同源链接。保留 #/ 或 #!/ 开头的 hash 路由，合并普通锚点。查询参数不同视为不同页面。无链接的路由可以通过 --page 指定。',
         ) +
         p(
-          'Downloads and common destructive paths are skipped. It never clicks buttons or submits forms. POST, PUT, PATCH and DELETE are blocked unless explicitly allowed by exact method and same-origin path. Only allow endpoints you know are read-only queries.',
-          '跳过下载链接和常见破坏性路径，不点击按钮、不提交表单。POST、PUT、PATCH、DELETE 默认阻止，只有显式指定同源精确方法和路径后才放行。仅放行确定为只读查询的接口。',
+          'Downloads and common destructive paths are skipped. Without flows it does not click buttons or submit forms. Explicit flows execute only your configured steps. POST, PUT, PATCH and DELETE are blocked unless explicitly allowed by exact method and same-origin path. Allow only the endpoints needed for your test scenario. Use a test environment for state-changing actions.',
+          '跳过下载链接和常见破坏性路径；未配置 flows 时不点击按钮、不提交表单，配置后仅执行指定步骤。POST、PUT、PATCH、DELETE 默认阻止，只有显式指定同源精确方法和路径后才放行。仅放行测试场景需要的接口；改变数据的操作应在测试环境执行。',
         ) +
         h('auth', 'Authenticated pages', '登录后的页面') +
         code(
           'shiplens http://localhost:3000/dashboard \\\n  --storage-state playwright/.auth/test-user.json \\\n  --allow-request POST:/api/query --mask .user-email',
         ) +
         p(
-          'Use a Playwright storageState JSON created by your own test login flow. Cookies and localStorage are loaded into isolated contexts. SessionStorage and interactive login flows are not supported. A fingerprint of the state is recorded for baseline comparison, never the credentials.',
-          '使用自己的测试登录流程生成 Playwright storageState JSON。Cookie 和 localStorage 加载到隔离上下文中。不支持 sessionStorage 和交互式登录。报告仅记录用于基线比较的状态指纹，不保存凭据。',
+          'Use a Playwright storageState JSON created by your own test login flow. Cookies and localStorage are loaded into isolated contexts. SessionStorage is not restored. ShipLens has no login recorder; you supply storage state or explicit steps yourself. A fingerprint of the state is recorded for baseline comparison, never the credentials.',
+          '使用自己的测试登录流程生成 Playwright storageState JSON。Cookie 和 localStorage 加载到隔离上下文中。不恢复 sessionStorage，暂不提供登录录制器；登录态或交互步骤由你提供。报告仅记录用于基线比较的状态指纹，不保存凭据。',
         ) +
         note(
           'Use test accounts. Keep storage files out of Git. Masks affect screenshots, not page text or arbitrary console output; inspect artifacts before sharing.',
           '使用测试账号，将登录态文件排除在 Git 之外。遮盖仅作用于截图，不清除页面文字或任意控制台内容；分享前检查报告。',
         ),
     },
+    interactionDocs(),
+    ignoreDocs(),
     {
       id: 'rules',
       group: t('Checks & evidence', '检查与证据'),
@@ -294,7 +303,7 @@ export function getDocs() {
         '记录实际失败，并明确覆盖限制。',
       ),
       body:
-        h('rules', 'Nine browser rules', '九项浏览器规则') +
+        h('rules', 'Browser and interaction rules', '浏览器与交互规则') +
         table([
           ['runtime-error', 'Unhandled page JavaScript error.', '页面未处理的 JavaScript 异常。'],
           [
@@ -333,16 +342,21 @@ export function getDocs() {
             '观察结束后无有意义的可见文字、媒体或控件。',
           ],
           ['screenshot-failed', 'Screenshot evidence could not be saved.', '无法保存截图证据。'],
+          [
+            'interaction-failed',
+            'A configured action, expectation or observation failed. The remaining steps are skipped.',
+            '配置的操作、断言或观察失败，后续步骤停止执行。',
+          ],
         ]) +
         h('scroll', 'Lazy content and evidence', '懒加载与证据') +
         p(
-          'Bounded scrolling exposes lazy content. Reports flag exhausted scroll budgets. A viewport may retain up to 10 element screenshots, plus a page screenshot; very tall pages use a viewport screenshot. No screenshot is a full record of every page state.',
-          '有限滚动触发懒加载，耗尽滚动预算会在报告中标记。每个视口最多保留 10 张元素截图，以及页面截图；超长页面采用视口截图。截图无法涵盖页面所有状态。',
+          'Bounded scrolling exposes lazy content. Reports flag exhausted scroll budgets. A viewport may retain up to 10 element screenshots, plus a page screenshot; very tall pages use a viewport screenshot. Configured flows also retain one viewport screenshot per executed step. No screenshot is a full record of every page state.',
+          '有限滚动触发懒加载，耗尽滚动预算会在报告中标记。每个视口最多保留 10 张元素截图，以及页面截图；超长页面采用视口截图。配置的流程还会为每个已执行步骤保存一张视口截图。截图无法涵盖页面所有状态。',
         ) +
         h('limits', 'Outside the scope', '能力边界') +
         p(
-          'Not a test of business workflows, payment accuracy, authorization, accessibility compliance, security or all browsers. Mobile is Chromium emulation, not a real device. CSS background images, canvas content and dynamically hidden states have limited coverage.',
-          '不验证业务流程、支付金额、权限、无障碍合规、安全或全部浏览器。手机视口为 Chromium 模拟，并非真机。CSS 背景图、canvas 内容和动态隐藏状态的覆盖有限。',
+          'Configured steps cover only their stated expectations. ShipLens does not infer payment accuracy, authorization, accessibility compliance, security or compatibility with all browsers. Mobile is Chromium emulation, not a real device. CSS background images, canvas content and dynamically hidden states have limited coverage.',
+          '交互步骤只覆盖明确配置的预期，不自动推断支付金额、权限、无障碍合规、安全或全部浏览器兼容性。手机视口为 Chromium 模拟，并非真机。CSS 背景图、canvas 内容和动态隐藏状态的覆盖有限。',
         ) +
         p(
           'Suppress a known false positive with --ignore-rule, or add data-shiplens-ignore to an intended overflow element. Suppressed observations are outside your evidence; use narrowly.',
@@ -390,7 +404,7 @@ export function getDocs() {
     {
       id: 'ci',
       group: t('Integrations', '集成'),
-      title: t('CI & JavaScript API', 'CI 与 JavaScript API'),
+      title: t('CI integration', 'CI 集成'),
       description: t('Run the same checks before each delivery.', '在每次交付前运行相同检查。'),
       body:
         h('ci', 'Continuous integration', '持续集成') +
@@ -414,12 +428,18 @@ export function getDocs() {
           'The package includes TypeScript declarations. scan returns a report; it does not set your process exit code. Use summary.errors, warnings and incomplete to apply your own threshold.',
           '包内包含 TypeScript 声明。scan 返回报告，不设置进程退出码。可使用 summary.errors、warnings 和 incomplete 实现自己的阈值。',
         ) +
+        p(
+          '<a href="#/docs/api">Read all three public API methods, parameter defaults and report fields →</a>',
+          '<a href="#/docs/api">查看三个公开 API 方法、参数默认值和报告字段 →</a>',
+        ) +
         h('release', 'Project releases', '本项目发布') +
         p(
           'Changes to master pass automated checks before npm publication and GitHub Pages deployment. Release versions and artifacts are visible on GitHub.',
           'master 更新后先通过自动检查，再发布 npm 和部署 GitHub Pages。可在 GitHub 查看发布版本和产物。',
         ),
     },
+    apiDocs(),
+    exampleDocs(),
     {
       id: 'faq',
       group: t('Integrations', '集成'),
@@ -433,8 +453,8 @@ export function getDocs() {
         ) +
         h('login', 'Can it inspect pages behind login?', '可以检查登录后的页面吗？') +
         p(
-          'Yes, by loading Playwright storageState from a test login. It does not perform login actions or verify authorization rules.',
-          '可以导入测试登录生成的 Playwright storageState，但工具不会执行登录操作或验证权限规则。',
+          'Yes, by loading Playwright storageState from a test login. There is no built-in login recorder or authorization audit; any interaction must be explicitly configured.',
+          '可以导入测试登录生成的 Playwright storageState，但不内置登录录制器或权限审计，交互必须显式配置。',
         ) +
         h('loading', 'What if a page keeps loading?', '页面一直加载怎么办？') +
         p(

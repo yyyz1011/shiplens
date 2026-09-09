@@ -1,6 +1,6 @@
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile, readFile } from 'node:fs/promises';
 const base = process.env.SHIPLENS_DOCS_URL || 'http://127.0.0.1:4318';
 const output = 'artifacts/ui';
 await mkdir(output, { recursive: true });
@@ -38,6 +38,10 @@ try {
           '/#/docs/rules',
           '/#/docs/reports',
           '/#/docs/ci',
+          '/#/docs/api',
+          '/#/docs/flows',
+          '/#/docs/ignores',
+          '/#/docs/examples',
           '/#/docs/faq',
           '/#/report',
         ]) {
@@ -66,15 +70,33 @@ try {
             );
           }
           results.push({ device, route, locale, theme, status: 'pass' });
-          if (route === '/' || route === '/#/docs/quickstart' || route === '/#/report')
+          if (
+            route === '/' ||
+            route === '/#/docs/quickstart' ||
+            route === '/#/report' ||
+            route === '/#/docs/api' ||
+            route === '/#/docs/flows'
+          )
             await page.screenshot({
-              path: `${output}/${device}-${locale}-${theme}-${route === '/' ? 'home' : route.includes('quickstart') ? 'docs' : 'report'}.png`,
+              path: `${output}/${device}-${locale}-${theme}-${route === '/' ? 'home' : route.includes('quickstart') ? 'docs' : route.includes('/docs/') ? route.split('/').at(-1) : 'report'}.png`,
               fullPage: true,
               animations: 'disabled',
             });
         }
       }
     await page.locator('#language-select').selectOption('en');
+    await page.goto(base + '/#/docs/api');
+    await page.getByRole('heading', { name: 'JavaScript API', exact: true }).waitFor();
+    const apiText = await page.locator('.reading-article').innerText();
+    for (const method of Object.keys(await import('../packages/cli/src/index.js')))
+      assert.ok(apiText.includes(method + '('), `Public API is undocumented: ${method}`);
+    const declarations = await readFile('packages/cli/src/index.d.ts', 'utf8');
+    const optionBlock = declarations
+      .split('export interface ScanOptions {')[1]
+      .split('export interface Finding')[0];
+    for (const match of optionBlock.matchAll(/^  (\w+)\??:/gm))
+      assert.ok(apiText.includes(match[1]), `ScanOptions field is undocumented: ${match[1]}`);
+
     await page.locator('.reading-toolbar .search-trigger').click();
     await page.locator('#search-input').fill('exit codes');
     await page.locator('.search-result').filter({ hasText: 'CLI reference' }).click();
@@ -124,6 +146,20 @@ try {
       anchorTop >= 64 && anchorTop < viewport.height - 64,
       `Anchor hidden by navigation: ${anchorTop}`,
     );
+    await page.goto(base + '/interaction-example/index.html');
+    await page.locator('section[aria-label="Interaction results"]').waitFor();
+    const failedFlow = page
+      .locator('section[aria-label="Interaction results"] details')
+      .filter({ hasText: 'broken-button' });
+    assert.ok((await failedFlow.innerText()).includes('Not executed'));
+    const stepShot = failedFlow.locator('a').first();
+    const absolute = new URL(await stepShot.getAttribute('href'), page.url()).href;
+    assert.ok((await page.request.get(absolute)).ok());
+    const suppressed = page
+      .locator('details')
+      .filter({ has: page.locator('summary', { hasText: 'Suppressed findings' }) });
+    await suppressed.locator('summary').click();
+    assert.ok((await suppressed.innerText()).includes('Synthetic known diagnostic'));
     await page.goto(base + '/example/index.html');
     await page.locator('.finding').first().waitFor();
     await page.locator('[data-filter="warning"]').click();
@@ -161,6 +197,8 @@ try {
           'escape close',
           'mobile drawer and escape',
           'deep links to document sections',
+          'all public API exports and options documented',
+          'interaction report steps and ignored evidence',
           'real report filters',
           'real screenshot load',
         ],

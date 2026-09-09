@@ -1,4 +1,5 @@
 export const RULE_TITLES = {
+  'interaction-failed': ['Interaction step failed', '交互步骤失败'],
   'runtime-error': ['Unhandled page error', '页面脚本运行异常'],
   'console-error': ['Console error', '浏览器控制台报错'],
   'http-error': ['HTTP request failed', 'HTTP 请求失败'],
