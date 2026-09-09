@@ -171,7 +171,7 @@ try {
       assert.ok(!(await page.locator('#docs-drawer').isVisible()));
       await page.locator('.docs-menu-trigger').click();
       await page.locator('#docs-drawer a[href="#/"]').click();
-      await page.locator('.reading-paths').waitFor();
+      await page.locator('.reading-home .home-comparison').waitFor();
       assert.ok(!(await page.locator('#docs-drawer').isVisible()));
     }
     await page.goto(base + '/#/docs/cli?section=exit-codes');

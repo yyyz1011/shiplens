@@ -394,6 +394,152 @@ select:focus-visible {
   flex-wrap: wrap;
   margin: 0 0 24px;
 }
+/* Homepage reads as purpose → comparison → capability → runnable starting point. */
+.reading-home .home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 24px;
+}
+.reading-home .home-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid var(--read-line);
+  border-radius: var(--read-radius);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-decoration: none;
+}
+.reading-home .home-actions .home-action-primary {
+  color: var(--read-bg);
+  background: var(--read-brand);
+  border-color: var(--read-brand);
+}
+.reading-home .home-actions a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.reading-home .doc-body #comparison {
+  margin-top: 24px;
+  padding-top: 20px;
+}
+.reading-home .doc-body .home-study-scope {
+  font-size: 14px;
+  margin: 0 0 16px;
+  line-height: 1.6;
+}
+.reading-home .home-comparison {
+  border-top: 1px solid var(--read-line);
+  border-bottom: 1px solid var(--read-line);
+}
+.reading-home .home-comparison th,
+.reading-home .home-comparison td {
+  padding: 12px 16px;
+  background: transparent;
+  font-size: 14px;
+}
+.reading-home .home-comparison th:first-child {
+  text-align: left;
+  width: 68%;
+}
+.reading-home .home-comparison tbody th {
+  font-weight: 400;
+}
+.reading-home .home-comparison th:last-child,
+.reading-home .home-comparison td {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.reading-home .home-comparison .home-shiplens-row th,
+.reading-home .home-comparison .home-shiplens-row td {
+  background: var(--read-active);
+  color: var(--read-brand);
+  font-weight: 600;
+}
+.reading-home .doc-body .home-study-note {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--read-muted);
+  margin: 12px 0 24px;
+}
+.reading-home .home-advantage {
+  margin: 28px 0 36px;
+}
+.reading-home .home-advantage h3 {
+  font-size: 19px;
+  line-height: 1.5;
+  margin: 0 0 8px;
+  text-wrap: balance;
+}
+.reading-home .home-advantage p {
+  margin-top: 0;
+}
+.reading-home .home-capabilities a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 24px;
+  padding: 20px 0;
+}
+.reading-home .home-capabilities strong {
+  color: var(--read-brand);
+}
+.reading-home .home-capabilities a > span {
+  margin: 0;
+}
+.reading-home .home-evidence {
+  margin: 24px 0;
+  padding: 0;
+  border-top: 1px solid var(--read-line);
+}
+.reading-home .home-evidence > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--read-line);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.reading-home .home-evidence dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+}
+.reading-article .doc-body .quickstart-context {
+  padding-bottom: 20px;
+  margin-top: 0;
+  border-bottom: 1px solid var(--read-line);
+  color: var(--read-muted);
+  font-size: 14px;
+}
+@media (max-width: 599px) {
+  .reading-home .home-capabilities a {
+    display: block;
+    padding: 16px 0;
+  }
+  .reading-home .home-capabilities a > span {
+    margin-top: 6px;
+  }
+  .reading-home .home-comparison th,
+  .reading-home .home-comparison td {
+    padding: 10px;
+    font-size: 13px;
+  }
+  .reading-home .home-comparison th:first-child {
+    width: 64%;
+  }
+  .reading-home .home-actions {
+    gap: 8px;
+  }
+  .reading-home .home-actions a {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+}
 .reading-meta span {
   font-size: 12px;
   border: 1px solid var(--read-line);
