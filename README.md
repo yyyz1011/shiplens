@@ -6,6 +6,24 @@
 
 ShipLens checks runtime errors, failed resources, visible broken images, suspicious blank pages and horizontal overflow. It saves HTML, JSON and Markdown reports with page and element screenshots. No model account, API key, telemetry or report upload.
 
+## Keep the approved acceptance standard fixed
+
+ShipLens 0.9 adds an acceptance lock for AI-assisted verification. If an assistant changes `equals ¥129` to `contains ¥`, deletes a requirement, changes a selector or drops mobile coverage, a pinned host blocks verification before browser execution. Matching plans still need to pass fresh checks. This is a ready-made policy layer; Playwright plus a custom standard guard can reproduce it.
+
+```sh
+npm install --save-dev shiplens
+npx shiplens browsers
+node node_modules/shiplens/examples/plan-lock-server.mjs
+# In another terminal:
+node node_modules/shiplens/examples/plan-lock.mjs
+```
+
+The deliberately wrong page returns `originalPassed: false`; weakening the price assertion returns `changedBlocked: true`. API: `createPlanLock({data, failOn?})`, `checkPlanLock({data, failOn?})`, then `verify({data})` on a host constructed with `acceptanceLock: {lock, sha256}`. CLI: `review lock --lock-output ...`, `review lock-check`, and `review verify`. MCP adds read-only `shiplens_check_plan_lock`; `shiplens_verify` enforces the pinned standard automatically.
+
+Protect the expected SHA-256 and enforcing host independently of candidate edits. Recomputing the expected digest from the candidate lock defeats the protection. All definition/policy changes require review, including stronger checks. The lock does not prove the initial requirements, runtime inputs or AI judgments correct, and is not tamper-proof against a host owner.
+
+[Complete configuration, API examples, trust boundary and recorded comparison](https://shiplens.nimokit.com/#/docs/acceptance-lock). Six changed-standard examples were blocked before browsing, with zero website requests; a custom guard also blocked all six. This is not an AI-model benchmark.
+
 ## AI acceptance and regression cases
 
 Your existing assistant supplies the reasoning; ShipLens supplies repeatable evidence and a review ledger. Connect an image-capable MCP client to:
@@ -14,7 +32,7 @@ Your existing assistant supplies the reasoning; ShipLens supplies repeatable evi
 shiplens mcp --config /absolute/project/shiplens.config.json
 ```
 
-Twenty-four tools support the review lifecycle. The core tools collect requirement-scoped evidence, read PNG images and bounded DOM, record cited pass/fail/needs-evidence assessments, retrieve history, save cases and recheck. A pass requires complete evidence for every requested device. Manual judgments start pending on recheck; configured checks re-evaluate fresh evidence. Prior passes are never silently reused. Machine diagnostics remain separate from AI judgments.
+Twenty-five tools support the review lifecycle. The core tools collect requirement-scoped evidence, read PNG images and bounded DOM, record cited pass/fail/needs-evidence assessments, retrieve history, save cases and recheck. A pass requires complete evidence for every requested device. Manual judgments start pending on recheck; configured checks re-evaluate fresh evidence. Prior passes are never silently reused. Machine diagnostics remain separate from AI judgments.
 
 For your own agent, import `ReviewWorkspace` from `shiplens/review`. The six core methods are demonstrated in `node node_modules/shiplens/examples/review.mjs` after starting the bundled demo server. Saved cases parameterize fill inputs; use test data and masks for any values echoed into page content or logs. Your AI client receives requested evidence; ShipLens makes no model calls or report uploads.
 

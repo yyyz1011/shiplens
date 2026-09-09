@@ -1,0 +1,33 @@
+{
+  "blockedBeforeBrowser": false,
+  "requests": 2,
+  "inspection": {
+    "kind": "shiplens-plan-lock-check",
+    "passed": true,
+    "status": "matched",
+    "lockSha256": "bcae10201122e679460d31c338b141e7ad6b3bc25210dcd5c7bfdf4b65c43a9a",
+    "definitionSha256": "4f16947b2de6b44e56c4d72152f711c37658d1488f1d815b38ba49ec12bb17b5",
+    "policySha256": "75cdcc8dd71db21eb5f527a0f714f979cda6b5211d51e3bcab88211f94cab454",
+    "changes": [],
+    "totalChanges": 0,
+    "changesTruncated": false,
+    "note": "Checks contract identity, not whether changes are weaker or legitimate. All definition/policy changes need review. Names, tags, object-key order and requirement order may change. No browser execution or website verdict."
+  },
+  "gate": {
+    "runId": "7315465b-4a73-4555-ae2b-43a5d0beeb36",
+    "passed": true,
+    "counts": {
+      "pass": 2,
+      "fail": 0,
+      "pending": 0,
+      "needs-evidence": 0
+    },
+    "failOn": "error",
+    "reasons": [],
+    "note": "Gate applies to configured text checks, recorded caller assessments and observed scope; it does not verify unconfigured business meaning or model reasoning.",
+    "planLock": {
+      "sha256": "bcae10201122e679460d31c338b141e7ad6b3bc25210dcd5c7bfdf4b65c43a9a",
+      "matched": true
+    }
+  }
+}

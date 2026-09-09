@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.0
+
+- Add host-pinned acceptance locks for portable plans and execution policy. Changed assertions, requirements, flows or scope block before browser execution, with structured differences.
+- Add `createPlanLock` and `checkPlanLock` API methods, `review lock` and `review lock-check` CLI commands, and read-only `shiplens_check_plan_lock` MCP support (25 tools total). Locked workspaces enforce the standard through `verify`; run gates and reports retain and validate lock references.
+- Ship an installed-package runnable example and a nine-case comparison using the actual Playwright Test runner plus an independent custom policy guard. Six changed-standard cases are rejected without website requests; native tests with unchanged assertions still detect the wrong value.
+- Rework the bilingual docs homepage around approved requirements, with complete integration examples, raw comparison artifacts and explicit host trust limits. This packages a policy layer and does not claim an intrinsic browser capability advantage over Playwright.
+
 ## 0.8.0
 
 - Add reusable delivery contracts connecting one authorized browser mutation to a generated correlation marker, independent JSON API readback and an exercised HTTP 503 failure trial. Require an absent precondition, one matching saved record, explicit UI feedback and no false success during failure.

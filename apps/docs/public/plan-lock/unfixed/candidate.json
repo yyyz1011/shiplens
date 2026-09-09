@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "kind": "shiplens-case",
+  "name": "Approved order summary",
+  "tags": [
+    "checkout"
+  ],
+  "requirements": [
+    {
+      "id": "title",
+      "description": "Order summary is visible",
+      "page": "/",
+      "selector": "h1",
+      "checks": [
+        {
+          "operator": "equals",
+          "value": "Order summary"
+        }
+      ],
+      "evaluation": "checks"
+    },
+    {
+      "id": "price",
+      "description": "The total must be ¥129",
+      "page": "/",
+      "selector": "#price",
+      "checks": [
+        {
+          "operator": "equals",
+          "value": "¥129"
+        }
+      ],
+      "evaluation": "checks"
+    }
+  ],
+  "flows": []
+}

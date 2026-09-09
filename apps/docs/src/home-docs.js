@@ -1,104 +1,86 @@
 import { t } from './i18n.js';
-import { h, p } from './markup.js';
-import { summary } from '../public/delivery-proof/results.json';
+import { h, p, dataTable as table } from './markup.js';
+import { summary } from '../public/plan-lock/results.json';
 
 export function homeDocs() {
-  const faults = summary.defectiveViewportCases;
   return {
     id: 'introduction',
     source: 'home-docs.js',
     group: t('Get started', '开始使用'),
-    title: t('Check that saving actually works.', '验证保存结果，让 AI 有据可查。'),
+    title: t('Fix the code. Keep the acceptance standard.', '修复代码，守住验收标准。'),
     description: t(
-      'An npm toolkit for your AI. One reusable configuration checks saved records and failure paths, with browser evidence attached.',
-      '给 AI 用的网站检查 npm 工具。一份可复用配置，验证保存记录与失败分支，返回关联的浏览器证据。',
+      'An npm toolkit for AI-assisted acceptance. Pin approved requirements, block changed checks before execution, and collect fresh browser evidence for the same standard.',
+      '给 AI 辅助验收用的 npm 工具。固定已确认的要求，执行前拦截被修改的断言，再按同一标准采集新浏览器证据。',
     ),
     body:
-      `<div class="home-actions"><a class="home-action-primary" href="#/docs/delivery-proof?section=start">${t('Try the example', '试用保存验收')}</a><a href="${import.meta.env.BASE_URL}delivery-proof/false-success/report.html">${t('View real report', '查看实际报告')}</a></div>` +
-      h('comparison', 'What the comparison found', '实测对比：发现了哪些问题') +
-      `<p class="home-study-scope">${t('Four deliberate save defects, tested on desktop and mobile.', '四种刻意植入的保存故障，分别在桌面与手机视口测试。')}</p>` +
-      `<div class="home-comparison"><table aria-labelledby="comparison"><thead><tr><th scope="col">${t('Check used', '检查方式')}</th><th scope="col">${t('Fault cases caught', '拦截故障案例')}</th></tr></thead><tbody><tr><th scope="row">${t('Check only the “Saved” message', '仅检查“保存成功”提示')}</th><td>${faults - summary.uiOnlyFalsePasses} / ${faults}</td></tr><tr><th scope="row">${t('Complete Playwright tests', '完整 Playwright 测试')}</th><td>${faults - summary.playwrightFullFalsePasses} / ${faults}</td></tr><tr class="home-shiplens-row"><th scope="row">${t('ShipLens delivery contract', 'ShipLens 保存验收')}</th><td>${faults - summary.shiplensFalsePasses} / ${faults}</td></tr></tbody></table></div>` +
-      `<p class="home-study-note">${t('One maintainer-controlled app, one run per viewport. Both complete approaches also passed the two healthy controls. This is not an AI-model benchmark.', '一个维护者自建应用，每个视口运行一轮。两种完整检查也都通过了两个正常对照；这不是 AI 模型能力测试。')} <a href="#/docs/delivery-proof?section=proof">${t('Read the method and raw results', '查看方法与原始结果')}</a></p>` +
-      `<div class="home-advantage"><h3>${t('The advantage: a complete workflow, ready for your AI.', '优势：把完整检查流程交给 AI 直接调用。')}</h3><p>${t('A reusable configuration connects the action, API readback and failure trial. One MCP or API call runs the contract and saves linked evidence. Complete Playwright tests can catch the same faults; ShipLens packages this specific workflow for reuse.', '一份可复用配置关联页面操作、API 回读和失败测试；一次 MCP 或 API 调用执行验收并保存关联证据。完整 Playwright 测试也能发现这些故障，ShipLens 将这套特定流程做成了可直接复用的工具。')}</p></div>` +
-      h('checks', 'What you can check', '你可以用它检查什么') +
+      `<div class="home-actions"><a class="home-action-primary" href="#/docs/acceptance-lock?section=start">${t('Try the runnable example', '运行实际案例')}</a><a href="#/docs/acceptance-lock?section=proof">${t('Inspect the comparison', '查看对比证据')}</a></div>` +
+      h('comparison', 'A green test can hide a changed requirement', '测试变绿了，要求可能也变了') +
+      p(
+        'The page still shows ¥999. Change the check from “equals ¥129” to “contains ¥” and the current test passes. With an approved lock, ShipLens blocks verification and identifies the changed price check.',
+        '页面仍显示 ¥999。把“必须等于 ¥129”改成“包含 ¥”，当前测试就能通过。配置已确认的标准锁后，ShipLens 会阻止验收，并指出 price 断言发生了变化。',
+      ) +
+      `<dl class="home-evidence"><div><dt>${t('Approved requirement', '已确认的要求')}</dt><dd>equals ¥129</dd></div><div><dt>${t('Changed check', '修改后的断言')}</dt><dd>contains ¥</dd></div><div><dt>${t('Page still shows', '页面实际仍显示')}</dt><dd>¥999</dd></div></dl>` +
+      table(
+        [
+          [
+            t('Run the current Playwright tests', '执行当前 Playwright 测试'),
+            t('Command succeeds with the changed assertion.', '按修改后的断言执行，命令成功。'),
+          ],
+          [
+            'ShipLens + ' + t('approved lock', '已确认的标准锁'),
+            t(
+              'Blocked before browser execution: price.checks changed.',
+              '打开浏览器前拦截：price.checks 已变更。',
+            ),
+          ],
+          [
+            'Playwright + ' + t('a custom standard guard', '自建标准保护层'),
+            t(
+              'Also blocks it. You implement and maintain the guard.',
+              '同样能拦住，需要自行实现和维护保护层。',
+            ),
+          ],
+        ],
+        [t('Approach', '方式'), t('Result for this example', '本案例结果')],
+      ) +
+      `<p class="home-study-note">${t(`Recorded locally: ${summary.changedStandards} changed-standard cases, ${summary.shiplensBlockedBeforeBrowser} blocked before browsing, ${summary.changedStandardRequests} website requests. Three unchanged controls also behaved as expected. No AI model was tested.`, `本地实测：${summary.changedStandards} 种标准变更，${summary.shiplensBlockedBeforeBrowser} 种在浏览器执行前被拦截，产生 ${summary.changedStandardRequests} 次网站请求。另有 3 个未改标准的对照，结果均符合预期。未测试 AI 模型。`)} <a href="#/docs/acceptance-lock?section=proof">${t('Method, cases and raw outputs', '方法、案例与原始输出')}</a></p>` +
+      h(
+        'advantage',
+        'A ready-made guard around AI verification',
+        '把 AI 验收需要的保护层直接用起来',
+      ) +
+      p(
+        'Playwright executes browser tests; it can also underpin a custom solution to this problem. ShipLens supplies the reviewed lock, readable differences, enforcement across CLI/API/MCP, and a lock reference in the acceptance report. Keep your existing Playwright tests; add this layer where an assistant edits acceptance plans.',
+        'Playwright 执行浏览器测试，也能作为自建方案的基础。ShipLens 提供已评审标准的锁定、可读差异、CLI / API / MCP 统一拦截，以及报告中的标准指纹。保留现有 Playwright 测试，在助手会修改验收文件的地方增加这一层。',
+      ) +
       `<div class="reading-paths home-capabilities">${[
         [
-          'delivery-proof',
-          'Did the save create the right record?',
-          '保存后，记录真的正确创建了吗？',
-          'Correlate a new record with this action, detect missing or duplicate writes, and check error UI after HTTP 503.',
-          '关联本轮新增记录，发现未写入、重复记录，以及 HTTP 503 后错误的成功提示。',
+          'acceptance-lock',
+          'Protect approved requirements',
+          '保护已确认的要求',
+          'Catch deleted criteria, rewritten assertions, changed selectors and reduced mobile coverage.',
+          '发现删除验收项、改写断言、更换选择器和缩小手机端覆盖。',
         ],
         [
           'check-audit',
-          'Would your checks miss a wrong value?',
-          '页面数值错了，验收规则能发现吗？',
-          'Try concrete counterexamples against passing text rules. See which wrong values a weak check still accepts.',
-          '用具体反例挑战已通过的文本规则，找出仍被弱规则接受的错误值。',
+          'Challenge weak checks',
+          '挑战原本就弱的规则',
+          'Try counterexamples against passing text checks before you approve them.',
+          '确认标准前，用反例检查已通过的文本规则是否过于宽松。',
         ],
         [
-          'quickstart',
-          'Does the page break in a browser?',
-          '页面有没有报错、坏图或布局溢出？',
-          'Inspect JavaScript errors, failed resources and horizontal overflow across desktop and mobile viewports.',
-          '在桌面与手机视口检查 JavaScript 异常、失效资源、坏图和横向溢出。',
-        ],
-        [
-          'portable-plans',
-          'Did the fix satisfy the same requirements?',
-          '修改之后，同一组要求通过了吗？',
-          'Replay a saved acceptance plan, collect fresh evidence and keep incomplete or unreviewed results visible.',
-          '重放保存的验收文件，采集新证据，并明确保留未完成、未评审的结果。',
-        ],
-      ]
-        .map(
-          ([id, en, zh, detail, detailZh]) =>
-            `<a href="#/docs/${id}"><strong>${t(en, zh)}</strong><span>${t(detail, detailZh)}</span></a>`,
-        )
-        .join('')}</div>` +
-      h(
-        'example',
-        'A “Saved” message after a failed request',
-        '请求失败了，页面却仍显示“保存成功”',
-      ) +
-      p(
-        'In the recorded example, the normal save succeeds. ShipLens then intercepts the next trial’s request as HTTP 503. The app still displays “Saved”, while independent readback finds no matching record. The delivery contract fails and keeps all three observations together.',
-        '在已记录的示例中，正常保存可以通过。随后 ShipLens 将下一分支的请求拦截为 HTTP 503，应用却仍显示“Saved”，独立回读也未找到匹配记录。保存验收因此失败，并保留这三层观察结果。',
-      ) +
-      `<dl class="home-evidence"><div><dt>${t('Request result', '请求结果')}</dt><dd>HTTP 503</dd></div><div><dt>${t('Captured page text', '页面实际文本')}</dt><dd>Saved</dd></div><div><dt>${t('Matching API records', 'API 匹配记录')}</dt><dd>0</dd></div></dl>` +
-      `<p><a href="${import.meta.env.BASE_URL}delivery-proof/false-success/report.html">${t('Inspect the screenshots and request evidence', '查看截图与请求证据')}</a></p>` +
-      h('fit', 'Where it fits in your AI workflow', '怎么配合你现有的 AI 工作流') +
-      p(
-        'Your AI assistant interprets requirements and judges visual or semantic details. ShipLens runs configured checks, records what happened and repeats the case after a fix. Use MCP for assistant-driven work, the CLI for local or CI checks, and JavaScript/TypeScript for integration. No additional model API key is required.',
-        'AI 助手理解需求、判断视觉和语义细节；ShipLens 执行配置的检查、记录实际结果，并在修复后重跑案例。助手工作流使用 MCP，本地与 CI 使用 CLI，程序集成使用 JavaScript / TypeScript。无需额外配置模型 API Key。',
-      ) +
-      p(
-        'Save verification needs an editable correlation field and a same-origin JSON readback API; cookie sessions are supported. Run in an authorized test environment because successful trials can create records. Readback verifies the API’s result during the test, not database durability or every business rule. A URL scan alone does not run this save contract.',
-        '保存验收需要可填写的关联字段和同源 JSON 回读 API，支持 Cookie 登录态。请在已授权的测试环境运行，成功分支可能创建记录。回读验证测试期间的 API 结果，不保证数据库持久化或所有业务正确性。仅扫描网址不会执行这份保存契约。',
-      ) +
-      `<p class="home-study-note">${t('The case study does not measure real-user setup time, token savings or market preference.', '该案例没有测量真实用户的接入时间、token 节省或市场偏好。')}</p>` +
-      h('start', 'Try it on a working example', '从可运行示例开始') +
-      `<div class="reading-paths">${[
-        [
-          'delivery-proof?section=start',
-          'Run the save example',
-          '运行保存验收示例',
-          'Start the bundled app and run its delivery contract.',
-          '启动包内应用，执行保存契约并查看报告。',
+          'delivery-proof',
+          'Verify saved records',
+          '验证保存记录',
+          'Connect a UI action, correlated API readback and an injected failure trial.',
+          '关联页面操作、API 回读和注入失败分支，验证保存结果。',
         ],
         [
           'mcp',
-          'Connect your AI assistant',
-          '连接你的 AI 助手',
-          'Configure the MCP server and let your assistant read the evidence.',
-          '配置 MCP 服务，让助手直接调用检查、读取证据。',
-        ],
-        [
-          'quickstart',
-          'Scan your own website',
-          '检查你自己的网站',
-          'Start with browser errors, resources and layout checks.',
-          '先检查浏览器错误、资源和布局问题。',
+          'Give your assistant evidence',
+          '让助手拿到验收证据',
+          'Use MCP to inspect changes, run checks and read linked browser evidence.',
+          '通过 MCP 查看变更、执行检查并读取关联浏览器证据。',
         ],
       ]
         .map(
@@ -106,6 +88,16 @@ export function homeDocs() {
             `<a href="#/docs/${id}"><strong>${t(en, zh)}</strong><span>${t(detail, detailZh)}</span></a>`,
         )
         .join('')}</div>` +
+      h('fit', 'When to use it', '什么情况下值得用') +
+      p(
+        'Use it when an AI assistant can edit the code and the acceptance plan, but a maintainer or CI host owns the approved standard. No extra model API key is required. Start with the bundled example, then lock a reviewed plan for your own app.',
+        '适用于 AI 助手可以修改代码和验收文件，而维护者或 CI 主机掌握已确认标准的工作流。不需要额外的模型 API Key。先运行包内案例，再为自己的应用锁定经过评审的验收文件。',
+      ) +
+      p(
+        'The lock detects definition changes, including legitimate improvements; a maintainer must approve a replacement. It does not decide whether a requirement is correct. Protect both the expected fingerprint and the enforcing host from candidate edits: an actor who controls both can bypass the guard.',
+        '标准锁会发现定义变化，包括合理的增强；更换标准需要维护者重新确认。它不判断需求本身是否正确。预期指纹与执行主机必须独立于候选修改受到保护：同时控制两者的人仍可绕过检查。',
+      ) +
+      `<p><a href="#/docs/acceptance-lock?section=start">${t('Run the example →', '运行案例 →')}</a> · <a href="#/docs/quickstart">${t('Start with a website scan', '从网站扫描开始')}</a></p>` +
       `<div class="reading-meta"><span>Node.js 22.12+</span><span>JavaScript / TypeScript</span><span>MIT</span></div>`,
   };
 }

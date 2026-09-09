@@ -1,0 +1,556 @@
+{
+  "schemaVersion": 1,
+  "kind": "shiplens-plan-lock-study",
+  "recordedAt": "2026-09-09T19:46:40.989Z",
+  "version": "0.9.0",
+  "playwright": "1.63.0",
+  "summary": {
+    "changedStandards": 6,
+    "nativeSuccessfulCommandsAfterChanges": 6,
+    "shiplensBlockedBeforeBrowser": 6,
+    "changedStandardRequests": 0,
+    "bespokeGuardBlocked": 6,
+    "unchangedControls": 3
+  },
+  "cases": [
+    {
+      "id": "healthy",
+      "mode": "healthy",
+      "changedStandard": false,
+      "viewport": "both",
+      "nativeExit": 0,
+      "nativeStats": {
+        "startTime": "2026-09-09T19:46:27.192Z",
+        "duration": 1233.832,
+        "expected": 4,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "customGuardPassed": true,
+      "shiplens": {
+        "blockedBeforeBrowser": false,
+        "requests": 2,
+        "inspection": {
+          "kind": "shiplens-plan-lock-check",
+          "passed": true,
+          "status": "matched",
+          "lockSha256": "bcae10201122e679460d31c338b141e7ad6b3bc25210dcd5c7bfdf4b65c43a9a",
+          "definitionSha256": "4f16947b2de6b44e56c4d72152f711c37658d1488f1d815b38ba49ec12bb17b5",
+          "policySha256": "75cdcc8dd71db21eb5f527a0f714f979cda6b5211d51e3bcab88211f94cab454",
+          "changes": [],
+          "totalChanges": 0,
+          "changesTruncated": false,
+          "note": "Checks contract identity, not whether changes are weaker or legitimate. All definition/policy changes need review. Names, tags, object-key order and requirement order may change. No browser execution or website verdict."
+        },
+        "gate": {
+          "runId": "7315465b-4a73-4555-ae2b-43a5d0beeb36",
+          "passed": true,
+          "counts": {
+            "pass": 2,
+            "fail": 0,
+            "pending": 0,
+            "needs-evidence": 0
+          },
+          "failOn": "error",
+          "reasons": [],
+          "note": "Gate applies to configured text checks, recorded caller assessments and observed scope; it does not verify unconfigured business meaning or model reasoning.",
+          "planLock": {
+            "sha256": "bcae10201122e679460d31c338b141e7ad6b3bc25210dcd5c7bfdf4b65c43a9a",
+            "matched": true
+          }
+        }
+      }
+    },
+    {
+      "id": "unfixed",
+      "mode": "wrong",
+      "changedStandard": false,
+      "viewport": "both",
+      "nativeExit": 1,
+      "nativeStats": {
+        "startTime": "2026-09-09T19:46:29.269Z",
+        "duration": 2940.864,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 2,
+        "flaky": 0
+      },
+      "customGuardPassed": false,
+      "shiplens": {
+        "blockedBeforeBrowser": false,
+        "requests": 2,
+        "inspection": {
+          "kind": "shiplens-plan-lock-check",
+          "passed": true,
+          "status": "matched",
+          "lockSha256": "bcae10201122e679460d31c338b141e7ad6b3bc25210dcd5c7bfdf4b65c43a9a",
+          "definitionSha256": "4f16947b2de6b44e56c4d72152f711c37658d1488f1d815b38ba49ec12bb17b5",
+          "policySha256": "75cdcc8dd71db21eb5f527a0f714f979cda6b5211d51e3bcab88211f94cab454",
+          "changes": [],
+          "totalChanges": 0,
+          "changesTruncated": false,
+          "note": "Checks contract identity, not whether changes are weaker or legitimate. All definition/policy changes need review. Names, tags, object-key order and requirement order may change. No browser execution or website verdict."
+        },
+        "gate": {
+          "runId": "41289093-3e0f-464f-8994-26698f89af28",
+          "passed": false,
+          "counts": {
+            "pass": 1,
+            "fail": 1,
+            "pending": 0,
+            "needs-evidence": 0
+          },
+          "failOn": "error",
+          "reasons": [
+            "failed-requirements"
+          ],
+          "note": "Gate applies to configured text checks, recorded caller assessments and observed scope; it does not verify unconfigured business meaning or model reasoning.",
+          "planLock": {
+            "sha256": "bcae10201122e679460d31c338b141e7ad6b3bc25210dcd5c7bfdf4b65c43a9a",
+            "matched": true
+          }
+        }
+      }
+    },
+    {
+      "id": "editorial",
+      "mode": "healthy",
+      "changedStandard": false,
+      "viewport": "both",
+      "nativeExit": 0,
+      "nativeStats": {
+        "startTime": "2026-09-09T19:46:33.010Z",
+        "duration": 912.75,
+        "expected": 4,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "customGuardPassed": true,
+      "shiplens": {
+        "blockedBeforeBrowser": false,
+        "requests": 2,
+        "inspection": {
+          "kind": "shiplens-plan-lock-check",
+          "passed": true,
+          "status": "matched",
+          "lockSha256": "bcae10201122e679460d31c338b141e7ad6b3bc25210dcd5c7bfdf4b65c43a9a",
+          "definitionSha256": "4f16947b2de6b44e56c4d72152f711c37658d1488f1d815b38ba49ec12bb17b5",
+          "policySha256": "75cdcc8dd71db21eb5f527a0f714f979cda6b5211d51e3bcab88211f94cab454",
+          "changes": [],
+          "totalChanges": 0,
+          "changesTruncated": false,
+          "note": "Checks contract identity, not whether changes are weaker or legitimate. All definition/policy changes need review. Names, tags, object-key order and requirement order may change. No browser execution or website verdict."
+        },
+        "gate": {
+          "runId": "d208618a-2a5b-45f5-b564-4e06b0876dc9",
+          "passed": true,
+          "counts": {
+            "pass": 2,
+            "fail": 0,
+            "pending": 0,
+            "needs-evidence": 0
+          },
+          "failOn": "error",
+          "reasons": [],
+          "note": "Gate applies to configured text checks, recorded caller assessments and observed scope; it does not verify unconfigured business meaning or model reasoning.",
+          "planLock": {
+            "sha256": "bcae10201122e679460d31c338b141e7ad6b3bc25210dcd5c7bfdf4b65c43a9a",
+            "matched": true
+          }
+        }
+      }
+    },
+    {
+      "id": "weakened-check",
+      "mode": "wrong",
+      "changedStandard": true,
+      "viewport": "both",
+      "nativeExit": 0,
+      "nativeStats": {
+        "startTime": "2026-09-09T19:46:34.724Z",
+        "duration": 914.491,
+        "expected": 4,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "customGuardPassed": false,
+      "shiplens": {
+        "blockedBeforeBrowser": true,
+        "requests": 0,
+        "inspection": {
+          "kind": "shiplens-plan-lock-check",
+          "passed": false,
+          "status": "changed",
+          "lockSha256": "bcae10201122e679460d31c338b141e7ad6b3bc25210dcd5c7bfdf4b65c43a9a",
+          "definitionSha256": "c72e479677daaa3b3e24dab498ac19bd37a53a0ff641acf8d3e55de07eada069",
+          "policySha256": "75cdcc8dd71db21eb5f527a0f714f979cda6b5211d51e3bcab88211f94cab454",
+          "changes": [
+            {
+              "kind": "requirement-changed",
+              "field": "checks",
+              "criterionId": "price",
+              "before": "[{\"operator\":\"equals\",\"value\":\"¥129\"}]",
+              "after": "[{\"operator\":\"contains\",\"value\":\"¥\"}]"
+            }
+          ],
+          "totalChanges": 1,
+          "changesTruncated": false,
+          "note": "Checks contract identity, not whether changes are weaker or legitimate. All definition/policy changes need review. Names, tags, object-key order and requirement order may change. No browser execution or website verdict."
+        },
+        "gate": null
+      }
+    },
+    {
+      "id": "rewritten-expectation",
+      "mode": "wrong",
+      "changedStandard": true,
+      "viewport": "both",
+      "nativeExit": 0,
+      "nativeStats": {
+        "startTime": "2026-09-09T19:46:35.895Z",
+        "duration": 899.3009999999999,
+        "expected": 4,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "customGuardPassed": false,
+      "shiplens": {
+        "blockedBeforeBrowser": true,
+        "requests": 0,
+        "inspection": {
+          "kind": "shiplens-plan-lock-check",
+          "passed": false,
+          "status": "changed",
+          "lockSha256": "bcae10201122e679460d31c338b141e7ad6b3bc25210dcd5c7bfdf4b65c43a9a",
+          "definitionSha256": "ea2ad0337be2bcc3c3daba5d16d241ccc11fdffcac28d1017d40ab24fb3e4b12",
+          "policySha256": "75cdcc8dd71db21eb5f527a0f714f979cda6b5211d51e3bcab88211f94cab454",
+          "changes": [
+            {
+              "kind": "requirement-changed",
+              "field": "checks",
+              "criterionId": "price",
+              "before": "[{\"operator\":\"equals\",\"value\":\"¥129\"}]",
+              "after": "[{\"operator\":\"equals\",\"value\":\"¥999\"}]"
+            }
+          ],
+          "totalChanges": 1,
+          "changesTruncated": false,
+          "note": "Checks contract identity, not whether changes are weaker or legitimate. All definition/policy changes need review. Names, tags, object-key order and requirement order may change. No browser execution or website verdict."
+        },
+        "gate": null
+      }
+    },
+    {
+      "id": "removed-requirement",
+      "mode": "wrong",
+      "changedStandard": true,
+      "viewport": "both",
+      "nativeExit": 0,
+      "nativeStats": {
+        "startTime": "2026-09-09T19:46:37.046Z",
+        "duration": 774.9,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "customGuardPassed": false,
+      "shiplens": {
+        "blockedBeforeBrowser": true,
+        "requests": 0,
+        "inspection": {
+          "kind": "shiplens-plan-lock-check",
+          "passed": false,
+          "status": "changed",
+          "lockSha256": "bcae10201122e679460d31c338b141e7ad6b3bc25210dcd5c7bfdf4b65c43a9a",
+          "definitionSha256": "8a04ff968112a3c7fadcd8a51a7f5217958c3725ab5f3126303c2df14fb57902",
+          "policySha256": "75cdcc8dd71db21eb5f527a0f714f979cda6b5211d51e3bcab88211f94cab454",
+          "changes": [
+            {
+              "kind": "requirement-removed",
+              "field": "requirement",
+              "criterionId": "price",
+              "before": "{\"id\":\"price\",\"description\":\"The total must be ¥129\",\"page\":\"/\",\"selector\":\"#price\",\"checks\":[{\"operator\":\"equals\",\"value\":\"¥129\"}],\"evaluation\":\"checks\"}",
+              "after": null
+            }
+          ],
+          "totalChanges": 1,
+          "changesTruncated": false,
+          "note": "Checks contract identity, not whether changes are weaker or legitimate. All definition/policy changes need review. Names, tags, object-key order and requirement order may change. No browser execution or website verdict."
+        },
+        "gate": null
+      }
+    },
+    {
+      "id": "changed-selector",
+      "mode": "wrong",
+      "changedStandard": true,
+      "viewport": "both",
+      "nativeExit": 0,
+      "nativeStats": {
+        "startTime": "2026-09-09T19:46:38.108Z",
+        "duration": 997.975,
+        "expected": 4,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "customGuardPassed": false,
+      "shiplens": {
+        "blockedBeforeBrowser": true,
+        "requests": 0,
+        "inspection": {
+          "kind": "shiplens-plan-lock-check",
+          "passed": false,
+          "status": "changed",
+          "lockSha256": "bcae10201122e679460d31c338b141e7ad6b3bc25210dcd5c7bfdf4b65c43a9a",
+          "definitionSha256": "bc24968e5e79aaa0137a10a61f413c6c9f02d6a15a2476360473912c84e165e8",
+          "policySha256": "75cdcc8dd71db21eb5f527a0f714f979cda6b5211d51e3bcab88211f94cab454",
+          "changes": [
+            {
+              "kind": "requirement-changed",
+              "field": "selector",
+              "criterionId": "price",
+              "before": "\"#price\"",
+              "after": "\"#reference\""
+            }
+          ],
+          "totalChanges": 1,
+          "changesTruncated": false,
+          "note": "Checks contract identity, not whether changes are weaker or legitimate. All definition/policy changes need review. Names, tags, object-key order and requirement order may change. No browser execution or website verdict."
+        },
+        "gate": null
+      }
+    },
+    {
+      "id": "omitted-mobile-criterion",
+      "mode": "mobile-wrong",
+      "changedStandard": true,
+      "viewport": "both",
+      "nativeExit": 0,
+      "nativeStats": {
+        "startTime": "2026-09-09T19:46:39.366Z",
+        "duration": 887.915,
+        "expected": 3,
+        "skipped": 1,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "customGuardPassed": false,
+      "shiplens": {
+        "blockedBeforeBrowser": true,
+        "requests": 0,
+        "inspection": {
+          "kind": "shiplens-plan-lock-check",
+          "passed": false,
+          "status": "changed",
+          "lockSha256": "bcae10201122e679460d31c338b141e7ad6b3bc25210dcd5c7bfdf4b65c43a9a",
+          "definitionSha256": "b6bdf49980435d306caa4ef6d33d1487c9e3b2a81ac9689a9ce1a676879da75c",
+          "policySha256": "75cdcc8dd71db21eb5f527a0f714f979cda6b5211d51e3bcab88211f94cab454",
+          "changes": [
+            {
+              "kind": "requirement-changed",
+              "field": "viewports",
+              "criterionId": "price",
+              "before": null,
+              "after": "[\"desktop\"]"
+            }
+          ],
+          "totalChanges": 1,
+          "changesTruncated": false,
+          "note": "Checks contract identity, not whether changes are weaker or legitimate. All definition/policy changes need review. Names, tags, object-key order and requirement order may change. No browser execution or website verdict."
+        },
+        "gate": null
+      }
+    },
+    {
+      "id": "narrowed-host",
+      "mode": "mobile-wrong",
+      "changedStandard": true,
+      "viewport": "desktop",
+      "nativeExit": 0,
+      "nativeStats": {
+        "startTime": "2026-09-09T19:46:40.516Z",
+        "duration": 463.203,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "customGuardPassed": false,
+      "shiplens": {
+        "blockedBeforeBrowser": true,
+        "requests": 0,
+        "inspection": {
+          "kind": "shiplens-plan-lock-check",
+          "passed": false,
+          "status": "changed",
+          "lockSha256": "bcae10201122e679460d31c338b141e7ad6b3bc25210dcd5c7bfdf4b65c43a9a",
+          "definitionSha256": "4f16947b2de6b44e56c4d72152f711c37658d1488f1d815b38ba49ec12bb17b5",
+          "policySha256": "0295744954d85405ad8beb26f5e8b2e8df3cfb7a21d92e705b1a38b75033d230",
+          "changes": [
+            {
+              "kind": "policy-changed",
+              "field": "viewport",
+              "before": "\"both\"",
+              "after": "\"desktop\""
+            }
+          ],
+          "totalChanges": 1,
+          "changesTruncated": false,
+          "note": "Checks contract identity, not whether changes are weaker or legitimate. All definition/policy changes need review. Names, tags, object-key order and requirement order may change. No browser execution or website verdict."
+        },
+        "gate": null
+      }
+    }
+  ],
+  "sources": {
+    "benchmarks/plan-lock/run.mjs": "b20568b9de5cacb3048f0b75c1df5058e069a56ba0341bba62e7fd9b72d31ffb",
+    "packages/cli/src/plan-lock.js": "dd4afaa259f65c12f6edd634286c60e8a04f630d7ecc7a053196220da81d92e5",
+    "packages/cli/src/review.js": "42650a141833b8b213e7eff662dd471a2b0a739294eb186ee1997f4e070f4df5",
+    "packages/cli/examples/locked-plan.json": "f03709143ea7f75bca66de8f77fe235bc6e40266b735eb8ef987d24c6fb67913",
+    "packages/cli/examples/plan-lock-server.mjs": "59b18e6859199f3d5f772d46258291f2061836c5d304f16d6523388fbcbbe2a0"
+  },
+  "artifacts": [
+    {
+      "file": "healthy/native-result.json",
+      "sha256": "049b19a1f130c6b12bf388efbbb6a9f5164d67338fe969041519cc8710e2a87f",
+      "bytes": 6102
+    },
+    {
+      "file": "healthy/candidate.json",
+      "sha256": "c831214824d55a3ce06fc706e7913bc92c000eb57631a2fae470f4a6d5d65d48",
+      "bytes": 692
+    },
+    {
+      "file": "healthy/lock-result.json",
+      "sha256": "bca5926d285441d7cf59bfc5a39cd5a50a1640e19ca8d8ab07b1ae55b5acd9c1",
+      "bytes": 1271
+    },
+    {
+      "file": "unfixed/native-result.json",
+      "sha256": "9ef0dfa8fb3d4c1626d857ef066ffa9ade1867ad97ca1bf919c6e972ec7dd534",
+      "bytes": 17996
+    },
+    {
+      "file": "unfixed/candidate.json",
+      "sha256": "c831214824d55a3ce06fc706e7913bc92c000eb57631a2fae470f4a6d5d65d48",
+      "bytes": 692
+    },
+    {
+      "file": "unfixed/lock-result.json",
+      "sha256": "f3e76a327a46e7e6dead5ae00aa714fb7ff0ee3fe816dc30716aab1e4aae02c2",
+      "bytes": 1305
+    },
+    {
+      "file": "editorial/native-result.json",
+      "sha256": "c60b57679453f947341d09cf5bd05260caabda960224b119c765fc1a0bb805a8",
+      "bytes": 6109
+    },
+    {
+      "file": "editorial/candidate.json",
+      "sha256": "c0f7ba8ebfa7bcdae62d83c8c00e54e5f3a6edf0f8c344e2b71305b37d8fcb37",
+      "bytes": 667
+    },
+    {
+      "file": "editorial/lock-result.json",
+      "sha256": "976a0e314393a94ca27a772221697a82d2d654928d7d35489da1f4432ff8ea7c",
+      "bytes": 1271
+    },
+    {
+      "file": "weakened-check/native-result.json",
+      "sha256": "7a2050633d37a6a785e736e6f3e08906b1e0a9a80b00a3089470b32721eda9fb",
+      "bytes": 6135
+    },
+    {
+      "file": "weakened-check/candidate.json",
+      "sha256": "e0e43bba8a6270fc71211d20dcc9550ad84b6ece5eac7087d979fcfc8c8c5e1c",
+      "bytes": 691
+    },
+    {
+      "file": "weakened-check/lock-result.json",
+      "sha256": "90edab71eeaa367d91c925cbfd7c1e71aff1a6a7feae48f9e18bc20035780ef0",
+      "bytes": 1004
+    },
+    {
+      "file": "rewritten-expectation/native-result.json",
+      "sha256": "03f5e5410888d584f0133f4ebfcb0126f80c233e0f12e65421e371690dd241e7",
+      "bytes": 6180
+    },
+    {
+      "file": "rewritten-expectation/candidate.json",
+      "sha256": "2a2bb04e2dd05febc80288a4577b5c346f910a4002fdb93a71a3208596c6d8ff",
+      "bytes": 692
+    },
+    {
+      "file": "rewritten-expectation/lock-result.json",
+      "sha256": "6fc09bcd3582f31ea9e012298d7db1ef6ff685fe6fbfdb0550509200a27c1323",
+      "bytes": 1005
+    },
+    {
+      "file": "removed-requirement/native-result.json",
+      "sha256": "38e856af8824d6ed6a27cdb84f4b22c998e6760a77a21e03cf09ba517d6b0688",
+      "bytes": 4160
+    },
+    {
+      "file": "removed-requirement/candidate.json",
+      "sha256": "300ade2bcf57a01d2aa9e49655f88a8d487536e4ea2f7c63f650662331447e6c",
+      "bytes": 428
+    },
+    {
+      "file": "removed-requirement/lock-result.json",
+      "sha256": "30bc22849bb703ef8c2d8f7038ca9054d8cc188c0cf37d109ec96e7ca44e462b",
+      "bytes": 1104
+    },
+    {
+      "file": "changed-selector/native-result.json",
+      "sha256": "b8a6088bea597e5afdc83b6fee69df24659522214d7e656d3d09bf59b8258d45",
+      "bytes": 6145
+    },
+    {
+      "file": "changed-selector/candidate.json",
+      "sha256": "a8566442059d4c8c4d20aea93b464ac09ec33f75f78fd6c73289049d73387497",
+      "bytes": 696
+    },
+    {
+      "file": "changed-selector/lock-result.json",
+      "sha256": "6f04b3de5712e809d8cfe1ab77c75c3d631e106c96f2d746ed4ecd348ed3aa07",
+      "bytes": 937
+    },
+    {
+      "file": "omitted-mobile-criterion/native-result.json",
+      "sha256": "9048648d6d437c1b6f79395c296c521b2c1d21545537120003cab8e43708b32d",
+      "bytes": 6960
+    },
+    {
+      "file": "omitted-mobile-criterion/candidate.json",
+      "sha256": "da5510bf32a34319ac1cbc9c126f9d17ec6b49ac7925433289b383bfd4688454",
+      "bytes": 740
+    },
+    {
+      "file": "omitted-mobile-criterion/lock-result.json",
+      "sha256": "46694bf7dd8a94779e2d4ba9284832ba7c1002bd7061fc4bebb7ff216676ded4",
+      "bytes": 929
+    },
+    {
+      "file": "narrowed-host/native-result.json",
+      "sha256": "5b2e968d9414fb97c9ae668792c4ec6bc29196fd4d61bb64569378fe9b005de0",
+      "bytes": 3738
+    },
+    {
+      "file": "narrowed-host/candidate.json",
+      "sha256": "c831214824d55a3ce06fc706e7913bc92c000eb57631a2fae470f4a6d5d65d48",
+      "bytes": 692
+    },
+    {
+      "file": "narrowed-host/lock-result.json",
+      "sha256": "ca9e77d52995143301a92ec9fb6a6d5824b5102724c672d45d9be2f21f125782",
+      "bytes": 895
+    }
+  ],
+  "note": "Maintainer-controlled app and deliberate plan/policy edits; no AI model or customer study. Native Playwright evaluates the current tests; an independent custom approved-definition guard catches the same edits as ShipLens. Native JSON paths are replaced with placeholders. Counts are scenario commands, not assertions or a detection-accuracy ranking. Skipped project requirements remain explicit in native stats. Lock mismatch refuses execution; it is not a website failure diagnosis."
+}

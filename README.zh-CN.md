@@ -6,6 +6,24 @@
 
 检查运行异常、失效资源、可见坏图、疑似白屏和横向溢出，生成带页面及元素截图的 HTML、JSON 和 Markdown 报告。无需配置 AI 模型或 API Key，不上传报告。
 
+## 固定已确认的验收标准
+
+0.9 新增验收标准锁：当助手把“等于 ¥129”改为“包含 ¥”、删除要求、更换选择器或缩小手机端范围时，已锁定主机会在访问网页前阻止验收。标准一致后，仍需通过新一轮浏览器检查。
+
+这是一层现成的策略保护；Playwright 配合自建保护层也能实现。实测 6 种标准变更均被拦截，产生 0 次网页请求，自建保护层同样拦住全部案例。不是 AI 模型能力对比。
+
+```sh
+npm install --save-dev shiplens
+npx shiplens browsers
+node node_modules/shiplens/examples/plan-lock-server.mjs
+# 在另一终端运行：
+node node_modules/shiplens/examples/plan-lock.mjs
+```
+
+预期 originalPassed 为 false，changedBlocked 为 true。预期指纹与执行主机必须独立于候选修改；如果同时控制锁、指纹与执行代码，仍可绕过保护。所有定义变化（包括增强）都需要重新确认，不保证初始需求或 AI 判断正确。
+
+[完整 API、CLI、MCP、配置与原始对照证据](https://shiplens.nimokit.com/#/docs/acceptance-lock)。
+
 ## AI 验收与回归案例
 
 由现有 AI 助手理解需求和判断页面；ShipLens 提供可重复的证据与验收记录。通过 `shiplens mcp --config /项目绝对路径/shiplens.config.json` 启动十七个 MCP 工具，支持采集、读取图片与页面结构、引用证据判断、查询历史、保存案例和重放。

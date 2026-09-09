@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "kind": "shiplens-case",
+  "name": "Approved order summary",
+  "tags": [
+    "checkout"
+  ],
+  "requirements": [
+    {
+      "id": "title",
+      "description": "Order summary is visible",
+      "page": "/",
+      "selector": "h1",
+      "checks": [
+        {
+          "operator": "equals",
+          "value": "Order summary"
+        }
+      ],
+      "evaluation": "checks"
+    }
+  ],
+  "flows": []
+}

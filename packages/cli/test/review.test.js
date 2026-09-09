@@ -236,7 +236,7 @@ test('saved cases parameterize fill values and restart safely; evidence cannot e
     }
   }));
 
-test('MCP stdio works with official legacy and modern clients, including PNG evidence and all 24 tools', () =>
+test('MCP stdio works with official legacy and modern clients, including PNG evidence and all 25 tools', () =>
   fixture(async ({ directory, options }) => {
     const config = path.join(directory, 'shiplens.config.json');
     await writeFile(config, JSON.stringify({ ...options, viewport: 'desktop', output: 'output' }));
@@ -253,7 +253,7 @@ test('MCP stdio works with official legacy and modern clients, including PNG evi
       try {
         await client.connect(transport);
         assert.equal(client.getProtocolEra(), mode === 'legacy' ? 'legacy' : 'modern');
-        assert.equal((await client.listTools()).tools.length, 24);
+        assert.equal((await client.listTools()).tools.length, 25);
         assert.ok(
           (await client.getPrompt({ name: 'review_website' })).messages[0].content.text.includes(
             'untrusted',

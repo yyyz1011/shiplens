@@ -60,6 +60,7 @@ export interface ReviewRun {
   previousRunId?: string;
   caseId?: string;
   planSource?: { name: string; sha256: string };
+  planLock?: { sha256: string; definitionSha256: string; policySha256: string };
   requirements: Array<
     Requirement & {
       viewports: Array<'desktop' | 'mobile'>;
@@ -109,7 +110,13 @@ export interface SavedCase {
   requiredInputs: RequiredInput[];
 }
 export class ReviewWorkspace {
-  constructor(config: { directory: string; options: ScanOptions });
+  constructor(config: {
+    directory: string;
+    options: ScanOptions;
+    acceptanceLock?: { lock: AcceptanceLock; sha256: string };
+  });
+  createPlanLock(input: { data: PortableCase; failOn?: 'error' | 'warning' }): AcceptanceLock;
+  checkPlanLock(input: { data: PortableCase; failOn?: 'error' | 'warning' }): PlanLockCheck;
   validatePlan(input: { data: PortableCase }): PlanInfo;
   verify(
     input: {
@@ -230,6 +237,53 @@ export interface PlanInfo {
   manualRequirements: string[];
   note: string;
 }
+export interface AcceptanceLock {
+  schemaVersion: 1;
+  kind: 'shiplens-plan-lock';
+  plan: PortableCase;
+  policy: {
+    entry: string;
+    pages: string[];
+    viewport: 'desktop' | 'mobile' | 'both';
+    exclude: string[];
+    ignoreRules: string[];
+    ignore: NonNullable<ScanOptions['ignore']>;
+    mask: string[];
+    allowRequests: NonNullable<ScanOptions['allowRequests']>;
+    maxPages: number;
+    crawl: boolean;
+    scroll: boolean;
+    scrollSteps: number;
+    waitFor: string;
+    timeout: number;
+    settle: number;
+    failOn: 'error' | 'warning';
+  };
+  sha256: string;
+}
+export interface PlanLockCheck {
+  kind: 'shiplens-plan-lock-check';
+  passed: boolean;
+  status: 'matched' | 'changed' | 'invalid-plan';
+  lockSha256: string;
+  definitionSha256?: string;
+  policySha256?: string;
+  changes: Array<{
+    kind:
+      | 'requirement-removed'
+      | 'requirement-added'
+      | 'requirement-changed'
+      | 'flows-changed'
+      | 'policy-changed';
+    field: string;
+    criterionId?: string;
+    before: string | null;
+    after: string | null;
+  }>;
+  totalChanges: number;
+  changesTruncated: boolean;
+  note: string;
+}
 export interface PlanVerification {
   runId: string;
   plan: PlanInfo;
@@ -289,6 +343,7 @@ export interface PortableCase {
   flows: PortableFlow[];
 }
 export interface AcceptanceGate {
+  planLock?: { sha256: string; matched: boolean };
   runId: string;
   passed: boolean;
   counts: Record<AssessmentStatus | 'pending', number>;

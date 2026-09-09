@@ -169,3 +169,22 @@ review.verifyDelivery({ contract: deliveryContract }).then(async (result) => {
 });
 // @ts-expect-error Readback assertions accept JSON scalar expectations only.
 deliveryContract.readback.checks.push({ pointer: '/status', equals: { value: 'saved' } });
+
+const approvedLock = review.createPlanLock({
+  data: {
+    schemaVersion: 1,
+    kind: 'shiplens-case',
+    name: 'Approved',
+    tags: [],
+    requirements: [requirement],
+    flows: [],
+  },
+});
+const pinned = new ReviewWorkspace({
+  directory: '.shiplens/locked',
+  options: { url: 'http://localhost:3000' },
+  acceptanceLock: { lock: approvedLock, sha256: approvedLock.sha256 },
+});
+const inspection = pinned.checkPlanLock({ data: approvedLock.plan });
+const changedCount: number = inspection.totalChanges;
+void changedCount;

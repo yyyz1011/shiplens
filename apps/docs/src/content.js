@@ -1,4 +1,5 @@
 import { t } from './i18n.js';
+import { lockDocs } from './lock-docs.js';
 import { homeDocs } from './home-docs.js';
 import { code, p, h, note, table } from './markup.js';
 export { escape } from './markup.js';
@@ -14,6 +15,7 @@ import { benchmarkDocs } from './benchmark-docs.js';
 export function getDocs() {
   return [
     homeDocs(),
+    lockDocs(),
     {
       id: 'quickstart',
       group: t('Get started', '开始使用'),

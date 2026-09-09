@@ -8,3 +8,4 @@ artifacts/
 *.tgz
 *.log
 playwright/.auth/
+test-results/

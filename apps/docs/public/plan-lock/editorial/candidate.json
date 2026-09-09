@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "kind": "shiplens-case",
+  "name": "Renamed display",
+  "tags": [],
+  "requirements": [
+    {
+      "id": "price",
+      "description": "The total must be ¥129",
+      "page": "/",
+      "selector": "#price",
+      "checks": [
+        {
+          "operator": "equals",
+          "value": "¥129"
+        }
+      ],
+      "evaluation": "checks"
+    },
+    {
+      "id": "title",
+      "description": "Order summary is visible",
+      "page": "/",
+      "selector": "h1",
+      "checks": [
+        {
+          "operator": "equals",
+          "value": "Order summary"
+        }
+      ],
+      "evaluation": "checks"
+    }
+  ],
+  "flows": []
+}

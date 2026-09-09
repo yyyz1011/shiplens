@@ -1,0 +1,25 @@
+{
+  "blockedBeforeBrowser": true,
+  "requests": 0,
+  "inspection": {
+    "kind": "shiplens-plan-lock-check",
+    "passed": false,
+    "status": "changed",
+    "lockSha256": "bcae10201122e679460d31c338b141e7ad6b3bc25210dcd5c7bfdf4b65c43a9a",
+    "definitionSha256": "8a04ff968112a3c7fadcd8a51a7f5217958c3725ab5f3126303c2df14fb57902",
+    "policySha256": "75cdcc8dd71db21eb5f527a0f714f979cda6b5211d51e3bcab88211f94cab454",
+    "changes": [
+      {
+        "kind": "requirement-removed",
+        "field": "requirement",
+        "criterionId": "price",
+        "before": "{\"id\":\"price\",\"description\":\"The total must be ¥129\",\"page\":\"/\",\"selector\":\"#price\",\"checks\":[{\"operator\":\"equals\",\"value\":\"¥129\"}],\"evaluation\":\"checks\"}",
+        "after": null
+      }
+    ],
+    "totalChanges": 1,
+    "changesTruncated": false,
+    "note": "Checks contract identity, not whether changes are weaker or legitimate. All definition/policy changes need review. Names, tags, object-key order and requirement order may change. No browser execution or website verdict."
+  },
+  "gate": null
+}

@@ -1,0 +1,233 @@
+{
+  "config": {
+    "argv": [
+      "<node>",
+      "<repository>/node_modules/playwright/cli.js",
+      "test",
+      "--config",
+      "<benchmark-workspace>/changed-selector/playwright.config.mjs"
+    ],
+    "configFile": "<benchmark-workspace>/changed-selector/playwright.config.mjs",
+    "rootDir": "<benchmark-workspace>/changed-selector",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "<repository>/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "<benchmark-workspace>/changed-selector",
+        "testIgnore": [],
+        "testMatch": [
+          "native.spec.mjs"
+        ],
+        "timeout": 5000
+      },
+      {
+        "outputDir": "<repository>/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile",
+        "name": "mobile",
+        "testDir": "<benchmark-workspace>/changed-selector",
+        "testIgnore": [],
+        "testMatch": [
+          "native.spec.mjs"
+        ],
+        "timeout": 5000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "native.spec.mjs",
+      "file": "native.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "title",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 5000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 81,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-09T19:46:38.373Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be0bbe6c09e2880a49e1-075c6ab61fb21273ad83",
+          "file": "native.spec.mjs",
+          "line": 3,
+          "column": 35
+        },
+        {
+          "title": "price",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 5000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 70,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-09T19:46:38.562Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be0bbe6c09e2880a49e1-71aaa95d2eab14c64fe9",
+          "file": "native.spec.mjs",
+          "line": 3,
+          "column": 35
+        },
+        {
+          "title": "title",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 5000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 69,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-09T19:46:38.849Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be0bbe6c09e2880a49e1-42e2254e2596cd9b7dce",
+          "file": "native.spec.mjs",
+          "line": 3,
+          "column": 35
+        },
+        {
+          "title": "price",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 5000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 54,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-09T19:46:39.023Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be0bbe6c09e2880a49e1-8f27b0395c19ef37f08f",
+          "file": "native.spec.mjs",
+          "line": 3,
+          "column": 35
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-09T19:46:38.108Z",
+    "duration": 997.975,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
